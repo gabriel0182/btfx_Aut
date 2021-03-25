@@ -6,8 +6,6 @@ Feature: Test the Login
 
     Given I visit the homepage
 
-    When I type my user and pass
-
-    And Click on the login button
+    When I type my user, pass and login
 
     Then I verify my user is logged on

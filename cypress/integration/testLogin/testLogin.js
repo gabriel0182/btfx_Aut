@@ -8,14 +8,9 @@ Given("I visit the homepage", () => {
   staging.landing();
 });
 
-When("I type my user and pass", () => {
-  staging.inputCredentials();
+When("I type my user, pass and login", () => {
+  staging.longIn();
  
-});
-
-When("Click on the login button", () => {
-  staging.loginButton();
-  
 });
 
 Then("I verify my user is logged on", () => {
