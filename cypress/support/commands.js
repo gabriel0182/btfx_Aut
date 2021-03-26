@@ -38,7 +38,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         "https://bfx-ui-trading.staging.bitfinex.com"
       );
       cy.fixture("sensitive/credentials.json").then((credentials) => {
-        cy.wait(5000);
+        cy.wait(2000);
         cy.get(".header__login-button").click();
         cy.get("#login").type(credentials.login, { force: true });
         cy.get("#auth-password").type(credentials.password, { log: false });
@@ -48,7 +48,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         login.wait(5000);
         cy.task("generateOTP", `${credentials.totp_secre}`).then((token) => {
           cy.get("#otp").type(token);
-          cy.wait(5000);
+          cy.wait(15000);
         });
       });
     }
