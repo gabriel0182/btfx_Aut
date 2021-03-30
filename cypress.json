@@ -1,7 +1,8 @@
 {
 
     "testFiles": "**/*.{feature,features}",
-    "viewportWidth": 1000,
+    "viewportHeight":768,
+"viewportWidth":1366,
   "screenshotOnRunFailure": false,
     "video": true,
   "numTestsKeptInMemory": 0,

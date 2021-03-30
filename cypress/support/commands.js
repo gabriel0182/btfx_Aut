@@ -45,10 +45,10 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         cy.get("button").contains("Login").click();
         const login = cy.get("#submit-login");
         login.click({ force: true });
-        login.wait(5000);
+        login.wait(2000);
         cy.task("generateOTP", `${credentials.totp_secre}`).then((token) => {
           cy.get("#otp").type(token);
-          cy.wait(15000);
+          cy.wait(5000);
         });
       });
     }
