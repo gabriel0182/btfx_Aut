@@ -25,4 +25,5 @@ When("I select to Exchange Buy", () => {
 
 Then("I verify the stop order was created", () => {
   stop.successMsg();
+  stop.cancelOrder();
 });
