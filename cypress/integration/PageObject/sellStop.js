@@ -1,4 +1,4 @@
-class buyStop {
+class sellStop {
   trading() {
     const tradingTab = cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
@@ -38,7 +38,7 @@ class buyStop {
     return this;
   }
   buyButton() {
-    const exchangeBuy = cy.get("#buyButton").contains("Exchange Buy");
+    const exchangeBuy = cy.get("#sellButton").contains("Exchange Sell");
     exchangeBuy.click({ force: true });
     exchangeBuy.wait(1000);
     return this;
@@ -47,9 +47,8 @@ class buyStop {
       const msg = cy
       .get('.notification-text__text')
       .invoke('text')
-      msg.should('contain', "Created exchange stop buy order of 0.0001 BTC  at  40000 USD")
-      return this;
+      msg.should('contain', "Created exchange stop sell order of 0.0001 BTC  at  40000 USD")
   }
 }
 
-export default buyStop;
+export default sellStop;
