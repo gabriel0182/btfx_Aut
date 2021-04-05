@@ -61,12 +61,11 @@ class buyStop {
       .get('[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa')
     .click({force:true})
     })
+    ordersTable.wait(4000)
     const msgCancel = cy
     .get('.notification-text__text')
       .invoke('text')
       msgCancel.should('contain', "Exchange stop buy order of 0.0001 BTC has been canceled")
-      msgCancel.wait(1000)
-      return this;
     return this;
   }
 }
