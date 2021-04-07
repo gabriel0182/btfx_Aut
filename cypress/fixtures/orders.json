@@ -2,7 +2,9 @@
     "wallet1": "Exchange",
     "wallet2": "Margin",
     "type1": "Stop",
+    "type2": "Limit",
     "price": "40000",
+    "limitprice": "50",
     "price2": "35000",
     "btc": "0.0001"
 
