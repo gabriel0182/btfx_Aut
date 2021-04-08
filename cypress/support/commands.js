@@ -38,21 +38,21 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         "https://bfx-ui-trading.staging.bitfinex.com"
       );
       cy.fixture("sensitive/credentials.json").then((credentials) => {
-        cy.wait(2000);
-        cy.get(".header__login-button").click();
-        cy.get("#login").type(credentials.login, { force: true });
-        cy.get("#auth-password").type(credentials.password, { log: false });
-        cy.get("button").contains("Login").click();
-        const login = cy.get("#submit-login");
-        login.click({ force: true });
-        login.wait(2000);
-        cy.task("generateOTP", `${credentials.totp_secre}`).then((token) => {
-          cy.get("#otp").type(token);
-          cy.wait(5000);
-        });
+        cy.waitUntil(() =>
+        cy.get(".header__login-button").should('be.visible')
+        .click({force:true})
+        .get("#login").type(credentials.login, { force: true })
+        .get("#auth-password").type(credentials.password, { log: false })
+        .get("button").contains("Login").click({force:true})
+        .get("#submit-login")
+        .click({ force: true })
+        .task("generateOTP", `${credentials.totp_secre}`).then((token) => {
+        cy.get("#otp").type(token)
+        })
+        )
       });
     }
-  });
+  })
 });
 
 Cypress.Commands.add("visitBitfinexHomepage", () => {
@@ -73,3 +73,4 @@ Cypress.Commands.add("visitWithCloudFlareBypass", (route) => {
     cy.visit(route, { headers: headers });
   });
 });
+import 'cypress-wait-until';

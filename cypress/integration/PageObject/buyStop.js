@@ -1,9 +1,11 @@
 class buyStop {
   trading() {
-    const tradingTab = cy.get(
+    const tradingTab = cy.waitUntil(() =>
+    cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
-    );
-    tradingTab.click({ force: true });
+    ).should('be.visible')
+    .click({ force: true })
+    )
     return this;
   }
   orderInfo() {
@@ -40,7 +42,6 @@ class buyStop {
   buyButton() {
     const exchangeBuy = cy.get("#buyButton").contains("Exchange Buy");
     exchangeBuy.click({ force: true });
-    exchangeBuy.wait(1000);
     return this;
   }
   successMsg() {
@@ -51,12 +52,15 @@ class buyStop {
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.price}`, () => {
-        const msg = cy.get(".notification-text__text").invoke("text");
-        msg.should(
-          "contain",
-          `Created exchange stop buy order of ${data.btc} BTC  at  ${data.price} USD`
+        const msg = cy.waitUntil(() =>
+          cy
+            .get(".notification-text__text")
+            .should("be.visible")
+            .should(
+              "contain",
+              `Created exchange stop buy order of ${data.btc} BTC  at  ${data.price} USD`
+            )
         );
-        msg.wait(4000);
       });
     });
     return this;
@@ -74,13 +78,16 @@ class buyStop {
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
           .click({ force: true });
+        const msgCancel = cy.waitUntil(() =>
+          cy
+            .get(".notification-text__text")
+            .should("be.visible")
+            .should(
+              "contain",
+              "Exchange stop buy order of 0.0001 BTC has been canceled"
+            )
+        );
       });
-    ordersTable.wait(4000);
-    const msgCancel = cy.get(".notification-text__text").invoke("text");
-    msgCancel.should(
-      "contain",
-      "Exchange stop buy order of 0.0001 BTC has been canceled"
-    );
     return this;
   }
 }
