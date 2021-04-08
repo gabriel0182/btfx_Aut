@@ -1,9 +1,11 @@
 class buyLimitExch {
   trading() {
-    const tradingTab = cy.get(
-      ".header__nav-buttons-wrapper > .header__nav-trading"
+    const tradingTab = cy.waitUntil(() =>
+      cy
+        .get(".header__nav-buttons-wrapper > .header__nav-trading")
+        .should("be.visible")
+        .click({ force: true })
     );
-    tradingTab.click({ force: true });
     return this;
   }
   orderInfo() {
@@ -40,7 +42,6 @@ class buyLimitExch {
   buyButton() {
     const exchangeBuy = cy.get("#buyButton").contains("Exchange Buy");
     exchangeBuy.click({ force: true });
-    exchangeBuy.wait(1000);
     return this;
   }
   successMsg() {
@@ -51,12 +52,15 @@ class buyLimitExch {
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.limitprice}`, () => {
-        const msg = cy.get(".notification-text__text").invoke("text");
-        msg.should(
-          "contain",
-          `Created exchange limit buy order of ${data.btc} BTC  at  ${data.limitprice} USD`
+        const msg = cy.waitUntil(() =>
+          cy
+            .get(".notification-text__text")
+            .should("be.visible")
+            .should(
+              "contain",
+              `Created exchange limit buy order of ${data.btc} BTC  at  ${data.limitprice} USD`
+            )
         );
-        msg.wait(4000);
       });
     });
     return this;
@@ -75,11 +79,14 @@ class buyLimitExch {
           )
           .click({ force: true });
       });
-    ordersTable.wait(4000);
-    const msgCancel = cy.get(".notification-text__text").invoke("text");
-    msgCancel.should(
-      "contain",
-      "Exchange limit buy order of 0.0001 BTC has been canceled"
+    const msgCancel = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("be.visible")
+        .should(
+          "contain",
+          "Exchange limit buy order of 0.0001 BTC has been canceled"
+        )
     );
     return this;
   }
