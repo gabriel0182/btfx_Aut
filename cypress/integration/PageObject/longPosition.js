@@ -51,6 +51,12 @@ class longPosition {
     return this;
   }
   cancelPosition(){
+    const testData = require("../../fixtures/positions.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        amount: testDataRow.amount
+      };
+      context(`Generating a test for ${data.amount}`, () => {
     const positionsTable = cy
     .get('[style="height: 25px; width: 100%;"] > .table-vir__row')
     .get('div')
@@ -66,7 +72,9 @@ class longPosition {
     confirm.click({force:true})
     confirm.wait(2000)
     const msgCancel = cy.get(".notification-text__text").invoke("text");
-    msgCancel.should("contain", "Margin market sell order of 0.003 BTC has been fully executed");
+    msgCancel.should("contain", `Margin market sell order of ${data.amount} BTC has been fully executed`);
+  });
+});
     return this;
   }
 }

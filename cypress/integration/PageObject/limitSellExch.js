@@ -1,4 +1,4 @@
-class buyStop {
+class limitSellExch {
   trading() {
     const tradingTab = cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
@@ -11,8 +11,8 @@ class buyStop {
     testData.forEach((testDataRow) => {
       const data = {
         wallet1: testDataRow.wallet1,
-        type1: testDataRow.type1,
-        price: testDataRow.price,
+        type2: testDataRow.type2,
+        limitprice2: testDataRow.limitprice2,
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
@@ -22,11 +22,11 @@ class buyStop {
           )
           .click({ force: true })
           .get('[id="orderFormDropdown"]')
-          .get('[id="orderFormDropdownItem_stop"]')
-          .contains(data.type1)
+          .get('[id="orderFormDropdownItem_limit"]')
+          .contains(data.type2)
           .click({ force: true });
         const priceUSD = cy.get('[name="price"]');
-        priceUSD.type(data.price);
+        priceUSD.type(data.limitprice2);
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);
         const orderFrom = cy
@@ -38,30 +38,30 @@ class buyStop {
     return this;
   }
   buyButton() {
-    const exchangeBuy = cy.get("#buyButton").contains("Exchange Buy");
+    const exchangeBuy = cy.get("#sellButton").contains("Exchange Sell");
     exchangeBuy.click({ force: true });
     exchangeBuy.wait(1000);
     return this;
   }
   successMsg() {
-    const testData = require("../../fixtures/orders.json");
-    testData.forEach((testDataRow) => {
-      const data = {
-        price: testDataRow.price,
-        btc: testDataRow.btc,
-      };
-      context(`Generating a test for ${data.price}`, () => {
-        const msg = cy.get(".notification-text__text").invoke("text");
-        msg.should(
-          "contain",
-          `Created exchange stop buy order of ${data.btc} BTC  at  ${data.price} USD`
-        );
-        msg.wait(4000);
-      });
-    });
+            const testData = require("../../fixtures/orders.json");
+        testData.forEach((testDataRow) => {
+          const data = {
+           limitprice2: testDataRow.limitprice2,
+            btc: testDataRow.btc,
+          };
+          context(`Generating a test for ${data.limitprice2}`, () => {
+    const msg = cy.get(".notification-text__text").invoke("text");
+    msg.should(
+      "contain",
+      `Created exchange limit sell order of ${data.btc} BTC  at  ${data.limitprice2} USD`
+    );
+    msg.wait(4000);
+          });
+        });
     return this;
   }
-  cancelOrder() {
+  cancelSellOrder() {
     const ordersTable = cy
       .get('[data-qa-id="orders-table"]')
       .get("div")
@@ -79,10 +79,10 @@ class buyStop {
     const msgCancel = cy.get(".notification-text__text").invoke("text");
     msgCancel.should(
       "contain",
-      "Exchange stop buy order of 0.0001 BTC has been canceled"
+      "Exchange limit sell order of 0.0001 BTC has been canceled"
     );
     return this;
   }
 }
 
-export default buyStop;
+export default limitSellExch;

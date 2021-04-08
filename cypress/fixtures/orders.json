@@ -4,7 +4,8 @@
     "type1": "Stop",
     "type2": "Limit",
     "price": "40000",
-    "limitprice": "50",
+    "limitprice": "50.000",
+    "limitprice2": "60000",
     "price2": "35000",
     "btc": "0.0001"
 
