@@ -11,12 +11,13 @@ longIn(){
     return this;
 }
 verifyLoggedOn() {
-   const accountName = cy.waitUntil(() =>
+   const accountName = cy.waitUntil (() =>
    cy
-      .get(".page-footer__content > :nth-child(1) > :nth-child(1)")
-      .get(":nth-child(1) > :nth-child(1) > .page-footer__title").should('be.visible')
-      .scrollIntoView()
-    .should("contain.text", "gabriel.aguar")
+   .get('#footer')
+   .get('.page-footer__content > :nth-child(1) > :nth-child(1)')
+   .scrollIntoView()
+   .get(':nth-child(1) > :nth-child(1) > .page-footer__title')
+      .should("contain", "gabriel.aguar")
    )
     return this;
   }

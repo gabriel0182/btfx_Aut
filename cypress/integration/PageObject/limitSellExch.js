@@ -1,9 +1,11 @@
 class limitSellExch {
   trading() {
-    const tradingTab = cy.get(
-      ".header__nav-buttons-wrapper > .header__nav-trading"
+    const tradingTab = cy.waitUntil(() =>
+      cy
+        .get(".header__nav-buttons-wrapper > .header__nav-trading")
+        .should("be.visible")
+        .click({ force: true })
     );
-    tradingTab.click({ force: true });
     return this;
   }
   orderInfo() {
@@ -40,25 +42,27 @@ class limitSellExch {
   buyButton() {
     const exchangeBuy = cy.get("#sellButton").contains("Exchange Sell");
     exchangeBuy.click({ force: true });
-    exchangeBuy.wait(1000);
     return this;
   }
   successMsg() {
-            const testData = require("../../fixtures/orders.json");
-        testData.forEach((testDataRow) => {
-          const data = {
-           limitprice2: testDataRow.limitprice2,
-            btc: testDataRow.btc,
-          };
-          context(`Generating a test for ${data.limitprice2}`, () => {
-    const msg = cy.get(".notification-text__text").invoke("text");
-    msg.should(
-      "contain",
-      `Created exchange limit sell order of ${data.btc} BTC  at  ${data.limitprice2} USD`
-    );
-    msg.wait(4000);
-          });
-        });
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        limitprice2: testDataRow.limitprice2,
+        btc: testDataRow.btc,
+      };
+      context(`Generating a test for ${data.limitprice2}`, () => {
+        const msg = cy.waitUntil(() =>
+          cy
+            .get(".notification-text__text")
+            .should("be.visible")
+            .should(
+              "contain",
+              `Created exchange limit sell order of ${data.btc} BTC  at  ${data.limitprice2} USD`
+            )
+        );
+      });
+    });
     return this;
   }
   cancelSellOrder() {
@@ -75,11 +79,14 @@ class limitSellExch {
           )
           .click({ force: true });
       });
-    ordersTable.wait(4000);
-    const msgCancel = cy.get(".notification-text__text").invoke("text");
-    msgCancel.should(
-      "contain",
-      "Exchange limit sell order of 0.0001 BTC has been canceled"
+    const msgCancel = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("be.visible")
+        .should(
+          "contain",
+          "Exchange limit sell order of 0.0001 BTC has been canceled"
+        )
     );
     return this;
   }
