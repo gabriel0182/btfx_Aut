@@ -79,15 +79,23 @@ class limitSellExch {
           )
           .click({ force: true });
       });
+      const testData = require("../../fixtures/orders.json");
+        testData.forEach((testDataRow) => {
+          const data = {
+            btc: testDataRow.btc,
+          };
+          context(`Generating a test for ${data.btc}`, () => {
     const msgCancel = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
         .should("be.visible")
         .should(
           "contain",
-          "Exchange limit sell order of 0.0001 BTC has been canceled"
+          `Exchange limit sell order of ${data.btc} BTC has been canceled`
         )
     );
+        })
+      })
     return this;
   }
 }

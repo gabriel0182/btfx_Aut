@@ -1,11 +1,11 @@
 class buyStop {
   trading() {
     const tradingTab = cy.waitUntil(() =>
-    cy.get(
-      ".header__nav-buttons-wrapper > .header__nav-trading"
-    ).should('be.visible')
-    .click({ force: true })
-    )
+      cy
+        .get(".header__nav-buttons-wrapper > .header__nav-trading")
+        .should("be.visible")
+        .click({ force: true })
+    );
     return this;
   }
   orderInfo() {
@@ -78,15 +78,23 @@ class buyStop {
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
           .click({ force: true });
-        const msgCancel = cy.waitUntil(() =>
-          cy
-            .get(".notification-text__text")
-            .should("be.visible")
-            .should(
-              "contain",
-              "Exchange stop buy order of 0.0001 BTC has been canceled"
-            )
-        );
+        const testData = require("../../fixtures/orders.json");
+        testData.forEach((testDataRow) => {
+          const data = {
+            btc: testDataRow.btc,
+          };
+          context(`Generating a test for ${data.btc}`, () => {
+            const msgCancel = cy.waitUntil(() =>
+              cy
+                .get(".notification-text__text")
+                .should("be.visible")
+                .should(
+                  "contain",
+                  `Exchange stop buy order of ${data.btc} BTC has been canceled`
+                )
+            );
+          });
+        });
       });
     return this;
   }
