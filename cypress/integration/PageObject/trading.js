@@ -13,11 +13,15 @@ class trading {
     return this;
   }
   verifyCurrency() {
+    const selectTicker =
+    cy.get('[style="height: 540px; width: 100%;"] > [aria-rowindex="6"]')
+    .get('[aria-rowindex="6"] > [style="flex: 0 1 83px;"] > .virtable__cellwrapper > .tickerlist__symbolcell')
+    selectTicker.click({force:true})
     const mainticker = cy.waitUntil(() =>
       cy
         .get(".main-ticker__container")
         .should("be.visible")
-        .should("contain", "MLN/USD")
+        .should("contain", "BTC/USD")
     );
     const chart = cy.get(
       "#chart-header > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
@@ -26,7 +30,7 @@ class trading {
     const chartLabel = cy.get(
       "#chart-header > .collapsible > .ui-collapsible__header > :nth-child(1)"
     );
-    chartLabel.should("contain", "MLN/USD");
+    chartLabel.should("contain", "BTC/USD");
     return this;
   }
 }

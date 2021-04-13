@@ -19,17 +19,17 @@ class shortPosition {
     const testData = require("../../fixtures/positions.json");
     testData.forEach((testDataRow) => {
       const data = {
-        type: testDataRow.type,
+        type2: testDataRow.type2,
         amount: testDataRow.amount,
       };
-      context(`Generating a test for ${data.type}`, () => {
+      context(`Generating a test for ${data.type2}`, () => {
         const selectType = cy.waitUntil(() =>
           cy
             .get(".ui-modaldialog__body")
             .get(".themed-react-select__value-container")
             .should("be.visible")
             );
-        selectType.type(`${data.type}{enter}{enter}`)
+        selectType.type(`${data.type2}{enter}`,'{enter}')
         const short = cy.waitUntil(() =>
           cy
             .get(".ui-radioinput > :nth-child(2)")
@@ -37,12 +37,16 @@ class shortPosition {
             .should("be.visible")
             .click({ force: true })
         );
-        const positionAmount = cy.get(".increase-positon__input");
-        positionAmount.type(data.amount);
+        const positionAmount = cy.waitUntil(() =>
+        cy.get(".increase-positon__input")
+      .type(data.amount,'{enter}')
+        )
+        positionAmount.wait(1000)
       });
       const proceed = cy.waitUntil(() =>
         cy
           .get(".increase-position-modal > .ui-button")
+          .contains('Proceed')
           .should("be.visible")
           .click({ force: true })
       );
