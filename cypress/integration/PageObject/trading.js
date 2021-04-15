@@ -14,8 +14,8 @@ class trading {
   }
   verifyCurrency() {
     const selectTicker =
-    cy.get('[style="height: 540px; width: 100%;"] > [aria-rowindex="6"]')
-    .get('[aria-rowindex="6"] > [style="flex: 0 1 83px;"] > .virtable__cellwrapper > .tickerlist__symbolcell')
+    cy.get('[class="custom-scrollbar"]')
+    .get('[href="/t/BTC:USD"]').last()
     selectTicker.click({force:true})
     const mainticker = cy.waitUntil(() =>
       cy
