@@ -1,6 +1,18 @@
 {
 
-    "testFiles": "**/*.{feature,features}",
+    "testFiles": [
+      "tradingPage.feature",
+      "createLongPosition.feature",
+      "createShortPosition.feature",
+      "tradingBuyLimitExch.feature",
+      "sellTradingLimitExch.feature",
+      "tradingBuyStop.feature",
+      "tradingSellStop.feature",
+      "buyStopMarginTIF.feature",
+      "tradingBuyStopLimitExch.feature",
+      "tradingSellStopLimitExch.feature",
+      "buyTrailingStopExch.feature"
+    ],
     "viewportHeight":768,
 "viewportWidth":1366,
   "screenshotOnRunFailure": false,

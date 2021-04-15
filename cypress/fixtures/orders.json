@@ -4,6 +4,7 @@
     "type1": "Stop",
     "type2": "Limit",
     "type3": "Stop limit",
+    "type4": "Trailing stop",
     "price": "50000",
     "limitprice": "50.000",
     "limitprice2": "60000",
