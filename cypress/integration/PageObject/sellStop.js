@@ -5,7 +5,7 @@ class sellStop {
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
-    );
+    )
     return this;
   }
   orderInfo() {
@@ -18,15 +18,17 @@ class sellStop {
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
-        const orderType = cy
-          .get(
-            ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click({ force: true })
-          .get('[id="orderFormDropdown"]')
-          .get('[id="orderFormDropdownItem_stop"]')
+        const orderType = cy.waitUntil(() =>
+        cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+        .should('be.visible').scrollIntoView()
+          .click({ force: true }).wait(2000)
+        .get('ul.dropdown-content',{force:true})
+          .within(()=>{
+            cy.get('#orderFormDropdownItem_stop')
           .contains(data.type1)
-          .click({ force: true });
+          .click({ force: true })
+          })
+        )
         const priceUSD = cy.get('[name="price"]');
         priceUSD.type(data.price2);
         const amountBTC = cy.get('[name="amount"]');

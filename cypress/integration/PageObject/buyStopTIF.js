@@ -5,7 +5,11 @@ class buyStopTIF {
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
-    );
+    )
+    const waitForTable = cy.waitUntil(() =>
+    cy.get('#chart-header > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body')
+    .should("be.visible")
+    )
     return this;
   }
   orderInfo() {
@@ -23,15 +27,17 @@ class buyStopTIF {
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet2}`, () => {
-        const orderType = cy
-          .get(
-            ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click({ force: true })
-          .get('[id="orderFormDropdown"]')
-          .get('[id="orderFormDropdownItem_stop"]')
+        const orderType = cy.waitUntil(() =>
+        cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+        .should('be.visible').scrollIntoView()
+          .click({ force: true }).wait(2000)
+        .get('ul.dropdown-content',{force:true})
+          .within(()=>{
+            cy.get('#orderFormDropdownItem_stop')
           .contains(data.type1)
-          .click({ force: true });
+          .click({ force: true })
+          })
+        )
         const orderFrom = cy
           .get("#form-choose-margin > span")
           .contains(data.wallet2);

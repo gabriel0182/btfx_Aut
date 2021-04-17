@@ -5,7 +5,9 @@ class buyLimitExch {
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
-    );
+        .get('.balances-overview-wrap')
+        .should("be.visible")
+    )
     return this;
   }
   orderInfo() {
@@ -18,16 +20,21 @@ class buyLimitExch {
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
-        const orderType = cy
-          .get(
-            ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click({ force: true })
-          .get('[id="orderFormDropdown"]')
-          .get('[id="orderFormDropdownItem_limit"]')
+        const orderForm = cy.waitUntil(() =>
+        cy.get('#orderform-panel').should('be.visible').should('exist')
+        )
+        const orderType = cy.waitUntil(() =>
+        cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+        .should('be.visible').scrollIntoView()
+          .click({ force: true }).wait(2000)
+        .get('ul.dropdown-content',{force:true})
+          .within(()=>{
+            cy.get('#orderFormDropdownItem_limit')
           .contains(data.type2)
-          .click({ force: true });
-        const priceUSD = cy.get('[name="price"]');
+          .click({ force: true })
+          })
+        )
+         const priceUSD = cy.get('[name="price"]');
         priceUSD.type(data.limitprice);
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);

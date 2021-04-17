@@ -3,7 +3,7 @@ class shortPosition {
     const tradingTab = cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
     );
-    tradingTab.click({ force: true });
+    tradingTab.click({ force: true })
     const add = cy
       .get(
         '[style="display: flex; align-items: baseline;"] > .trigger > .ui-button'

@@ -47,7 +47,8 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         .get("#submit-login")
         .click({ force: true })
         .task("generateOTP", `${credentials.totp_secre}`).then((token) => {
-        cy.get("#otp").type(token)
+          cy.get('#twofa-modal').should('be.visible')
+        .get("#otp").type(token)
         })
         )
       });

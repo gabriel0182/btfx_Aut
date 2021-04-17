@@ -11,12 +11,13 @@
       "buyStopMarginTIF.feature",
       "tradingBuyStopLimitExch.feature",
       "tradingSellStopLimitExch.feature",
-      "buyTrailingStopExch.feature"
+      "buyTrailingStopExch.feature",
+      "sellTrailingStopExch.feature"
     ],
     "viewportHeight":768,
 "viewportWidth":1366,
   "screenshotOnRunFailure": false,
-  "defaultCommandTimeout":10000,
+  "defaultCommandTimeout":15000,
     "video": true,
   "numTestsKeptInMemory": 0,
   "responseTimeout": 20000,

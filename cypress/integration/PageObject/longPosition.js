@@ -3,7 +3,7 @@ class longPosition {
     const tradingTab = cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
     );
-    tradingTab.click({ force: true });
+    tradingTab.click({ force: true })
     const add = cy
       .get(
         '[style="display: flex; align-items: baseline;"] > .trigger > .ui-button'
@@ -37,8 +37,10 @@ class longPosition {
             .should("be.visible")
             .click({ force: true })
         );
-        const positionAmount = cy.get(".increase-positon__input");
-        positionAmount.type(data.amount);
+        const positionAmount = cy.waitUntil(() =>
+        cy.get(".increase-positon__input")
+        .type(data.amount).wait(1000)
+        )
       });
       const proceed = cy.waitUntil(() =>
         cy

@@ -1,11 +1,11 @@
-class buyStop {
+class trailingStopSellExch {
   trading() {
     const tradingTab = cy.waitUntil(() =>
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
-    )
+    );
     return this;
   }
   orderInfo() {
@@ -13,24 +13,27 @@ class buyStop {
     testData.forEach((testDataRow) => {
       const data = {
         wallet1: testDataRow.wallet1,
-        type1: testDataRow.type1,
+        type4: testDataRow.type4,
         price: testDataRow.price,
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+        cy.get('#orderform-panel').should('be.visible').should('exist')
+        )
         const orderType = cy.waitUntil(() =>
         cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
         .should('be.visible').scrollIntoView()
           .click({ force: true }).wait(2000)
         .get('ul.dropdown-content',{force:true})
           .within(()=>{
-            cy.get('#orderFormDropdownItem_stop')
-          .contains(data.type1)
+            cy.get('#orderFormDropdownItem_trailingstop')
+          .contains(data.type4)
           .click({ force: true })
           })
         )
-        const priceUSD = cy.get('[name="price"]');
-        priceUSD.type(data.price);
+        const distanceUSD = cy.get('[name="price"]');
+        distanceUSD.type(data.price);
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);
         const orderFrom = cy
@@ -41,9 +44,9 @@ class buyStop {
     });
     return this;
   }
-  buyButton() {
-    const exchangeBuy = cy.get("#buyButton").contains("Exchange Buy");
-    exchangeBuy.click({ force: true });
+  sellButton() {
+    const exchangeSell = cy.get('#sellButton').contains("Exchange Sell");
+    exchangeSell.click({ force: true });
     return this;
   }
   successMsg() {
@@ -60,7 +63,7 @@ class buyStop {
             .should("be.visible")
             .should(
               "contain",
-              `Created exchange stop buy order of ${data.btc} BTC  at  ${data.price} USD`
+              `Created exchange trailing stop sell order of ${data.btc} BTC`
             )
         );
       });
@@ -92,7 +95,7 @@ class buyStop {
                 .should("be.visible")
                 .should(
                   "contain",
-                  `Exchange stop buy order of ${data.btc} BTC has been canceled`
+                  `Exchange trailing stop sell order of ${data.btc} BTC has been canceled`
                 )
             );
           });
@@ -101,5 +104,4 @@ class buyStop {
     return this;
   }
 }
-
-export default buyStop;
+export default trailingStopSellExch;
