@@ -5,6 +5,7 @@
     "type2": "Limit",
     "type3": "Stop limit",
     "type4": "Trailing stop",
+    "type5": "Fill or kill",
     "price": "50000",
     "limitprice": "50.000",
     "limitprice2": "60000",
