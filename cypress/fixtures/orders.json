@@ -6,6 +6,7 @@
     "type3": "Stop limit",
     "type4": "Trailing stop",
     "type5": "Fill or kill",
+    "type6": "Immediate or Cancel",
     "price": "50000",
     "limitprice": "50.000",
     "limitprice2": "60000",
