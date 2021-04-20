@@ -25,7 +25,8 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("loginToBitfinexManually", () => {
-  cy.visitWithCloudFlareBypass("https://bfx-ui-trading.staging.bitfinex.com/t");
+  //cy.visitWithCloudFlareBypass("https://bfx-ui-trading.staging.bitfinex.com/t");
+  cy.visitWithCloudFlareBypass("https://www.staging.bitfinex.com/");
   let session = cy.getCookie("_bfx_session");
   cy.request("GET", "https://www.staging.bitfinex.com/_ws_token", {
     cookie: `${session.name}=${session.value}`,
@@ -43,12 +44,11 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         .click({force:true})
         .get("#login").type(credentials.login, { force: true })
         .get("#auth-password").type(credentials.password, { log: false })
-        .get("button").contains("Login").click({force:true})
+        .get("button").click({force:true})
         .get("#submit-login")
         .click({ force: true })
         .task("generateOTP", `${credentials.totp_secre}`).then((token) => {
-          cy.get('#twofa-modal').should('be.visible')
-        .get("#otp").type(token)
+        cy.get("#otp").type(token)
         })
         )
       });

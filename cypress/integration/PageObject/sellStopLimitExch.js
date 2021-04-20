@@ -26,7 +26,7 @@ class sellStopLimitExch{
         const orderType = cy.waitUntil(() =>
         cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
         .should('be.visible').scrollIntoView()
-          .click({ force: true }).wait(2000)
+          .click({ force: true })
         .get('ul.dropdown-content',{force:true})
           .within(()=>{
             cy.get('#orderFormDropdownItem_stoplimit')

@@ -5,6 +5,8 @@ class trailingStopSellExch {
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
+       .get('.grid-layout__component-wrapper-orderHistory > .grid-layout__component > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body')
+        .should("be.visible")
     );
     return this;
   }
@@ -24,7 +26,7 @@ class trailingStopSellExch {
         const orderType = cy.waitUntil(() =>
         cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
         .should('be.visible').scrollIntoView()
-          .click({ force: true }).wait(2000)
+          .click({ force: true })
         .get('ul.dropdown-content',{force:true})
           .within(()=>{
             cy.get('#orderFormDropdownItem_trailingstop')

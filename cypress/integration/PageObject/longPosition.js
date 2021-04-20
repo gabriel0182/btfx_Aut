@@ -39,7 +39,7 @@ class longPosition {
         );
         const positionAmount = cy.waitUntil(() =>
         cy.get(".increase-positon__input")
-        .type(data.amount).wait(1000)
+        .type(data.amount)
         )
       });
       const proceed = cy.waitUntil(() =>
