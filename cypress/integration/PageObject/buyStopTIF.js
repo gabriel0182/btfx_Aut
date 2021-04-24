@@ -5,11 +5,40 @@ class buyStopTIF {
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
+        .get("#book-bids > .book__rows")
+        .should("be.visible")
+    );
+    return this;
+  }
+  verifyFields() {
+    const orderType = cy.waitUntil(() =>
+    cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+          .click({ force: true })
+          .get("ul.dropdown-content", { force: true })
     )
-    const waitForTable = cy.waitUntil(() =>
-    cy.get('#chart-header > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body')
-    .should("be.visible")
-    )
+    const selectOrder  = cy.waitUntil(() =>
+    cy.get("ul.dropdown-content", { force: true })
+        .within(() => {
+          cy
+          .get("#orderFormDropdownItem_stop")
+          .get('[data-qa-id="order-form__order-type-dropdown-menu-item-stop"]')
+          //.contains('Stop')
+          .click({ force: true });
+        })
+    );
+    const wallet = cy
+      .get("#form-choose-exchange")
+      .get("#form-choose-exchange > span")
+      .click({ force: true });
+    const TIF = cy.get('.orderform__field > .ui-labeledcheckbox__container > label')
+    TIF.should("be.visible");
+    const marginWallet = cy.get("#form-choose-margin");
+    cy.get("#form-choose-margin > span");
+    marginWallet.click({ force: true });
+    const TIFMargin = cy.get('.orderform__field > .ui-labeledcheckbox__container > label')
+    TIFMargin.should("be.visible");
+    const reduceOnlyMargin = cy.get('.orderform__options > :nth-child(2) > .ui-labeledcheckbox__container > label')
+    reduceOnlyMargin.should("be.visible");
     return this;
   }
   orderInfo() {
@@ -21,34 +50,31 @@ class buyStopTIF {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
       const data = {
-        wallet2: testDataRow.wallet2,
-        type1: testDataRow.type1,
-        price: testDataRow.price,
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet2}`, () => {
-        const orderType = cy.waitUntil(() =>
-        cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-        .should('be.visible').scrollIntoView()
-          .click({ force: true })
-        .get('ul.dropdown-content',{force:true})
-          .within(()=>{
-            cy.get('#orderFormDropdownItem_stop')
-          .contains(data.type1)
-          .click({ force: true })
-          })
-        )
-        const orderFrom = cy
-          .get("#form-choose-margin > span")
-          .contains(data.wallet2);
-        orderFrom.click({ force: true });
+        const orderForm = cy.waitUntil(() =>
+        cy.get("#orderform-panel").should("be.visible").should("exist")
+      );
+      const selectTicker = cy
+        .get('[class="custom-scrollbar"]')
+        .get('[href="/t/BTC:USD"]')
+        .last();
+      selectTicker.click({ force: true })
+      //Read the current BTC/USD price
+      cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+        const txt = $btn.text();
+        var pointNum = parseInt(txt);
+        var amout = pointNum * 950;
+        var value = amout + 100;
+        const priceUSD = cy.get('[name="price"]').type(value);
+        localStorage.setItem("price", value);
+      });
         const addTIF = cy
           .get(".orderform__options")
           .get(".orderform__field > .ui-labeledcheckbox__container > label")
           .get('[data-qa-id="tif-checkbox-label"]')
           .click({ force: true });
-        const priceUSD = cy.get('[name="price"]');
-        priceUSD.type(data.price);
         const TIFDate = cy.waitUntil(() =>
           cy
             .get(".react-datepicker__input-container > input")
@@ -64,7 +90,7 @@ class buyStopTIF {
   }
   buyButton() {
     const exchangeBuy = cy.waitUntil(() =>
-      cy.get("#buyButton").contains("Margin Buy").click({ force: true })
+      cy.get("#buyButton").click({ force: true })
     );
     return this;
   }
@@ -72,7 +98,6 @@ class buyStopTIF {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
       const data = {
-        price: testDataRow.price,
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.price}`, () => {
@@ -80,9 +105,13 @@ class buyStopTIF {
           cy
             .get(".notification-text__text")
             .should("be.visible")
+        )
+        const verifyMsg = cy.waitUntil(() =>
+            cy
+              .get(".notification-text__text")
             .should(
               "contain",
-              `Created margin stop buy order of ${data.btc} BTC  at  ${data.price} USD`
+              `Created margin stop buy order of ${data.btc} BTC`
             )
         );
       });
@@ -129,6 +158,10 @@ class buyStopTIF {
               cy
                 .get(".notification-text__text")
                 .should("be.visible")
+            )
+            const verifyMsg = cy.waitUntil(() =>
+            cy
+              .get(".notification-text__text")
                 .should(
                   "contain",
                   `Margin stop buy order of ${data.btc} BTC has been canceled`

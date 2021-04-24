@@ -1,9 +1,11 @@
 ///  <reference types="cypress"/>
 
 import login from "../PageObject/login.js";
+import sellFillKill from "../PageObject/sellFillKill.js";
 import buyFillKill from "../PageObject/buyFillKill.js";
 
 const staging = new login();
+const sellFK = new sellFillKill();
 const buyFK = new buyFillKill();
 
 Given("I go to Trading page", () => {
@@ -12,18 +14,18 @@ Given("I go to Trading page", () => {
 });
 
 When("I go to Trading page", () => {
-    buyFK.trading();
+    sellFK.trading();
 });
 
 When("I type the order required info", () => {
     buyFK.verifyFields();
-    buyFK.orderInfo();
+    sellFK.orderInfo();
 });
 
-When("I select to Exchange Buy", () => {
-    buyFK.buyButton();
+When("I select to Exchange Sell", () => {
+    sellFK.sellButton();
 });
 
-Then("I verify the Fill or Kill buy order from Exchange wallet was created", () => {
-    buyFK.successMsg();
+Then("I verify the Fill or Kill sell order from Exchange wallet was created", () => {
+    sellFK.successMsg();
 });

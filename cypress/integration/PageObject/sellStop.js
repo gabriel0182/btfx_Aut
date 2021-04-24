@@ -5,7 +5,9 @@ class sellStop {
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
         .click({ force: true })
-    )
+        .get("#book-bids > .book__rows")
+        .should("be.visible")
+    );
     return this;
   }
   orderInfo() {
@@ -13,53 +15,62 @@ class sellStop {
     testData.forEach((testDataRow) => {
       const data = {
         wallet1: testDataRow.wallet1,
-        type1: testDataRow.type1,
-        price2: testDataRow.price2,
-        btc: testDataRow.btc,
+        btc: testDataRow.btc
       };
       context(`Generating a test for ${data.wallet1}`, () => {
-        const orderType = cy.waitUntil(() =>
-        cy.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-        .should('be.visible').scrollIntoView()
-          .click({ force: true })
-        .get('ul.dropdown-content',{force:true})
-          .within(()=>{
-            cy.get('#orderFormDropdownItem_stop')
-          .contains(data.type1)
-          .click({ force: true })
-          })
-        )
-        const priceUSD = cy.get('[name="price"]');
-        priceUSD.type(data.price2);
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        const selectTicker = cy
+          .get('[class="custom-scrollbar"]')
+          .get('[href="/t/BTC:USD"]')
+          .last();
+        selectTicker.click({ force: true })
+        //Read the current BTC/USD price
+        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+          const txt = $btn.text();
+          var pointNum = parseInt(txt);
+          var amout = pointNum * 950;
+          var value = amout + 100;
+          const priceUSD = cy.get('[name="price"]').type(value);
+          localStorage.setItem("price", value);
+        });
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);
         orderFrom.click({ force: true });
+        orderForm.wait(5000)
       });
     });
     return this;
   }
-  buyButton() {
-    const exchangeBuy = cy.get("#sellButton").contains("Exchange Sell");
-    exchangeBuy.click({ force: true });
+  sellButton() {
+    const exchangeSell = cy.get("#sellButton")
+    exchangeSell.click({ force: true });
     return this;
   }
   successMsg() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
       const data = {
-        price2: testDataRow.price2,
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.price2}`, () => {
         const msg = cy.waitUntil(() =>
           cy
             .get(".notification-text__text")
+            .should('be.visible')
+        )
+        var limitprice = localStorage.getItem("price");
+        var makeNum = parseInt(limitprice);
+            const verifyMsg = cy.waitUntil(() =>
+            cy
+              .get(".notification-text__text")
             .should(
               "contain",
-              `Created exchange stop sell order of ${data.btc} BTC  at  ${data.price2} USD`
+              `Created exchange stop sell order of ${data.btc} BTC`
             )
         );
       });

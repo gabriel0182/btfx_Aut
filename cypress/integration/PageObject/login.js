@@ -1,13 +1,13 @@
 
 class login {
   landing() {
-    cy.clearCookies("_bfx_session");
+    cy.clearCookies("_bfx_session","tradingview.chartproperties.mainSeriesProperties");
     cy.clearLocalStorage();
     return this;
   }
 longIn(){
   cy.visitBitfinexAndLogin();
-    return this;
+  return this;
 }
 verifyLoggedOn() {
    const accountName = cy.waitUntil (() =>

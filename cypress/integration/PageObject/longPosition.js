@@ -39,13 +39,12 @@ class longPosition {
         );
         const positionAmount = cy.waitUntil(() =>
         cy.get(".increase-positon__input")
-        .type(data.amount)
+        .type(data.amount).wait(1000)
         )
-      });
+      })
       const proceed = cy.waitUntil(() =>
         cy
           .get(".increase-position-modal > .ui-button")
-          .contains('Proceed')
           .should("be.visible")
           .click({ force: true })
       );

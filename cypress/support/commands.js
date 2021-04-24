@@ -24,22 +24,21 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("loginToBitfinexManually", () => {
-  //cy.visitWithCloudFlareBypass("https://bfx-ui-trading.staging.bitfinex.com/t");
-  cy.visitWithCloudFlareBypass("https://www.staging.bitfinex.com/");
+Cypress.Commands.add("loginToBitfinexManually", () => { 
+  cy.visitWithCloudFlareBypass("https://bfx-ui-trading.staging.bitfinex.com/t")
+  .get('#book-bids > .book__rows')
+        .should("be.visible")
   let session = cy.getCookie("_bfx_session");
   cy.request("GET", "https://www.staging.bitfinex.com/_ws_token", {
     cookie: `${session.name}=${session.value}`,
   }).then((response) => {
     let token = response.body.token;
     if (token.length > 0) {
-      return;
+      return this;
     } else {
       cy.visitWithCloudFlareBypass(
-        "https://bfx-ui-trading.staging.bitfinex.com"
-      );
+        "https://bfx-ui-trading.staging.bitfinex.com/t")
       cy.fixture("sensitive/credentials.json").then((credentials) => {
-        cy.waitUntil(() =>
         cy.get(".header__login-button").should('be.visible')
         .click({force:true})
         .get("#login").type(credentials.login, { force: true })
@@ -50,7 +49,6 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         .task("generateOTP", `${credentials.totp_secre}`).then((token) => {
         cy.get("#otp").type(token)
         })
-        )
       });
     }
   })
@@ -62,8 +60,40 @@ Cypress.Commands.add("visitBitfinexHomepage", () => {
 });
 
 Cypress.Commands.add("visitBitfinexAndLogin", () => {
-  cy.loginToBitfinexManually();
-});
+  cy.loginToBitfinexManually()
+  cy.waitForPageToLoad()
+})
+
+function lookForSpinners() {
+  return new Cypress.Promise((resolve, reject) => {
+    // Poll for the presence of spinners
+    setInterval(() => {
+      let spinners = Cypress.$("i.fa-spin")
+      if (spinners.length == 0) {
+        resolve(0)
+      }
+    }, 1000)
+
+    setTimeout(() => {
+      resolve(-1)
+    }, 10000)
+  })
+}
+
+Cypress.Commands.add("waitForPageToLoad", () => {
+  // Give the page upto 60 seconds to resolve loading before continuing (wait for all loading spinners to disappear)
+  // cy.get("i.fa-spin", { timeout: 60000 }).should("be.at.least", 1)
+  cy.get("#interface").should("be.visible")
+
+  /*cy.wrap(null).then(() => {
+    return lookForSpinners().then(s => {
+      if (s == -1) {
+        cy.visitBitfinexAndLogin()
+      }
+    })
+  })*/
+})
+
 
 Cypress.Commands.add("visitWithCloudFlareBypass", (route) => {
   cy.fixture("sensitive/credentials.json").then((credentials) => {

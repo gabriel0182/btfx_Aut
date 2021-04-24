@@ -16,6 +16,7 @@ When("I go to Trading page", () => {
 });
 
 When("I type the order required info", () => {
+    stopLmt.verifyFields();
     stopLmt.orderInfo();
 });
 

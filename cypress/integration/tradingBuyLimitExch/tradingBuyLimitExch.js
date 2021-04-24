@@ -16,7 +16,9 @@ When("I go to Trading page", () => {
 });
 
 When("I type the order required info", () => {
+    limitExch.verifyFields();
     limitExch.orderInfo();
+    
 });
 
 When("I select to Exchange Buy", () => {

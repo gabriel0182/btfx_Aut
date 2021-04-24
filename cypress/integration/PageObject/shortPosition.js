@@ -46,7 +46,6 @@ class shortPosition {
       const proceed = cy.waitUntil(() =>
         cy
           .get(".increase-position-modal > .ui-button")
-          .contains('Proceed')
           .should("be.visible")
           .click({ force: true })
       );
