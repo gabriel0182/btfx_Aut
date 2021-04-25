@@ -36,7 +36,7 @@ class trailingStopSellExch {
           var value = amout + 100;
           localStorage.setItem("price", value);
           const distanceUSD = cy.get('[name="price"]');
-          distanceUSD.type(value);
+          distanceUSD.type(txt);
           const amountBTC = cy.get('[name="amount"]');
           amountBTC.type(data.btc);
           const orderFrom = cy

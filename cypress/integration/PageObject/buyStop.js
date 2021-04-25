@@ -64,12 +64,12 @@ class buyStop {
           .last();
         selectTicker.click({ force: true });
         //Read the current BTC/USD price
-        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)').then(($btn) => {
           const txt = $btn.text();
           var pointNum = parseInt(txt);
           var amout = pointNum * 950;
           var value = amout + 100;
-          const priceUSD = cy.get('[name="price"]').type(value);
+          const priceUSD = cy.get('[name="price"]').type(txt);
           localStorage.setItem("price", value);
         });
         const amountBTC = cy.get('[name="amount"]');

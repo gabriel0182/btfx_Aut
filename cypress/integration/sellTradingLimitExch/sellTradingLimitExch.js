@@ -28,5 +28,5 @@ When("I select to Exchange sell", () => {
 
 Then("I verify the limit sell order was created", () => {
     limitSell.successMsg();
-    limitSell.cancelSellOrder();
+    //limitSell.cancelSellOrder();
 });

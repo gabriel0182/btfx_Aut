@@ -54,15 +54,14 @@ class buyFillKill{
         .get('[href="/t/BTC:USD"]')
         .last();
       selectTicker.click({ force: true });
-      //Read the current BTC/USD price
-      cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+      cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then(($btn) => {
         const txt = $btn.text();
         var pointNum = parseInt(txt);
         var amout = pointNum * 1020;
         var value = amout + 100;
-        localStorage.setItem("price", value);
+        localStorage.setItem("price", txt);
         const distanceUSD = cy.get('[name="price"]');
-        distanceUSD.type(value);
+        distanceUSD.type(txt);
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);
         const orderFrom = cy
@@ -77,11 +76,11 @@ class buyFillKill{
       buyButton() {
         const exchangeBuy = cy.get("#buyButton")
         exchangeBuy.click({ force: true });
-        const abovealert = cy.get('.ui-modaldialog__container')
+        /*const abovealert = cy.get('.ui-modaldialog__container')
         .get('.ui-modaldialog__footer')
         .get('.ui-modaldialog__footer > .ui-button--green')
         abovealert.click({ force: true });
-        return this;
+        return this;*/
       }
       successMsg() {
         const testData = require("../../fixtures/orders.json");
