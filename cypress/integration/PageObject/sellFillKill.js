@@ -29,16 +29,13 @@ class sellFillKill {
           .last();
         selectTicker.click({ force: true });
         //Read the current BTC/USD price
-        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
-          const txt = $btn.text();
-          var pointNum = parseInt(txt);
-          var amout = pointNum * 1022.25;
-          var value = amout + 100;
-          localStorage.setItem("price", value);
+        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)').then(($btn) => {
+          let txt = $btn.text()
+          localStorage.setItem("price", txt);
           const distanceUSD = cy.get('[name="price"]');
-          distanceUSD.type(amout);
+          distanceUSD.type(`${txt}`)
           const amountBTC = cy.get('[name="amount"]');
-          amountBTC.type(data.btc);
+          amountBTC.type(data.btc)
           const orderFrom = cy
             .get("#form-choose-exchange")
             .contains(data.wallet1);

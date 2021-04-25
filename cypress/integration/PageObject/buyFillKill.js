@@ -58,7 +58,7 @@ class buyFillKill{
       cy.get(":nth-child(2) > h5 > span").then(($btn) => {
         const txt = $btn.text();
         var pointNum = parseInt(txt);
-        var amout = pointNum * 1120;
+        var amout = pointNum * 1020;
         var value = amout + 100;
         localStorage.setItem("price", value);
         const distanceUSD = cy.get('[name="price"]');
