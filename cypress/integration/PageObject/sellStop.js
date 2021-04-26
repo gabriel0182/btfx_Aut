@@ -27,7 +27,8 @@ class sellStop {
           .last();
         selectTicker.click({ force: true })
         //Read the current BTC/USD price
-        cy.get(':nth-child(2) > h5 > span').then(($btn) => {
+        cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
+        .then(($btn) => {
           const txt = $btn.text();
           var pointNum = parseInt(txt);
           var amout = pointNum * 950;

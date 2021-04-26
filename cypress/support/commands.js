@@ -26,6 +26,10 @@
 
 Cypress.Commands.add("loginToBitfinexManually", () => { 
   cy.visitWithCloudFlareBypass("https://bfx-ui-trading.staging.bitfinex.com/t")
+      cy.on('uncaught:exception', (err, runnable) => {
+        expect(err.message).to.include('t._innerWindow(...).widgetReady')
+        return false
+      })
   .get('#book-bids > .book__rows')
         .should("be.visible")
   let session = cy.getCookie("_bfx_session");
@@ -38,6 +42,10 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
     } else {
       cy.visitWithCloudFlareBypass(
         "https://bfx-ui-trading.staging.bitfinex.com/t")
+                      cy.on('uncaught:exception', (err, runnable) => {
+              expect(err.message).to.include('t._innerWindow(...).widgetReady')
+              return false
+            })
       cy.fixture("sensitive/credentials.json").then((credentials) => {
         cy.get(".header__login-button").should('be.visible')
         .click({force:true})

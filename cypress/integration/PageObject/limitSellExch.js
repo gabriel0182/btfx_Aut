@@ -69,7 +69,7 @@ class limitSellExch {
           .get(".notification-text__text")
             .should(
               "contain",
-              `Exchange limit sell order of ${data.btc} BTC has been fully executed`
+              `Created exchange limit sell order of ${data.btc} BTC`
             )
         );
       });

@@ -48,10 +48,10 @@ class sellFillKill {
   sellButton() {
     const exchangeSell = cy.get("#sellButton");
     exchangeSell.click({ force: true })
-    const abovealert = cy.get('.ui-modaldialog__container')
+    /* abovealert = cy.get('.ui-modaldialog__container')
         .get('.ui-modaldialog__footer')
         .get('.ui-modaldialog__footer > .ui-button--green')
-        abovealert.click({ force: true });
+        abovealert.click({ force: true });*/
     return this;
   }
   successMsg() {

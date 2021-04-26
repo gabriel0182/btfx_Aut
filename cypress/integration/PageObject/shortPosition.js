@@ -19,17 +19,17 @@ class shortPosition {
     const testData = require("../../fixtures/positions.json");
     testData.forEach((testDataRow) => {
       const data = {
-        type2: testDataRow.type2,
+        type: testDataRow.type,
         amount: testDataRow.amount,
       };
-      context(`Generating a test for ${data.type2}`, () => {
+      context(`Generating a test for ${data.type}`, () => {
         const selectType = cy.waitUntil(() =>
           cy
             .get(".ui-modaldialog__body")
             .get(".themed-react-select__value-container")
             .should("be.visible")
             );
-        selectType.type(`${data.type2}{enter}`,'{enter}')
+        selectType.type(`${data.type}{enter}`,'{enter}')
         const short = cy.waitUntil(() =>
           cy
             .get(".ui-radioinput > :nth-child(2)")
