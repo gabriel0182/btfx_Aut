@@ -1,4 +1,4 @@
-Feature: Test Creating a new position
+Feature: Test Creating a new short position
 
   @focus
 

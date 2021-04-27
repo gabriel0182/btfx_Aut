@@ -1,4 +1,4 @@
-Feature: Test Creating a stop buy order
+Feature: Test Creating a stop buy order from Exchange wallet
 
   @focus
 

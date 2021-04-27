@@ -29,7 +29,7 @@ class sellFillKill {
           .last();
         selectTicker.click({ force: true });
         //Read the current BTC/USD price
-        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)').then(($btn) => {
+        cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').first().then(($btn) => {
           let txt = $btn.text()
           localStorage.setItem("price", txt);
           const distanceUSD = cy.get('[name="price"]');
