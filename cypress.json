@@ -7,6 +7,7 @@
       "tradingBuyLimitExch.feature",
       "sellTradingLimitExch.feature",
       "buyMarketMargin.feature",
+      "sellMarketMargin.feature",
       "tradingBuyStop.feature",
       "tradingSellStop.feature",
       "buyStopMarginTIF.feature",
@@ -17,7 +18,8 @@
       "buyFillKillExch.feature",
       "sellFillKillExch.feature",
       "buyImmediateOrCancelExch.feature",
-      "sellImmediateOrCancelExch.feature"
+      "sellImmediateOrCancelExch.feature",
+      "buyLimitBookExch.feature"
     ],
     "viewportWidth": 1280,
   "viewportHeight": 720,
