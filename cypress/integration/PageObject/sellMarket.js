@@ -89,7 +89,7 @@ class sellMarket{
                     .should("be.visible")
                     .should(
                       "contain",
-                      `Margin market sell order of ${data.btc} BTC has been fully executed`
+                      `Margin market buy order of ${data.btc} BTC has been fully executed`
                     )
                 );
               });

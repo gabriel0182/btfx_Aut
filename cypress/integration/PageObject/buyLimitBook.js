@@ -1,4 +1,4 @@
-class limitBook {
+class buyLimitBook {
   trading() {
     const tradingTab = cy.waitUntil(() =>
       cy
@@ -141,4 +141,4 @@ class limitBook {
     return this;
   }
 }
-export default limitBook;
+export default buyLimitBook;

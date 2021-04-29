@@ -19,13 +19,14 @@
       "sellFillKillExch.feature",
       "buyImmediateOrCancelExch.feature",
       "sellImmediateOrCancelExch.feature",
-      "buyLimitBookExch.feature"
+      "buyLimitBookExch.feature",
+      "sellLimitBookExc.feature"
     ],
     "viewportWidth": 1280,
   "viewportHeight": 720,
   "screenshotOnRunFailure": false,
   "videoOnRunFailure": false,
-  "video": false,
+  "video": true,
   "defaultCommandTimeout":30000,
   "numTestsKeptInMemory": 0,
   "responseTimeout": 5000,

@@ -54,7 +54,8 @@ class buyImmediateCancel {
         .last();
       selectTicker.click({ force: true });
       //Read the current BTC/USD price
-      cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then(($btn) => {
+      cy.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
+      .then(($btn) => {
         const txt = $btn.text();
         var pointNum = parseInt(txt);
         var amout = pointNum * 1120;
