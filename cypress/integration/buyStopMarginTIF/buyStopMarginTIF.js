@@ -9,10 +9,7 @@ const stopTIF = new buyStopTIF();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    stopTIF.trading();
+  stopTIF.trading();
 });
 
 When("I type the order required info", () => {

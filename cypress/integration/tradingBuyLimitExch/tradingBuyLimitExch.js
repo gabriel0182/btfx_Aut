@@ -9,10 +9,7 @@ const limitExch = new buyLimitExch();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    limitExch.trading();
+  limitExch.trading();
 });
 
 When("I type the order required info", () => {

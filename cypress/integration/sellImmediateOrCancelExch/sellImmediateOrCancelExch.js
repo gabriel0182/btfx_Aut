@@ -11,10 +11,7 @@ const sellIC = new sellImmediateCancel();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    sellIC.trading();
+  sellIC.trading();
 });
 
 When("I type the order required info", () => {

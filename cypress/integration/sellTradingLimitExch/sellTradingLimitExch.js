@@ -11,14 +11,11 @@ const limitBuy = new buyLimitExch()
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    limitBuy.verifyFields();
-    limitSell.trading();
+  limitSell.trading();
 });
 
 When("I type the order required info", () => {
+    limitBuy.verifyFields();
     limitSell.orderInfo();
 });
 

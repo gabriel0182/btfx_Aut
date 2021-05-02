@@ -9,10 +9,7 @@ const buyIC = new buyImmediateCancel();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    buyIC.trading();
+  buyIC.trading();
 });
 
 When("I type the order required info", () => {

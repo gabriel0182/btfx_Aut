@@ -9,10 +9,7 @@ const stopLmt = new stopLimitExch();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    stopLmt.trading();
+  stopLmt.trading();
 });
 
 When("I type the order required info", () => {

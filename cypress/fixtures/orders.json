@@ -11,6 +11,9 @@
     "limitprice": "50.000",
     "limitprice2": "60000",
     "price2": "35000",
-    "btc": "0.0001"
+    "btc": "0.0001",
+    "orderCount": 2,
+    "amountVariance": 1,
+    "priceVariance": 1
 
 }]

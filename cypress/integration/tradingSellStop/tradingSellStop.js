@@ -11,9 +11,6 @@ const stopBuy = new buyStop();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
   stopSell.trading();
 });
 

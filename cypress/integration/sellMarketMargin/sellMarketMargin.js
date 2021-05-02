@@ -11,10 +11,7 @@ const sellMk = new sellMarket();
 Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
-});
-
-When("I go to Trading page", () => {
-    sellMk.trading();
+  sellMk.trading();
 });
 
 When("I type the order required info", () => {
