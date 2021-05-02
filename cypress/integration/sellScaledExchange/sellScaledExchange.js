@@ -1,10 +1,12 @@
 ///  <reference types="cypress"/>
 
 import login from "../PageObject/login.js";
+import sellScaled from "../PageObject/sellScaled.js";
 import buyScaled from "../PageObject/buyScaled.js";
 
 const staging = new login();
 const buyScld = new buyScaled();
+const sellScld = new sellScaled();
 
 Given("I go to Trading page", () => {
   staging.landing();
@@ -14,14 +16,14 @@ Given("I go to Trading page", () => {
 When("I type the order required info", () => {
   buyScld.trading();
   buyScld.verifyFields();
-  buyScld.orderInfo();
+  sellScld.orderInfo();
 });
 
 When("I select to Exchange Submit", () => {
-  buyScld.submitButton();
+  sellScld.submitButton();
 });
 
-Then("I verify the Scaled buy order from Exchange wallet was created", () => {
-  buyScld.successMsg();
-  buyScld.cancelOrder();
+Then("I verify the Scaled sell order from Exchange wallet was created", () => {
+  sellScld.successMsg();
+  sellScld.cancelOrder();
 });

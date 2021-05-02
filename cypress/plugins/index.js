@@ -19,15 +19,10 @@ module.exports = (on, config) => {
   on("task", {
     generateOTP: require("cypress-otp")
   })
-    on('before:browser:launch', (browser, launchOptions) => {
-      if (browser.family === 'chromium' && browser.name !== 'electron') {
-        launchOptions.preferences.default = { Accept_Language: "en-gb" }
-        return launchOptions
-      }
-      if (browser.name === 'crhome') {
-        launchOptions.preferences.Accept_Language = true
-  
-        return launchOptions
-      }
-    })
-  }
+  on('before:browser:launch', (browser = {}, launchOptions) => {
+    if (browser.name === 'chrome') {
+      launchOptions.args.push('--lang=de');
+      return launchOptions;
+    }
+  })
+}

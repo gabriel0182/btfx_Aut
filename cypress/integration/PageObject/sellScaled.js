@@ -1,62 +1,4 @@
-class buyScaled {
-  trading() {
-    const tradingTab = cy.waitUntil(() =>
-      cy
-        .get(".header__nav-buttons-wrapper > .header__nav-trading")
-        .should("be.visible")
-        .click({ force: true })
-        .get("#book-bids > .book__rows")
-        .should("be.visible")
-    );
-    return this;
-  }
-  verifyFields() {
-    const orderType = cy.waitUntil(() =>
-      cy
-        .get(
-          ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-        )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
-    );
-    const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
-        cy.get("#orderFormDropdownItem_scaled")
-          .get(
-            '[data-qa-id="order-form__order-type-dropdown-menu-item-scaled"]'
-          )
-          .click({ force: true });
-      })
-    );
-    const wallet = cy
-      .get("#form-choose-exchange")
-      .get("#form-choose-exchange > span")
-      .click({ force: true });
-    const hidden = cy.get(
-      ".orderform__options > :nth-child(1) > .ui-labeledcheckbox__container > label"
-    );
-    hidden.should("be.visible");
-    const postOnly = cy.get(
-      ".orderform__options > :nth-child(2) > .ui-labeledcheckbox__container > label"
-    );
-    postOnly.should("be.visible");
-    const marginWallet = cy.get("#form-choose-margin");
-    cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
-    const hiddenMargin = cy.get(
-      ".orderform__options > :nth-child(1) > .ui-labeledcheckbox__container > label"
-    );
-    hiddenMargin.should("be.visible");
-    const reduceOnlyMargin = cy.get(
-      ":nth-child(3) > .ui-labeledcheckbox__container > label"
-    );
-    reduceOnlyMargin.should("be.visible");
-    const postOnlyMargin = cy.get(
-      ".orderform__options > :nth-child(2) > .ui-labeledcheckbox__container > label"
-    );
-    postOnlyMargin.should("be.visible");
-    return this;
-  }
+class sellScaled {
   orderInfo() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
@@ -118,7 +60,9 @@ class buyScaled {
     return this;
   }
   submitButton() {
-    const action = cy.get('#radio-buy > .circle')
+    const distribution = cy.get('#radio-upwards > .circle')
+    distribution.click({force:true})
+    const action = cy.get('#radio-sell > .circle')
     action.click({force:true})
     const submit = cy.get('#submitButton')
     submit.click({ force: true });
@@ -133,7 +77,7 @@ class buyScaled {
             .get(".notification-text__text")
             .should(
               "contain",
-              `Created exchange limit buy order of`
+              `Created exchange limit sell order of`
             ).wait(5000)
         );
     return this;
@@ -166,4 +110,4 @@ class buyScaled {
     return this;
   }
 }
-export default buyScaled;
+export default sellScaled;

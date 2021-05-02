@@ -21,7 +21,8 @@
       "sellImmediateOrCancelExch.feature",
       "buyLimitBookExch.feature",
       "sellLimitBookExc.feature",
-      "buyScaledExchange.feature"
+      "buyScaledExchange.feature",
+      "sellScaledExchange.feature"
     ],
     "viewportWidth": 1280,
   "viewportHeight": 720,
