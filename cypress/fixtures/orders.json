@@ -1,0 +1,19 @@
+[{
+    "wallet1": "Exchange",
+    "wallet2": "Margin",
+    "type1": "Stop",
+    "type2": "Limit",
+    "type3": "Stop limit",
+    "type4": "Trailing stop",
+    "type5": "Fill or kill",
+    "type6": "Immediate or Cancel",
+    "price": "50000",
+    "limitprice": "50.000",
+    "limitprice2": "60000",
+    "price2": "35000",
+    "btc": "0.0001",
+    "orderCount": 2,
+    "amountVariance": 1,
+    "priceVariance": 1
+
+}]
