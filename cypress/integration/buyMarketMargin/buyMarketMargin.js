@@ -14,6 +14,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
   buyMk.verifyFields();
+  buyMk.requiredFields();
   buyMk.orderInfo();
 });
 

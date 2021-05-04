@@ -2,9 +2,11 @@
 
 import login from "../PageObject/login.js";
 import buyStop from "../PageObject/buyStop.js";
+import buyLimitExch from "../PageObject/buyLimitExch.js";
 
 const staging = new login();
 const stop = new buyStop();
+const buyLimit = new buyLimitExch();
 
 Given("I go to Trading page", () => {
   staging.landing();
@@ -14,6 +16,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
   stop.verifyFields();
+  stop.requiredFields();
   stop.orderInfo();
 });
 
@@ -23,5 +26,6 @@ When("I select to Exchange Buy", () => {
 
 Then("I verify the stop order was created", () => {
   stop.successMsg();
+  buyLimit.orderFilter();
   stop.cancelOrder();
 });

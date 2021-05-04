@@ -30,11 +30,14 @@ class limitSellExch {
       const data = {
         wallet1: testDataRow.wallet1,
         btc: testDataRow.btc,
+        ticker: testDataRow.ticker
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
+        const searchTicker = cy.get('#ticker-search-input')
+        searchTicker.type(`${data.ticker}{enter}`)
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
@@ -57,7 +60,7 @@ class limitSellExch {
           .get("#form-choose-exchange")
           .contains(data.wallet1);
         orderFrom.click({ force: true });
-        orderForm.wait(5000);
+        orderForm.wait(2000);
       });
     });
     return this;

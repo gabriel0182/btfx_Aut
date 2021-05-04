@@ -16,6 +16,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
     buyMk.verifyFields();
+    sellMk.requiredFields();
     sellMk.orderInfo();
 });
 
@@ -25,5 +26,6 @@ When("I select to Margin Sell", () => {
 
 Then("I verify the Market sell order from Margin wallet was created", () => {
     sellMk.successMsg();
+    sellMk.orderFilter();
     sellMk.cancelPosition();
 });

@@ -47,24 +47,48 @@ class buyStop {
     reduceOnlyMargin.should("be.visible");
     return this;
   }
+  requiredFields() {
+    const buy = cy.get("#buyButton");
+    buy.click({ force: true });
+    const price = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(1)");
+    price.should("contain", "Stop price USD must be a number");
+    const btc = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(2)");
+    btc.should("contain", "Amount BTC must be a number");
+    return this;
+  }
   orderInfo() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
       const data = {
         wallet1: testDataRow.wallet1,
         btc: testDataRow.btc,
+        ticker: testDataRow.ticker,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
+        const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click({ force: true })
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click({ force: true });
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
         selectTicker.click({ force: true });
         //Read the current BTC/USD price
-        cy.get(':nth-child(2) > h5 > span').then(($btn) => {
+        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
           const txt = $btn.text();
           var pointNum = parseInt(txt);
           var amout = pointNum * 1120;
@@ -78,7 +102,7 @@ class buyStop {
           .get("#form-choose-exchange")
           .contains(data.wallet1);
         orderFrom.click({ force: true });
-        orderForm.wait(5000);
+        orderForm.wait(3000);
       });
     });
     return this;
