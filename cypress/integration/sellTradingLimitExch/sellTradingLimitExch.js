@@ -16,6 +16,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
     limitBuy.verifyFields();
+    limitSell.requiredFields();
     limitSell.orderInfo();
 });
 
@@ -25,5 +26,6 @@ When("I select to Exchange sell", () => {
 
 Then("I verify the limit sell order was created", () => {
     limitSell.successMsg();
-    //limitSell.cancelSellOrder();
+    limitSell.orderFilter();
+    limitSell.cancelSellOrder();
 });

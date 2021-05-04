@@ -10,7 +10,20 @@ class limitSellExch {
     );
     return this;
   }
-  
+  requiredFields() {
+    const exchangeSell = cy.get("#sellButton");
+    exchangeSell.click({ force: true });
+    const price = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(1)");
+    price.should("contain", "Price USD must be a number");
+    const btc = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(2)");
+    btc.should("contain", "Amount BTC must be a number");
+    return this;
+  }
+
   orderInfo() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
@@ -20,35 +33,37 @@ class limitSellExch {
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
-        cy.get('#orderform-panel').should('be.visible').should('exist')
-        )
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true })
+        selectTicker.click({ force: true });
         //Read the current BTC/USD price
-        cy.get(':nth-child(2) > h5 > span').then(($btn) => {
-          const txt = $btn.text();
-          var pointNum = parseInt(txt);
-          var amout = pointNum * 1020;
-          var value = amout + 100;
-          const priceUSD = cy.get('[name="price"]').type(txt);
-          localStorage.setItem("price", value);
-        });
+        cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
+          ($btn) => {
+            const txt = $btn.text();
+            var pointNum = parseInt(txt);
+            var amout = pointNum * 1020;
+            var value = amout + 100;
+            const priceUSD = cy.get('[name="price"]').type(txt);
+            localStorage.setItem("price", value);
+          }
+        );
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);
         orderFrom.click({ force: true });
-        orderForm.wait(5000)
+        orderForm.wait(5000);
       });
     });
     return this;
   }
   sellButton() {
-    const exchangeSell = cy.get("#sellButton")
+    const exchangeSell = cy.get("#sellButton");
     exchangeSell.click({ force: true });
     return this;
   }
@@ -60,13 +75,11 @@ class limitSellExch {
       };
       context(`Generating a test for ${data.limitprice2}`, () => {
         const msg = cy.waitUntil(() =>
+          cy.get(".notification-text__text").should("be.visible")
+        );
+        const validateMsg = cy.waitUntil(() =>
           cy
             .get(".notification-text__text")
-            .should("be.visible")
-        )
-        const validateMsg = cy.waitUntil(() =>
-        cy
-          .get(".notification-text__text")
             .should(
               "contain",
               `Created exchange limit sell order of ${data.btc} BTC`
@@ -74,6 +87,31 @@ class limitSellExch {
         );
       });
     });
+    return this;
+  }
+  orderFilter() {
+    const filter = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
+    );
+    filter.click({ force: true });
+    const type = cy.get(
+      '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
+    );
+    type.click({ force: true });
+    const side = cy.get(
+      '[data-qa-id="orders-filter-side-sell"] > .filter-select__selection-label'
+    );
+    side.click({ force: true });
+    const apply = cy.get(".filter-select__actions > .ui-button");
+    apply.click({ force: true });
+    const appliedType = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
+    );
+    appliedType.should("contain", "Exchange");
+    const appliedSide = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-side-sell"] > .filter-select__selection-label'
+    );
+    appliedSide.should("contain", "Asks");
     return this;
   }
   cancelSellOrder() {
@@ -90,23 +128,23 @@ class limitSellExch {
           )
           .click({ force: true });
       });
-      const testData = require("../../fixtures/orders.json");
-        testData.forEach((testDataRow) => {
-          const data = {
-            btc: testDataRow.btc,
-          };
-          context(`Generating a test for ${data.btc}`, () => {
-    const msgCancel = cy.waitUntil(() =>
-      cy
-        .get(".notification-text__text")
-        .should("be.visible")
-        .should(
-          "contain",
-          `Exchange limit sell order of ${data.btc} BTC has been canceled`
-        )
-    );
-        })
-      })
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        btc: testDataRow.btc,
+      };
+      context(`Generating a test for ${data.btc}`, () => {
+        const msgCancel = cy.waitUntil(() =>
+          cy
+            .get(".notification-text__text")
+            .should("be.visible")
+            .should(
+              "contain",
+              `Exchange limit sell order of ${data.btc} BTC has been canceled`
+            )
+        );
+      });
+    });
     return this;
   }
 }
