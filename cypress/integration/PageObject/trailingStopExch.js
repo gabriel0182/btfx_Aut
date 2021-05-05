@@ -10,6 +10,19 @@ class trailingStopExch {
     );
     return this;
   }
+  requiredFields() {
+    const buy = cy.get("#buyButton");
+    buy.click({ force: true });
+    const distance = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(1)");
+      distance.should("contain", "Distance USD must be a number");
+    const btc = cy
+      .get(".order-errors")
+      .get('.order-errors__wrapper > :nth-child(2)')
+    btc.should("contain", "Amount BTC must be a number");
+    return this;
+  }
   verifyFields() {
     const orderType = cy.waitUntil(() =>
       cy
@@ -54,14 +67,23 @@ class trailingStopExch {
     testData.forEach((testDataRow) => {
       const data = {
         wallet1: testDataRow.wallet1,
-        type4: testDataRow.type4,
-        price: testDataRow.price,
         btc: testDataRow.btc,
+        ticker: testDataRow.ticker,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
         cy.get("#orderform-panel").should("be.visible").should("exist")
       );
+      const searchTicker = cy.get("#ticker-search-input");
+      searchTicker.type(`${data.ticker}{enter}`);
+      const currency = cy
+        .get(
+          ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+        )
+        .click({ force: true })
+        .get('[id="Item_USD"]')
+        .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+        .click({ force: true });
       const selectTicker = cy
         .get('[class="custom-scrollbar"]')
         .get('[href="/t/BTC:USD"]')
@@ -81,7 +103,7 @@ class trailingStopExch {
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);
-        orderFrom.click({ force: true }).wait(5000)
+        orderFrom.click({ force: true }).wait(2000)
       })
       });
     });
@@ -115,6 +137,31 @@ class trailingStopExch {
         );
       });
     });
+    return this;
+  }
+  orderFilter() {
+    const filter = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
+    );
+    filter.click({ force: true });
+    const type = cy.get(
+      '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
+    );
+    type.click({ force: true });
+    const side = cy.get(
+      '[data-qa-id="orders-filter-side-buy"] > .filter-select__selection-label'
+    );
+    side.click({ force: true });
+    const apply = cy.get(".filter-select__actions > .ui-button");
+    apply.click({ force: true });
+    const appliedType = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
+    );
+    appliedType.should("contain", "Exchange");
+    const appliedSide = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-side-buy"] > .filter-select__selection-label'
+    );
+    appliedSide.should("contain", "Bids");
     return this;
   }
   cancelOrder() {

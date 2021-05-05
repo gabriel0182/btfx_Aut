@@ -16,6 +16,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
     stopLmt.verifyFields();
+    sellstopLmt.requiredFields();
     sellstopLmt.orderInfo();
 });
 
@@ -25,5 +26,6 @@ When("I select to Exchange sell from Exchange wallet", () => {
 
 Then("I verify the stop limit order was created", () => {
     sellstopLmt.successMsg();
+    sellstopLmt.orderFilter();
     sellstopLmt.cancelOrder();
 });

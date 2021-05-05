@@ -11,17 +11,45 @@ class sellStopLimitExch{
     );
     return this;
     }
+    requiredFields() {
+      const exchangeSell = cy.get('#sellButton')
+        exchangeSell.click({ force: true });
+      const limitPrice = cy
+        .get(".order-errors")
+        .get(".order-errors__wrapper > :nth-child(1)");
+        limitPrice.should("contain", "Limit price USD must be a number");
+      const btc = cy
+        .get(".order-errors")
+        .get('.order-errors__wrapper > :nth-child(3)')
+      btc.should("contain", "Amount BTC must be a number");
+      const priceUSD = cy
+        .get(".order-errors")
+        .get('.order-errors__wrapper > :nth-child(2)')
+        priceUSD.should("contain", "Price USD must be a number");
+      return this;
+    }
     orderInfo() {
       const testData = require("../../fixtures/orders.json");
       testData.forEach((testDataRow) => {
         const data = {
           wallet1: testDataRow.wallet1,
           btc: testDataRow.btc,
+          ticker: testDataRow.ticker,
         };
         context(`Generating a test for ${data.wallet1}`, () => {
           const orderForm = cy.waitUntil(() =>
             cy.get("#orderform-panel").should("be.visible").should("exist")
           );
+          const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click({ force: true })
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click({ force: true });
           const selectTicker = cy
             .get('[class="custom-scrollbar"]')
             .get('[href="/t/BTC:USD"]')
@@ -43,7 +71,7 @@ class sellStopLimitExch{
             .get("#form-choose-exchange")
             .contains(data.wallet1);
           orderFrom.click({ force: true });
-          orderForm.wait(5000);
+          orderForm.wait(2000);
           const limitUSD = cy
             .get(".orderform > :nth-child(4)")
             .get("#priceinput5");
@@ -82,6 +110,15 @@ class sellStopLimitExch{
             );
           });
         });
+        return this;
+      }
+      orderFilter() {
+        const filter = cy.get(
+          '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
+        );
+        filter.click({ force: true });
+        const reset = cy.get('.filter-select__reset-btn')
+          reset.click({force:true})
         return this;
       }
       cancelOrder() {

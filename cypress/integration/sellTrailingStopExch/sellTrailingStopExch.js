@@ -16,6 +16,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
     trailingStop.verifyFields();
+    sellTrailingStop.requiredFields();
     sellTrailingStop.orderInfo();
 });
 
@@ -25,5 +26,6 @@ When("I select to Exchange Sell", () => {
 
 Then("I verify the Trailing Stop sell order from Exchange wallet was created", () => {
     sellTrailingStop.successMsg();
+    sellTrailingStop.orderFilter();
     sellTrailingStop.cancelOrder();
 });
