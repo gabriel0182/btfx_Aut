@@ -16,6 +16,7 @@ Given("I go to Trading page", () => {
 
 When("I type the order required info", () => {
   limitBk.verifyFields();
+  sellLimitBk.requiredFields();
   sellLimitBk.orderInfo();
 });
 

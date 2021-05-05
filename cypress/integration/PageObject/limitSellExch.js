@@ -15,11 +15,13 @@ class limitSellExch {
     exchangeSell.click({ force: true });
     const price = cy
       .get(".order-errors")
-      .get(".order-errors__wrapper > :nth-child(1)");
+      .get('.order-errors__wrapper')
+    .get('li')
     price.should("contain", "Price USD must be a number");
     const btc = cy
       .get(".order-errors")
-      .get(".order-errors__wrapper > :nth-child(2)");
+      .get('.order-errors__wrapper')
+    .get('li')
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }

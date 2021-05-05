@@ -24,14 +24,23 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("loginToBitfinexManually", () => { 
-  cy.visitWithCloudFlareBypass("https://bfx-ui-trading.staging.bitfinex.com/t")
-      cy.on('uncaught:exception', (err, runnable) => {
-        expect(err.message).to.include('t._innerWindow(...).widgetReady')
-        return false
-      })
-  .get('#book-bids > .book__rows')
-        .should("be.visible")
+Cypress.Commands.add("loginToBitfinexManually", () => {
+  cy.visitWithCloudFlareBypass(
+    "https://bfx-ui-trading.staging.bitfinex.com/t",
+    {
+      onBeforeLoad(win) {
+        Object.defineProperty(win.navigator, "language", {
+          value: "de",
+        });
+      },
+    }
+  );
+  cy.on("uncaught:exception", (err, runnable) => {
+    expect(err.message).to.include("t._innerWindow(...).widgetReady");
+    return false;
+  })
+    .get("#book-bids > .book__rows")
+    .should("be.visible");
   let session = cy.getCookie("_bfx_session");
   cy.request("GET", "https://www.staging.bitfinex.com/_ws_token", {
     cookie: `${session.name}=${session.value}`,
@@ -41,25 +50,38 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
       return this;
     } else {
       cy.visitWithCloudFlareBypass(
-        "https://bfx-ui-trading.staging.bitfinex.com/t")
-                      cy.on('uncaught:exception', (err, runnable) => {
-              expect(err.message).to.include('t._innerWindow(...).widgetReady')
-              return false
-            })
+        "https://bfx-ui-trading.staging.bitfinex.com/t",
+        {
+          onBeforeLoad(win) {
+            Object.defineProperty(win.navigator, "language", {
+              value: "de",
+            });
+          },
+        }
+      );
+      cy.on("uncaught:exception", (err, runnable) => {
+        expect(err.message).to.include("t._innerWindow(...).widgetReady");
+        return false;
+      });
       cy.fixture("sensitive/credentials.json").then((credentials) => {
-        cy.get(".header__login-button").should('be.visible')
-        .click({force:true})
-        .get("#login").type(credentials.login, { force: true })
-        .get("#auth-password").type(credentials.password, { log: false })
-        .get("button").click({force:true})
-        .get("#submit-login")
-        .click({ force: true })
-        .task("generateOTP", `${credentials.totp_secre}`).then((token) => {
-        cy.get("#otp").type(token)
-        })
+        cy.get(".header__login-button")
+          .should("be.visible")
+          .click({ force: true })
+          .get("#login")
+          .type(credentials.login, { force: true })
+          .get("#auth-password")
+          .type(credentials.password, { log: false })
+          .get("button")
+          .click({ force: true })
+          .get("#submit-login")
+          .click({ force: true })
+          .task("generateOTP", `${credentials.totp_secre}`)
+          .then((token) => {
+            cy.get("#otp").type(token);
+          });
       });
     }
-  })
+  });
 });
 
 Cypress.Commands.add("visitBitfinexHomepage", () => {
@@ -68,30 +90,30 @@ Cypress.Commands.add("visitBitfinexHomepage", () => {
 });
 
 Cypress.Commands.add("visitBitfinexAndLogin", () => {
-  cy.loginToBitfinexManually()
-  cy.waitForPageToLoad()
-})
+  cy.loginToBitfinexManually();
+  cy.waitForPageToLoad();
+});
 
 function lookForSpinners() {
   return new Cypress.Promise((resolve, reject) => {
     // Poll for the presence of spinners
     setInterval(() => {
-      let spinners = Cypress.$("i.fa-spin")
+      let spinners = Cypress.$("i.fa-spin");
       if (spinners.length == 0) {
-        resolve(0)
+        resolve(0);
       }
-    }, 1000)
+    }, 1000);
 
     setTimeout(() => {
-      resolve(-1)
-    }, 10000)
-  })
+      resolve(-1);
+    }, 10000);
+  });
 }
 
 Cypress.Commands.add("waitForPageToLoad", () => {
   // Give the page upto 60 seconds to resolve loading before continuing (wait for all loading spinners to disappear)
   // cy.get("i.fa-spin", { timeout: 60000 }).should("be.at.least", 1)
-  cy.get("#interface").should("be.visible")
+  cy.get("#interface").should("be.visible");
 
   /*cy.wrap(null).then(() => {
     return lookForSpinners().then(s => {
@@ -100,8 +122,7 @@ Cypress.Commands.add("waitForPageToLoad", () => {
       }
     })
   })*/
-})
-
+});
 
 Cypress.Commands.add("visitWithCloudFlareBypass", (route) => {
   cy.fixture("sensitive/credentials.json").then((credentials) => {
@@ -112,4 +133,4 @@ Cypress.Commands.add("visitWithCloudFlareBypass", (route) => {
     cy.visit(route, { headers: headers });
   });
 });
-import 'cypress-wait-until';
+import "cypress-wait-until";

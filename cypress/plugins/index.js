@@ -19,9 +19,19 @@ module.exports = (on, config) => {
   on("task", {
     generateOTP: require("cypress-otp")
   })
-  on('before:browser:launch', (browser = {}, launchOptions) => {
+  on('before:browser:launch', (browser, launchOptions) => {
     if (browser.name === 'chrome') {
+      args.push('--lang=de');
+      return launchOptions;
+    }
+    if (browser.name === 'firefox') {
       launchOptions.args.push('--lang=de');
+      return launchOptions;
+    }
+  })
+  on('before:browser:launch', (browser, launchOptions) => {
+    if (browser.name !== 'electron') {
+      launchOptions.args['--lang=de']= true
       return launchOptions;
     }
   })

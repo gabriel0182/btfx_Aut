@@ -15,11 +15,13 @@ class trailingStopExch {
     buy.click({ force: true });
     const distance = cy
       .get(".order-errors")
-      .get(".order-errors__wrapper > :nth-child(1)");
+      .get('.order-errors__wrapper')
+    .get('li')
       distance.should("contain", "Distance USD must be a number");
     const btc = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper > :nth-child(2)')
+      .get('.order-errors__wrapper')
+    .get('li')
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }

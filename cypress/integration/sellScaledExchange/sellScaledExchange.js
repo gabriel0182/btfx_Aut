@@ -16,6 +16,7 @@ Given("I go to Trading page", () => {
 When("I type the order required info", () => {
   buyScld.trading();
   buyScld.verifyFields();
+  sellScld.requiredFields();
   sellScld.orderInfo();
 });
 
@@ -25,5 +26,7 @@ When("I select to Exchange Submit", () => {
 
 Then("I verify the Scaled sell order from Exchange wallet was created", () => {
   sellScld.successMsg();
+  sellScld.orderFilter();
   sellScld.cancelOrder();
+  sellScld.cleanFilters();
 });

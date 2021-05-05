@@ -13,7 +13,8 @@ class buyMarket {
   requiredFields() {
     const buy = cy.get("#buyButton");
     buy.click({ force: true });
-    const btc = cy.get(".order-errors").get("li");
+    const btc = cy.get(".order-errors").get('.order-errors__wrapper')
+    .get('li')
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }

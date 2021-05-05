@@ -1,4 +1,33 @@
 class sellScaled {
+  requiredFields() {
+    const distribution = cy.get("#radio-upwards > .circle");
+    distribution.click({ force: true });
+    const action = cy.get("#radio-sell > .circle");
+    action.click({ force: true });
+    const submit = cy.get("#submitButton");
+    submit.click({ force: true });
+    const priceLower = cy
+      .get(".order-errors")
+      .get('.order-errors__wrapper')
+    .get('li')
+    priceLower.should("contain", "Price lower USD is required");
+    const priceUpper = cy
+      .get(".order-errors")
+      .get('.order-errors__wrapper')
+    .get('li')
+    priceUpper.should("contain", "Price upper USD is required");
+    const btc = cy
+      .get(".order-errors")
+      .get('.order-errors__wrapper')
+    .get('li')
+    btc.should("contain", "Amount BTC must be a number");
+    const orderCount = cy
+      .get(".order-errors")
+      .get('.order-errors__wrapper')
+    .get('li')
+    orderCount.should("contain", "Order count is required");
+    return this;
+  }
   orderInfo() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
@@ -8,11 +37,22 @@ class sellScaled {
         amountVariance: testDataRow.amountVariance,
         priceVariance: testDataRow.priceVariance,
         btc: testDataRow.btc,
+        ticker: testDataRow.ticker,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
+        const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click({ force: true })
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click({ force: true });
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
@@ -79,35 +119,70 @@ class sellScaled {
     );
     return this;
   }
+  orderFilter() {
+    const filter = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
+    );
+    filter.click({ force: true });
+    const type = cy.get(
+      '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
+    );
+    type.click({ force: true });
+    const side = cy.get(
+      '[data-qa-id="orders-filter-side-sell"] > .filter-select__selection-label'
+    );
+    side.click({ force: true });
+    const apply = cy.get(".filter-select__actions > .ui-button");
+    apply.click({ force: true });
+    const appliedType = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
+    );
+    appliedType.should("contain", "Exchange");
+    const appliedSide = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-side-sell"] > .filter-select__selection-label'
+    );
+    appliedSide.should("contain", "Asks");
+    return this;
+  }
   cancelOrder() {
     const msg = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
         .should("be.visible")
-        .get('div.notification__skip').click({ force: true })
-    )
-            const ordersTable = cy
-              .get('[data-qa-id="orders-table"]')
-              .get("div")
-              .first("div")
-              .each(($div) => {
-                cy.get(
-                  '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
-                )
-                  .get(
-                    '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
-                  )
-                  .click({ force: true });
-                const msgCancel = cy.waitUntil(() =>
-                  cy.get(".notification-text__text").should("be.visible")
-                );
-                const verifyMsg = cy.waitUntil(() =>
-                  cy
-                    .get(".notification-text__text")
-                    .should("contain", `has been canceled`)
-                );
-              });
-            return this;
-        }
+        .get("div.notification__skip")
+        .click({ force: true })
+    );
+    const ordersTable = cy
+      .get('[data-qa-id="orders-table"]')
+      .get("div")
+      .first("div")
+      .each(($div) => {
+        cy.get(
+          '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
+        )
+          .get(
+            '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
+          )
+          .click({ force: true });
+        const msgCancel = cy.waitUntil(() =>
+          cy.get(".notification-text__text").should("be.visible")
+        );
+        const verifyMsg = cy.waitUntil(() =>
+          cy
+            .get(".notification-text__text")
+            .should("contain", `has been canceled`)
+        );
+      });
+    return this;
+  }
+  cleanFilters() {
+    const filter = cy.get(
+      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
+    );
+    filter.click({ force: true });
+    const reset = cy.get('.filter-select__reset-btn')
+      reset.click({force:true})
+    return this;
+  }
 }
 export default sellScaled;
