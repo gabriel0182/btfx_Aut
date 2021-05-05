@@ -10,6 +10,19 @@ class buyImmediateCancel {
     );
     return this;
   }
+  requiredFields() {
+    const buy = cy.get("#buyButton");
+    buy.click({ force: true });
+    const distance = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(1)");
+    distance.should("contain", "Price USD must be a number");
+    const btc = cy
+      .get(".order-errors")
+      .get(".order-errors__wrapper > :nth-child(2)");
+    btc.should("contain", "Amount BTC must be a number");
+    return this;
+  }
   verifyFields() {
     const orderType = cy.waitUntil(() =>
       cy
@@ -31,7 +44,9 @@ class buyImmediateCancel {
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
     marginWallet.click({ force: true });
-    const reduceOnlyMargin = cy.get('.orderform__field > .ui-labeledcheckbox__container > label')
+    const reduceOnlyMargin = cy.get(
+      ".orderform__field > .ui-labeledcheckbox__container > label"
+    );
     reduceOnlyMargin.should("be.visible");
     return this;
   }
@@ -40,42 +55,54 @@ class buyImmediateCancel {
     testData.forEach((testDataRow) => {
       const data = {
         wallet1: testDataRow.wallet1,
-        type6: testDataRow.type6,
-        price: testDataRow.price,
+        ticker: testDataRow.ticker,
         btc: testDataRow.btc,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
-        cy.get("#orderform-panel").should("be.visible").should("exist")
-      );
-      const selectTicker = cy
-        .get('[class="custom-scrollbar"]')
-        .get('[href="/t/BTC:USD"]')
-        .last();
-      selectTicker.click({ force: true });
-      //Read the current BTC/USD price
-      cy.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
-      .then(($btn) => {
-        const txt = $btn.text();
-        var pointNum = parseInt(txt);
-        var amout = pointNum * 1120;
-        var value = amout + 100;
-        localStorage.setItem("price", value);
-        const distanceUSD = cy.get('[name="price"]');
-        distanceUSD.type(txt);
-        const amountBTC = cy.get('[name="amount"]');
-        amountBTC.type(data.btc);
-        const orderFrom = cy
-          .get("#form-choose-exchange")
-          .contains(data.wallet1);
-        orderFrom.click({ force: true }).wait(5000)
-      })
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click({ force: true })
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click({ force: true });
+        const selectTicker = cy
+          .get('[class="custom-scrollbar"]')
+          .get('[href="/t/BTC:USD"]')
+          .last();
+        selectTicker.click({ force: true });
+        //Read the current BTC/USD price
+        cy.get(
+          "#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span"
+        )
+          .first()
+          .then(($btn) => {
+            const txt = $btn.text();
+            var pointNum = parseInt(txt);
+            var amout = pointNum * 1120;
+            var value = amout + 100;
+            localStorage.setItem("price", value);
+            const distanceUSD = cy.get('[name="price"]');
+            distanceUSD.type(txt);
+            const amountBTC = cy.get('[name="amount"]');
+            amountBTC.type(data.btc);
+            const orderFrom = cy
+              .get("#form-choose-exchange")
+              .contains(data.wallet1);
+            orderFrom.click({ force: true }).wait(2000);
+          });
       });
     });
     return this;
-      }
+  }
   buyButton() {
-    const exchangeBuy = cy.get("#buyButton")
+    const exchangeBuy = cy.get("#buyButton");
     exchangeBuy.click({ force: true });
     return this;
   }
@@ -88,10 +115,8 @@ class buyImmediateCancel {
       };
       context(`Generating a test for ${data.price}`, () => {
         const msg = cy.waitUntil(() =>
-          cy
-            .get(".notification-text__text")
-            .should("be.visible")
-        )
+          cy.get(".notification-text__text").should("be.visible")
+        );
         const verifyMsg = cy.waitUntil(() =>
           cy
             .get(".notification-text__text")
