@@ -30,8 +30,8 @@ module.exports = (on, config) => {
     }
   })
   on('before:browser:launch', (browser, launchOptions) => {
-    if (browser.name !== 'electron') {
-      launchOptions.args['--lang=de']= true
+    if (browser.family === 'chromium' && browser.name !== 'electron') {
+      launchOptions.preferences.default.intl= ('--lang=de' )
       return launchOptions;
     }
   })

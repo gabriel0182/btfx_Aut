@@ -29,9 +29,14 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
     "https://bfx-ui-trading.staging.bitfinex.com/t",
     {
       onBeforeLoad(win) {
-        Object.defineProperty(win.navigator, "language", {
-          value: "de",
+        Object.defineProperty(win.navigator, "language", { value: 'en-GB' });
+        Object.defineProperty(win.navigator, "languages", ['en-GB'] );
+        Object.defineProperty(win.navigator, "accept_languages", {
+          value: ["en"],
         });
+      },
+      headers: {
+        "Accept-Language": "en",
       },
     }
   );
@@ -53,9 +58,14 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         "https://bfx-ui-trading.staging.bitfinex.com/t",
         {
           onBeforeLoad(win) {
-            Object.defineProperty(win.navigator, "language", {
-              value: "de",
+            Object.defineProperty(win.navigator, "language", { value: 'en-GB' });
+            Object.defineProperty(win.navigator, "languages", ['en-GB'] );
+            Object.defineProperty(win.navigator, "accept_languages", {
+              value: ["en"],
             });
+          },
+          headers: {
+            "Accept-Language": "en",
           },
         }
       );

@@ -2,6 +2,7 @@
 
     "testFiles": [
       "tradingPage.feature",
+      "balanceQuickTransfer.feature",
       "createLongPosition.feature",
       "createShortPosition.feature",
       "tradingBuyLimitExch.feature",
@@ -28,13 +29,13 @@
   "viewportHeight": 720,
   "screenshotOnRunFailure": false,
   "videoOnRunFailure": false,
-  "video": true,
+  "video": false,
   "defaultCommandTimeout":50000,
   "numTestsKeptInMemory": 0,
   "responseTimeout": 5000,
   "taskTimeout": 5000,
   "execTimeout": 50000,
-  "retries": 0,
+  "retries": 2,
   "pageLoadTimeout": 50000,
   "chromeWebSecurity": false,
   "watchForFileChanges": false,
