@@ -25,6 +25,7 @@
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
 
 Cypress.Commands.add("loginToBitfinexManually", () => {
+  cy.setCookie('bfx_locale', 'en')
   cy.visitWithCloudFlareBypass(
     "https://bfx-ui-trading.staging.bitfinex.com/t",
     {
@@ -54,6 +55,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
     if (token.length > 0) {
       return this;
     } else {
+      cy.setCookie('bfx_locale', 'en')
       cy.visitWithCloudFlareBypass(
         "https://bfx-ui-trading.staging.bitfinex.com/t",
         {

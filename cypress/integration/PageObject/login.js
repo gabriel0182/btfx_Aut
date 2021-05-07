@@ -3,6 +3,7 @@ class login {
   landing() {
     cy.clearCookies("_bfx_session","tradingview.chartproperties.mainSeriesProperties");
     cy.clearLocalStorage();
+    cy.setCookie('bfx_locale', 'en')
     return this;
   }
 longIn(){
