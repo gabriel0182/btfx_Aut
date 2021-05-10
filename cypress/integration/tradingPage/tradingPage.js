@@ -17,6 +17,9 @@ When("I Select a currency", () => {
 
 Then("I verify the graph is shown", () => {
   trd.verifyCurrency();
+ trd.checkBestValue();
+  trd.checkMaxValue();
+  trd.addAlert();
 });
 
 Then("I Verify Balance table is shown", () => {});
