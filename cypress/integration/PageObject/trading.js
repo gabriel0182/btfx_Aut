@@ -67,14 +67,17 @@ class trading {
           "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
         ).click({ force: true });
       });
-    const msgBid = cy.waitUntil(() =>
-      cy.get(".notification-text__text").should("be.visible")
-    );
     const validateBidMsg = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
         .should("contain", "Added new price alert BTC/USD")
-    );
+    )
+    const deleteAlert = cy.get('div.standalone-notification-drawer__item')
+    .get('div.notification__skip')
+    .within(()=>{
+      cy.get('div.fa-times')
+      .click({ force: true });
+    })
     const removeBidAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
@@ -86,14 +89,17 @@ class trading {
           "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
         ).click({ force: true });
       });
-    const msgBidAlert = cy.waitUntil(() =>
-      cy.get(".notification-text__text").should("be.visible")
-    );
     const validateMsgAlert = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
         .should("contain", "Removed price alert BTC/USD")
-    );
+    )
+    const deleteAlert2 = cy.get('div.standalone-notification-drawer__item')
+    .get('div.notification__skip')
+    .within(()=>{
+      cy.get('div.fa-times')
+      .click({ force: true });
+    })
     const setAskAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
@@ -104,15 +110,18 @@ class trading {
         cy.get(
           "#book-asks > .book__rows > :nth-child(1) > .book__alert > .fa"
         ).click({ force: true });
-      });
-    const msgAsk = cy.waitUntil(() =>
-      cy.get(".notification-text__text").should("be.visible")
-    );
+      })
     const validateAskMsg = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
         .should("contain", "Added new price alert BTC/USD")
-    );
+    )
+    const deleteAlert3 = cy.get('div.standalone-notification-drawer__item')
+    .get('div.notification__skip')
+    .within(()=>{
+      cy.get('div.fa-times')
+      .click({ force: true });
+    })
     const removeAskAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
@@ -123,14 +132,11 @@ class trading {
         cy.get(
           "#book-asks > .book__rows > :nth-child(1) > .book__alert > .fa"
         ).click({ force: true });
-      });
-    const msgremoveAsk = cy.waitUntil(() =>
-      cy.get(".notification-text__text").should("be.visible")
-    );
+      })
     const validateRemoveAskMsg = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
-        .should("contain", "Added new price alert BTC/USD")
+        .should("contain", "Removed price alert BTC/USD")
     );
     return this;
   }

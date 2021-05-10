@@ -8,23 +8,20 @@ class sellScaled {
     submit.click({ force: true });
     const priceLower = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     priceLower.should("contain", "Price lower USD is required");
     const priceUpper = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     priceUpper.should("contain", "Price upper USD is required");
-    const btc = cy
-      .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     const orderCount = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     orderCount.should("contain", "Order count is required");
     return this;
   }
@@ -59,42 +56,37 @@ class sellScaled {
           .last();
         selectTicker.click({ force: true });
         //Read the current BTC/USD price
-        cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
-          ($btn) => {
-            const txt1 = $btn.text();
-            cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
-              ($btn) => {
-                const txt2 = $btn.text();
-                /*var pointNum = parseInt(txt);
-          var amout = pointNum * 1090;
-          var value = amout + 100;
-          localStorage.setItem("price", value);*/
-                const lowerUSD = cy.get("#priceinput3");
-                lowerUSD.type(txt1);
-                const uperUSD = cy.get("#priceinput4");
-                uperUSD.type(txt2);
-                const amountBTC = cy.get("#amountinput5");
-                amountBTC.type(data.btc);
-                const count = cy.get(
-                  ":nth-child(4) > :nth-child(2) > .orderform__field > .ui-labeledinput__container > div > .ui-labeledinput__input"
-                );
-                count.type(data.orderCount);
-                const variance1 = cy.get(
-                  ":nth-child(5) > :nth-child(1) > .orderform__field > .ui-labeledinput__container > div > .ui-labeledinput__input"
-                );
-                variance1.type(data.amountVariance);
-                const variance2 = cy.get(
-                  ":nth-child(5) > :nth-child(2) > .orderform__field > .ui-labeledinput__container > div > .ui-labeledinput__input"
-                );
-                variance2.type(data.priceVariance);
-                const orderFrom = cy
-                  .get("#form-choose-exchange")
-                  .contains(data.wallet1);
-                orderFrom.click({ force: true });
-              }
+        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+          const txt1 = $btn.text();
+          cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+            const txt2 = $btn.text();
+            var pointNum = parseInt(txt2);
+            var amout = pointNum * 1002;
+            var value = amout + 100;
+            const lowerUSD = cy.get("#priceinput3");
+            lowerUSD.type(txt1);
+            const upperUSD = cy.get("#priceinput4");
+            upperUSD.type(amout);
+            const amountBTC = cy.get("#amountinput5");
+            amountBTC.type(data.btc);
+            const count = cy.get(
+              ":nth-child(4) > :nth-child(2) > .orderform__field > .ui-labeledinput__container > div > .ui-labeledinput__input"
             );
-          }
-        );
+            count.type(data.orderCount);
+            const variance1 = cy.get(
+              ":nth-child(5) > :nth-child(1) > .orderform__field > .ui-labeledinput__container > div > .ui-labeledinput__input"
+            );
+            variance1.type(data.amountVariance);
+            const variance2 = cy.get(
+              ":nth-child(5) > :nth-child(2) > .orderform__field > .ui-labeledinput__container > div > .ui-labeledinput__input"
+            );
+            variance2.type(data.priceVariance);
+            const orderFrom = cy
+              .get("#form-choose-exchange")
+              .contains(data.wallet1);
+            orderFrom.click({ force: true });
+          });
+        });
       });
     });
     return this;
@@ -180,8 +172,8 @@ class sellScaled {
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
     filter.click({ force: true });
-    const reset = cy.get('.filter-select__reset-btn')
-      reset.click({force:true})
+    const reset = cy.get(".filter-select__reset-btn");
+    reset.click({ force: true });
     return this;
   }
 }

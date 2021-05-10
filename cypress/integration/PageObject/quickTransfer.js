@@ -10,12 +10,9 @@ class quickTransfer {
         search.type(`${data.tranfer}{enter}`);
       });
       const selectUSD = cy
-        .get(
-          '.table-vir__row-odd > [style="flex: 1 1 96px;"] > .virtable__cellwrapper'
-        )
-        .get(
-          '.table-vir__row-odd > [style="flex: 1 1 96px;"] > .virtable__cellwrapper > .trigger > .balances__symbolcell > .show-soft > span'
-        );
+        .get('div.balances__symbolcell')
+        .get('span.show-soft')
+        .contains(`${data.tranfer}`)
       selectUSD.click({ force: true });
     });
     return this;
