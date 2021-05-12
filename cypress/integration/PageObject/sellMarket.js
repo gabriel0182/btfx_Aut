@@ -4,7 +4,7 @@ class sellMarket {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,7 +12,7 @@ class sellMarket {
   }
   requiredFields() {
     const sell = cy.get("#sellButton");
-    sell.click({ force: true });
+    sell.click();
     const btc = cy.get(".order-errors").get('.order-errors__wrapper')
     .get('li')
     btc.should("contain", "Amount BTC must be a number");
@@ -35,7 +35,7 @@ class sellMarket {
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
+        selectTicker.click();
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc).wait(2000);
       });
@@ -44,7 +44,7 @@ class sellMarket {
   }
   sellButton() {
     const exchangeBuy = cy.get("#sellButton");
-    exchangeBuy.click({ force: true });
+    exchangeBuy.click();
     return this;
   }
   successMsg() {
@@ -73,9 +73,9 @@ class sellMarket {
     const filter = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
-    filter.click({ force: true });
+    filter.click();
     const reset = cy.get('.filter-select__reset-btn')
-      reset.click({force:true})
+      reset.click()
     return this;
   }
   cancelPosition() {
@@ -88,19 +88,19 @@ class sellMarket {
         const positionsTable = cy
           .get('[style="height: 25px; width: 100%;"] > .table-vir__row')
           .get("div")
-          .first("div")
+          .first()
           .each(($div) => {
             cy.get(
               '[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button'
             );
             cy.get(
               '[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button > .fa'
-            ).click({ force: true });
+            ).click();
           });
         const confirm = cy
           .get(".ui-modaldialog__footer")
           .get(".ui-modaldialog__footer > .ui-button--green");
-        confirm.click({ force: true });
+        confirm.click();
         const msgCancel = cy.waitUntil(() =>
           cy
             .get(".notification-text__text")

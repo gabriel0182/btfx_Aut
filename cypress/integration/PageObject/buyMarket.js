@@ -4,7 +4,7 @@ class buyMarket {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,9 +12,8 @@ class buyMarket {
   }
   requiredFields() {
     const buy = cy.get("#buyButton");
-    buy.click({ force: true });
-    const btc = cy.get(".order-errors").get('.order-errors__wrapper')
-    .get('li')
+    buy.click();
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
@@ -24,21 +23,21 @@ class buyMarket {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_market")
           .get(
             '[data-qa-id="order-form__order-type-dropdown-menu-item-market"]'
           )
-          .click({ force: true });
+          .click();
       })
     );
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const reduceOnlyMargin = cy.get(
       ".orderform__field > .ui-labeledcheckbox__container > label"
     );
@@ -62,7 +61,7 @@ class buyMarket {
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
+        selectTicker.click();
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc).wait(2000);
       });
@@ -71,7 +70,7 @@ class buyMarket {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton");
-    exchangeBuy.click({ force: true });
+    exchangeBuy.click();
   }
   successMsg() {
     const testData = require("../../fixtures/orders.json");
@@ -105,19 +104,19 @@ class buyMarket {
         const positionsTable = cy
           .get('[style="height: 25px; width: 100%;"] > .table-vir__row')
           .get("div")
-          .first("div")
+          .first()
           .each(($div) => {
             cy.get(
               '[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button'
             );
             cy.get(
               '[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button > .fa'
-            ).click({ force: true });
+            ).click();
           });
         const confirm = cy
           .get(".ui-modaldialog__footer")
           .get(".ui-modaldialog__footer > .ui-button--green");
-        confirm.click({ force: true });
+        confirm.click();
         const msgCancel = cy.waitUntil(() =>
           cy
             .get(".notification-text__text")

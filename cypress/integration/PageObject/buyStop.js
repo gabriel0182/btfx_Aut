@@ -4,7 +4,7 @@ class buyStop {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -16,27 +16,27 @@ class buyStop {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_stop")
           .get('[data-qa-id="order-form__order-type-dropdown-menu-item-stop"]')
-          .click({ force: true });
+          .click();
       })
     );
     const wallet = cy
       .get("#form-choose-exchange")
       .get("#form-choose-exchange > span")
-      .click({ force: true });
+      .click();
     const TIF = cy.get(
       ".orderform__field > .ui-labeledcheckbox__container > label"
     );
     TIF.should("be.visible");
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const TIFMargin = cy.get(
       ".orderform__field > .ui-labeledcheckbox__container > label"
     );
@@ -49,7 +49,7 @@ class buyStop {
   }
   requiredFields() {
     const buy = cy.get("#buyButton");
-    buy.click({ force: true });
+    buy.click();
     const price = cy
       .get(".order-errors")
       .get('.order-errors__wrapper')
@@ -80,15 +80,15 @@ class buyStop {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
+        selectTicker.click();
         //Read the current BTC/USD price
         cy.get(":nth-child(2) > h5 > span").then(($btn) => {
           const txt = $btn.text();
@@ -96,14 +96,13 @@ class buyStop {
           var amout = pointNum * 1120;
           var value = amout + 100;
           const priceUSD = cy.get('[name="price"]').type(value);
-          localStorage.setItem("price", value);
         });
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.btc);
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);
-        orderFrom.click({ force: true });
+        orderFrom.click();
         orderForm.wait(3000);
       });
     });
@@ -111,7 +110,7 @@ class buyStop {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton");
-    exchangeBuy.click({ force: true });
+    exchangeBuy.click();
     return this;
   }
   successMsg() {
@@ -141,7 +140,7 @@ class buyStop {
     const ordersTable = cy
       .get('[data-qa-id="orders-table"]')
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
@@ -149,7 +148,7 @@ class buyStop {
           .get(
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
-          .click({ force: true });
+          .click();
         const testData = require("../../fixtures/orders.json");
         testData.forEach((testDataRow) => {
           const data = {

@@ -4,7 +4,7 @@ class trailingStopExch {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,7 +12,7 @@ class trailingStopExch {
   }
   requiredFields() {
     const buy = cy.get("#buyButton");
-    buy.click({ force: true });
+    buy.click();
     const distance = cy
       .get(".order-errors")
       .get('.order-errors__wrapper')
@@ -31,29 +31,29 @@ class trailingStopExch {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_trailingstop")
           .get(
             '[data-qa-id="order-form__order-type-dropdown-menu-item-trailingstop"]'
           )
-          .click({ force: true });
+          .click();
       })
     );
     const wallet = cy
       .get("#form-choose-exchange")
       .get("#form-choose-exchange > span")
-      .click({ force: true });
+      .click();
     const TIF = cy.get(
       ".orderform__field > .ui-labeledcheckbox__container > label"
     );
     TIF.should("be.visible");
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const TIFMargin = cy.get(
       ".orderform__options > :nth-child(1) > .ui-labeledcheckbox__container > label"
     );
@@ -82,22 +82,18 @@ class trailingStopExch {
         .get(
           ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
+        .click()
         .get('[id="Item_USD"]')
         .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-        .click({ force: true });
+        .click();
       const selectTicker = cy
         .get('[class="custom-scrollbar"]')
         .get('[href="/t/BTC:USD"]')
         .last();
-      selectTicker.click({ force: true });
+      selectTicker.click();
       //Read the current BTC/USD price
       cy.get(':nth-child(2) > h5 > span').then(($btn) => {
         const txt = $btn.text();
-        var pointNum = parseInt(txt);
-        var amout = pointNum * 1090;
-        var value = amout + 100;
-        localStorage.setItem("price", value);
         const distanceUSD = cy.get('[name="price"]');
         distanceUSD.type(txt);
         const amountBTC = cy.get('[name="amount"]');
@@ -105,7 +101,7 @@ class trailingStopExch {
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);
-        orderFrom.click({ force: true }).wait(2000)
+        orderFrom.click().wait(2000)
       })
       });
     });
@@ -113,7 +109,7 @@ class trailingStopExch {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton")
-    exchangeBuy.click({ force: true });
+    exchangeBuy.click();
     return this;
   }
   successMsg() {
@@ -145,17 +141,17 @@ class trailingStopExch {
     const filter = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
-    filter.click({ force: true });
+    filter.click();
     const type = cy.get(
       '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
     );
-    type.click({ force: true });
+    type.click();
     const side = cy.get(
       '[data-qa-id="orders-filter-side-buy"] > .filter-select__selection-label'
     );
-    side.click({ force: true });
+    side.click();
     const apply = cy.get(".filter-select__actions > .ui-button");
-    apply.click({ force: true });
+    apply.click();
     const appliedType = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
     );
@@ -170,7 +166,7 @@ class trailingStopExch {
     const ordersTable = cy
       .get('[data-qa-id="orders-table"]')
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
@@ -178,7 +174,7 @@ class trailingStopExch {
           .get(
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
-          .click({ force: true });
+          .click();
         const testData = require("../../fixtures/orders.json");
         testData.forEach((testDataRow) => {
           const data = {

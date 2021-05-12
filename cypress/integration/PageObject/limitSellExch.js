@@ -4,7 +4,7 @@ class limitSellExch {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,7 +12,7 @@ class limitSellExch {
   }
   requiredFields() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click({ force: true });
+    exchangeSell.click();
     const price = cy
       .get(".order-errors")
       .get('.order-errors__wrapper')
@@ -44,16 +44,11 @@ class limitSellExch {
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
-        //Read the current BTC/USD price
+        selectTicker.click();
         cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
           ($btn) => {
             const txt = $btn.text();
-            var pointNum = parseInt(txt);
-            var amout = pointNum * 1020;
-            var value = amout + 100;
             const priceUSD = cy.get('[name="price"]').type(txt);
-            localStorage.setItem("price", value);
           }
         );
         const amountBTC = cy.get('[name="amount"]');
@@ -61,7 +56,7 @@ class limitSellExch {
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);
-        orderFrom.click({ force: true });
+        orderFrom.click();
         orderForm.wait(2000);
       });
     });
@@ -69,7 +64,7 @@ class limitSellExch {
   }
   sellButton() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click({ force: true });
+    exchangeSell.click();
     return this;
   }
   successMsg() {
@@ -98,17 +93,17 @@ class limitSellExch {
     const filter = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
-    filter.click({ force: true });
+    filter.click();
     const type = cy.get(
       '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
     );
-    type.click({ force: true });
+    type.click();
     const side = cy.get(
       '[data-qa-id="orders-filter-side-sell"] > .filter-select__selection-label'
     );
-    side.click({ force: true });
+    side.click();
     const apply = cy.get(".filter-select__actions > .ui-button");
-    apply.click({ force: true });
+    apply.click();
     const appliedType = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
     );
@@ -123,7 +118,7 @@ class limitSellExch {
     const ordersTable = cy
       .get('[data-qa-id="orders-table"]')
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
@@ -131,7 +126,7 @@ class limitSellExch {
           .get(
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
-          .click({ force: true });
+          .click();
       });
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {

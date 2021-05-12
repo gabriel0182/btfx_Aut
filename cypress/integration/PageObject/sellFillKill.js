@@ -4,7 +4,7 @@ class sellFillKill {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,16 +12,13 @@ class sellFillKill {
   }
   requiredFields() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click({ force: true });
+    exchangeSell.click();
     const distance = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     distance.should("contain", "Price USD must be a number");
-    const btc = cy
-      .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
@@ -43,23 +40,21 @@ class sellFillKill {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
-        //Read the current BTC/USD price
+        selectTicker.click();
         cy.get(
           "#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span"
         )
           .first()
           .then(($btn) => {
             let txt = $btn.text();
-            localStorage.setItem("price", txt);
             const distanceUSD = cy.get('[name="price"]');
             distanceUSD.type(`${txt}`);
             const amountBTC = cy.get('[name="amount"]');
@@ -67,7 +62,7 @@ class sellFillKill {
             const orderFrom = cy
               .get("#form-choose-exchange")
               .contains(data.wallet1);
-            orderFrom.click({ force: true }).wait(2000);
+            orderFrom.click().wait(2000);
           });
       });
     });
@@ -75,11 +70,7 @@ class sellFillKill {
   }
   sellButton() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click({ force: true });
-    /* abovealert = cy.get('.ui-modaldialog__container')
-        .get('.ui-modaldialog__footer')
-        .get('.ui-modaldialog__footer > .ui-button--green')
-        abovealert.click({ force: true });*/
+    exchangeSell.click();
     return this;
   }
   successMsg() {

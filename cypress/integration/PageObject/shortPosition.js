@@ -3,7 +3,7 @@ class shortPosition {
     const tradingTab = cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
     );
-    tradingTab.click({ force: true })
+    tradingTab.click()
     const add = cy
       .get(
         '[style="display: flex; align-items: baseline;"] > .trigger > .ui-button'
@@ -12,7 +12,7 @@ class shortPosition {
         '[style="display: flex; align-items: baseline;"] > .trigger > .ui-button > .fa'
       )
       .scrollIntoView();
-    add.click({ force: true });
+    add.click();
     return this;
   }
   requiredInfo() {
@@ -29,7 +29,7 @@ class shortPosition {
             .get(".themed-react-select__value-container")
             .should("be.visible")
             );
-        selectType.type(`${data.type}{enter}`,'{enter}')
+        selectType.type(`${data.type}{enter}{enter}`)
         const short = cy.waitUntil(() =>
           cy
             .get(".ui-radioinput > :nth-child(2)")
@@ -47,7 +47,7 @@ class shortPosition {
         cy
           .get(".increase-position-modal > .ui-button")
           .should("be.visible")
-          .click({ force: true })
+          .click()
       );
     });
     return this;
@@ -71,19 +71,19 @@ class shortPosition {
         const positionsTable = cy
           .get('[style="height: 25px; width: 100%;"] > .table-vir__row')
           .get("div")
-          .first("div")
+          .first()
           .each(($div) => {
             cy.get(
               '[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button'
             );
             cy.get(
               '[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button > .fa'
-            ).click({ force: true });
+            ).click();
           });
         const confirm = cy
           .get(".ui-modaldialog__footer")
           .get(".ui-modaldialog__footer > .ui-button--green");
-        confirm.click({ force: true });
+        confirm.click();
         const msgCancel = cy.waitUntil(() =>
           cy
             .get(".notification-text__text")

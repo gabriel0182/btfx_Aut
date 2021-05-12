@@ -13,7 +13,7 @@ class quickTransfer {
         .get('div.balances__symbolcell')
         .get('span.show-soft')
         .contains(`${data.tranfer}`)
-      selectUSD.click({ force: true });
+      selectUSD.click();
     });
     return this;
   }
@@ -21,18 +21,18 @@ class quickTransfer {
     const source = cy
       .get(".overlay-transfer-link")
       .get(".overlay-transfer-link > :nth-child(1)");
-    source.click({ force: true });
+    source.click();
     return this;
   }
   selectDestination() {
     const destination = cy
       .get("tbody > :nth-child(2) > :nth-child(2)")
       .get("tbody > :nth-child(2) > :nth-child(2) > .trigger > span");
-    destination.click({ force: true });
+    destination.click();
     const exchange = cy
       .get(".balances-transfer > table > tbody > :nth-child(1) > :nth-child(2)")
       .get("tbody > :nth-child(1) > :nth-child(2) > .trigger > span");
-    exchange.click({ force: true });
+    exchange.click();
     return this;
   }
   tranferAmount() {
@@ -47,12 +47,12 @@ class quickTransfer {
           .get(
             ".balance-transfer__form-input > .ui-labeledinput__container > div > .ui-labeledinput__input"
           )
-          .clear({ force: true });
+          .clear();
         amount.type(data.tranferAmt);
       });
     });
     const transferButton = cy.get(".balance-transfer__form-button");
-    transferButton.click({ force: true }).wait(1000)
+    transferButton.click().wait(1000)
     return this;
   }
   successMsg() {

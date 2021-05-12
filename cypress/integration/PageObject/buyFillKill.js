@@ -4,7 +4,7 @@ class buyFillKill {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,16 +12,13 @@ class buyFillKill {
   }
   requiredFields() {
     const buy = cy.get("#buyButton");
-    buy.click({ force: true });
+    buy.click();
     const distance = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
-      distance.should("contain", "Price USD must be a number");
-    const btc = cy
-      .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
+    distance.should("contain", "Price USD must be a number");
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
@@ -31,21 +28,21 @@ class buyFillKill {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_fillorkill")
           .get(
             '[data-qa-id="order-form__order-type-dropdown-menu-item-fillorkill"]'
           )
-          .click({ force: true });
+          .click();
       })
     );
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const reduceOnlyMargin = cy.get(
       ".orderform__field > .ui-labeledcheckbox__container > label"
     );
@@ -58,28 +55,30 @@ class buyFillKill {
       const data = {
         wallet1: testDataRow.wallet1,
         btc: testDataRow.btc,
-        ticker: testDataRow.ticker
+        ticker: testDataRow.ticker,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
         const orderForm = cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
         const searchTicker = cy.get("#ticker-search-input");
-      searchTicker.type(`${data.ticker}{enter}`);
-      const currency = cy
-        .get(
-          ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-        )
-        .click({ force: true })
-        .get('[id="Item_USD"]')
-        .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-        .click({ force: true });
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click()
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
-        cy.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span')
+        selectTicker.click();
+        cy.get(
+          "#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span"
+        )
           .first()
           .then(($btn) => {
             const txt = $btn.text();
@@ -94,7 +93,7 @@ class buyFillKill {
             const orderFrom = cy
               .get("#form-choose-exchange")
               .contains(data.wallet1);
-            orderFrom.click({ force: true }).wait(2000);
+            orderFrom.click().wait(2000);
           });
       });
     });
@@ -102,12 +101,13 @@ class buyFillKill {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton");
-    exchangeBuy.click({ force: true });
-    const abovealert = cy.get('.ui-modaldialog__container')
-        .get('.ui-modaldialog__footer')
-        .get('.ui-modaldialog__footer > .ui-button--green')
-        abovealert.click({ force: true });
-        return this;
+    exchangeBuy.click();
+    const abovealert = cy
+      .get(".ui-modaldialog__container")
+      .get(".ui-modaldialog__footer")
+      .get(".ui-modaldialog__footer > .ui-button--green");
+    abovealert.click();
+    return this;
   }
   successMsg() {
     const testData = require("../../fixtures/orders.json");

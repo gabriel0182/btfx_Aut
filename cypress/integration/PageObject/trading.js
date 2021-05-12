@@ -5,11 +5,11 @@ class trading {
     const tradingTab = cy.get(
       ".header__nav-buttons-wrapper > .header__nav-trading"
     );
-    tradingTab.click({ force: true });
+    tradingTab.click();
     const selectCurrency = cy.get(
       '[aria-rowindex="1"] > [style="flex: 0 1 83px;"] > .virtable__cellwrapper > .tickerlist__symbolcell'
     );
-    selectCurrency.click({ force: true });
+    selectCurrency.click({force:true});
     return this;
   }
   verifyCurrency() {
@@ -28,15 +28,15 @@ class trading {
       .get(
         ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
       )
-      .click({ force: true })
+      .click()
       .get('[id="Item_USD"]')
       .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-      .click({ force: true });
+      .click();
     const selectTicker = cy
       .get('[class="custom-scrollbar"]')
       .get('[href="/t/BTC:USD"]')
       .last();
-    selectTicker.click({ force: true });
+    selectTicker.click();
       })
     })
     const mainticker = cy.waitUntil(() =>
@@ -65,7 +65,7 @@ class trading {
       .each(($div) => {
         cy.get(
           "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
-        ).click({ force: true });
+        ).click();
       });
     const validateBidMsg = cy.waitUntil(() =>
       cy
@@ -76,18 +76,18 @@ class trading {
     .get('div.notification__skip')
     .within(()=>{
       cy.get('div.fa-times')
-      .click({ force: true });
+      .click();
     })
     const removeBidAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
-        ).click({ force: true });
+        ).click();
       });
     const validateMsgAlert = cy.waitUntil(() =>
       cy
@@ -98,18 +98,18 @@ class trading {
     .get('div.notification__skip')
     .within(()=>{
       cy.get('div.fa-times')
-      .click({ force: true });
+      .click();
     })
     const setAskAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           "#book-asks > .book__rows > :nth-child(1) > .book__alert > .fa"
-        ).click({ force: true });
+        ).click();
       })
     const validateAskMsg = cy.waitUntil(() =>
       cy
@@ -120,18 +120,18 @@ class trading {
     .get('div.notification__skip')
     .within(()=>{
       cy.get('div.fa-times')
-      .click({ force: true });
+      .click();
     })
     const removeAskAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           "#book-asks > .book__rows > :nth-child(1) > .book__alert > .fa"
-        ).click({ force: true });
+        ).click();
       })
     const validateRemoveAskMsg = cy.waitUntil(() =>
       cy
@@ -150,7 +150,7 @@ class trading {
     const priceBid = cy.get(
       ":nth-child(1) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
     );
-    priceBid.click({ force: true });
+    priceBid.click();
     const compareBid = cy;
     cy.get(
       ":nth-child(1) > .top-bidask__wrapper > .orderform-bidask__label > .trigger > :nth-child(2) > div > :nth-child(1)"
@@ -164,7 +164,7 @@ class trading {
     const priceAsk = cy.get(
       ":nth-child(1) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa"
     );
-    priceAsk.click({ force: true });
+    priceAsk.click();
     const compareAsk = cy;
     cy.get(
       ":nth-child(2) > .top-bidask__wrapper > .orderform-bidask__label > .trigger > :nth-child(2) > div > :nth-child(1)"
@@ -179,12 +179,12 @@ class trading {
   }
   checkMaxValue() {
     const priceUSD = cy.get('#priceinput1')
-    priceUSD.clear({force:true})
+    priceUSD.clear()
     .type('1')
     const checkMaxbuy = cy.get(
       ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
     );
-    checkMaxbuy.click({ force: true });
+    checkMaxbuy.click();
     const compare = cy
       .get(
         '[style="height: 420px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(2) > .trigger-ledger-modal > div > .trigger > .avail'
@@ -199,7 +199,7 @@ class trading {
     const checkMaxAsk = cy.get(
       ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa"
     );
-    checkMaxAsk.click({ force: true });
+    checkMaxAsk.click();
     const compareAsk = cy
       .get(
         '[aria-rowindex="2"] > :nth-child(2) > .trigger-ledger-modal > div > .trigger > .avail'
