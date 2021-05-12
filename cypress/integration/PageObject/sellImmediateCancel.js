@@ -4,7 +4,7 @@ class sellImmediateCancel {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,7 +12,7 @@ class sellImmediateCancel {
   }
   requiredFields() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click({ force: true });
+    exchangeSell.click();
     const distance = cy
       .get(".order-errors")
       .get('.order-errors__wrapper')
@@ -43,15 +43,15 @@ class sellImmediateCancel {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
+        selectTicker.click();
         //Read the current BTC/USD price
         cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
         .then(
@@ -68,7 +68,7 @@ class sellImmediateCancel {
             const orderFrom = cy
               .get("#form-choose-exchange")
               .contains(data.wallet1);
-            orderFrom.click({ force: true }).wait(2000);
+            orderFrom.click().wait(2000);
           }
         );
       });
@@ -77,11 +77,11 @@ class sellImmediateCancel {
   }
   sellButton() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click({ force: true });
+    exchangeSell.click();
     const abovealert = cy.get('.ui-modaldialog__container')
         .get('.ui-modaldialog__footer')
         .get('.ui-modaldialog__footer > .ui-button--green')
-        abovealert.click({ force: true });
+        abovealert.click();
         return this;
   }
   successMsg() {

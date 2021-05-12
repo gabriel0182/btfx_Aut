@@ -4,7 +4,7 @@ class buyImmediateCancel {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,7 +12,7 @@ class buyImmediateCancel {
   }
   requiredFields() {
     const buy = cy.get("#buyButton");
-    buy.click({ force: true });
+    buy.click();
     const distance = cy
       .get(".order-errors")
       .get('.order-errors__wrapper')
@@ -31,21 +31,21 @@ class buyImmediateCancel {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_immediateorcancel")
           .get(
             '[data-qa-id="order-form__order-type-dropdown-menu-item-immediateorcancel"]'
           )
-          .click({ force: true });
+          .click();
       })
     );
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const reduceOnlyMargin = cy.get(
       ".orderform__field > .ui-labeledcheckbox__container > label"
     );
@@ -70,26 +70,21 @@ class buyImmediateCancel {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
-        //Read the current BTC/USD price
+        selectTicker.click();
         cy.get(
           "#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span"
         )
           .first()
           .then(($btn) => {
             const txt = $btn.text();
-            var pointNum = parseInt(txt);
-            var amout = pointNum * 1120;
-            var value = amout + 100;
-            localStorage.setItem("price", value);
             const distanceUSD = cy.get('[name="price"]');
             distanceUSD.type(txt);
             const amountBTC = cy.get('[name="amount"]');
@@ -97,7 +92,7 @@ class buyImmediateCancel {
             const orderFrom = cy
               .get("#form-choose-exchange")
               .contains(data.wallet1);
-            orderFrom.click({ force: true }).wait(2000);
+            orderFrom.click().wait(2000);
           });
       });
     });
@@ -105,7 +100,7 @@ class buyImmediateCancel {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton");
-    exchangeBuy.click({ force: true });
+    exchangeBuy.click();
     return this;
   }
   successMsg() {
