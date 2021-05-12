@@ -4,7 +4,7 @@ class buyScaled {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
@@ -12,30 +12,28 @@ class buyScaled {
   }
   requiredFields() {
     const submit = cy.get("#submitButton");
-    submit.click({ force: true });
+    submit.click();
     const orderDirection = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     orderDirection.should("contain", "Order direction (buy/sell) not selected");
     const priceLower = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     priceLower.should("contain", "Price lower USD is required");
     const priceUpper = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     priceUpper.should("contain", "Price upper USD is required");
-    const btc = cy.get(".order-errors")
-    .get('.order-errors__wrapper')
-    .get('li')
-      btc.should('contain','Amount BTC must be a number')
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
+    btc.should("contain", "Amount BTC must be a number");
     const orderCount = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     orderCount.should("contain", "Order count is required");
     return this;
   }
@@ -45,22 +43,22 @@ class buyScaled {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_scaled")
           .get(
             '[data-qa-id="order-form__order-type-dropdown-menu-item-scaled"]'
           )
-          .click({ force: true });
+          .click();
       })
     );
     const wallet = cy
       .get("#form-choose-exchange")
       .get("#form-choose-exchange > span")
-      .click({ force: true });
+      .click();
     const hidden = cy.get(
       ".orderform__options > :nth-child(1) > .ui-labeledcheckbox__container > label"
     );
@@ -71,7 +69,7 @@ class buyScaled {
     postOnly.should("be.visible");
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const hiddenMargin = cy.get(
       ".orderform__options > :nth-child(1) > .ui-labeledcheckbox__container > label"
     );
@@ -107,15 +105,15 @@ class buyScaled {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
+        selectTicker.click();
         //Read the current BTC/USD price
         cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
           ($btn) => {
@@ -123,10 +121,6 @@ class buyScaled {
             cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
               ($btn) => {
                 const txt2 = $btn.text();
-                /*var pointNum = parseInt(txt);
-          var amout = pointNum * 1090;
-          var value = amout + 100;
-          localStorage.setItem("price", value);*/
                 const lowerUSD = cy.get("#priceinput3");
                 lowerUSD.type(txt1);
                 const uperUSD = cy.get("#priceinput4");
@@ -148,7 +142,7 @@ class buyScaled {
                 const orderFrom = cy
                   .get("#form-choose-exchange")
                   .contains(data.wallet1);
-                orderFrom.click({ force: true });
+                orderFrom.click();
               }
             );
           }
@@ -159,9 +153,9 @@ class buyScaled {
   }
   submitButton() {
     const action = cy.get("#radio-buy > .circle");
-    action.click({ force: true });
+    action.click();
     const submit = cy.get("#submitButton");
-    submit.click({ force: true });
+    submit.click();
     return this;
   }
   successMsg() {
@@ -180,17 +174,17 @@ class buyScaled {
     const filter = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
-    filter.click({ force: true });
+    filter.click();
     const type = cy.get(
       '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
     );
-    type.click({ force: true });
+    type.click();
     const side = cy.get(
       '[data-qa-id="orders-filter-side-buy"] > .filter-select__selection-label'
     );
-    side.click({ force: true });
+    side.click();
     const apply = cy.get(".filter-select__actions > .ui-button");
-    apply.click({ force: true });
+    apply.click();
     const appliedType = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
     );
@@ -205,7 +199,7 @@ class buyScaled {
     const ordersTable = cy
       .get('[data-qa-id="orders-table"]')
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
@@ -213,7 +207,7 @@ class buyScaled {
           .get(
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
-          .click({ force: true });
+          .click();
         const msgCancel = cy.waitUntil(() =>
           cy.get(".notification-text__text").should("be.visible")
         );

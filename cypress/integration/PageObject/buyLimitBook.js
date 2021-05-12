@@ -4,29 +4,26 @@ class buyLimitBook {
       cy
         .get(".header__nav-buttons-wrapper > .header__nav-trading")
         .should("be.visible")
-        .click({ force: true })
+        .click()
         .get("#book-bids > .book__rows")
         .should("be.visible")
     );
     return this;
   }
   requiredFields() {
-    const bookTable = 
-      cy.get(
+    const bookTable = cy
+      .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
-        .get("div")
-        .first("div")
-        .each(($div) => {
-          cy.get("#book-asks > .book__rows > :nth-child(1)");
-          cy.get(
-            "#book-asks > .book__rows > :nth-child(1) > .book__row > :nth-child(4) > span"
-          ).click({ force: true });
-        });
-    const btc = cy
-      .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get("div")
+      .first()
+      .each(($div) => {
+        cy.get("#book-asks > .book__rows > :nth-child(1)");
+        cy.get(
+          "#book-asks > .book__rows > :nth-child(1) > .book__row > :nth-child(4) > span"
+        ).click();
+      });
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
@@ -36,22 +33,22 @@ class buyLimitBook {
         .get(
           ":nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
         )
-        .click({ force: true })
-        .get("ul.dropdown-content", { force: true })
+        .click()
+        .get("ul.dropdown-content")
     );
     const selectOrder = cy.waitUntil(() =>
-      cy.get("ul.dropdown-content", { force: true }).within(() => {
+      cy.get("ul.dropdown-content").within(() => {
         cy.get("#orderFormDropdownItem_limitbook")
           .get(
             '[data-qa-id="order-form__order-type-dropdown-menu-item-limitbook"]'
           )
-          .click({ force: true });
+          .click();
       })
     );
     const wallet = cy
       .get("#form-choose-exchange")
       .get("#form-choose-exchange > span")
-      .click({ force: true });
+      .click();
     const TIF = cy.get(
       ":nth-child(4) > .ui-labeledcheckbox__container > label"
     );
@@ -70,7 +67,7 @@ class buyLimitBook {
     postOnly.should("be.visible");
     const marginWallet = cy.get("#form-choose-margin");
     cy.get("#form-choose-margin > span");
-    marginWallet.click({ force: true });
+    marginWallet.click();
     const TIFMargin = cy.get(
       ":nth-child(4) > .ui-labeledcheckbox__container > label"
     );
@@ -95,10 +92,8 @@ class buyLimitBook {
       ":nth-child(5) > .ui-labeledcheckbox__container > label"
     );
     reduceOnlyMargin.should("be.visible");
-    const walletExch = cy
-    .get('#form-choose-exchange')
-    cy.get('#form-choose-exchange > span')
-      .click({ force: true });
+    const walletExch = cy.get("#form-choose-exchange");
+    cy.get("#form-choose-exchange > span").click();
     return this;
   }
   orderInfo() {
@@ -118,15 +113,15 @@ class buyLimitBook {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
+        selectTicker.click();
         const amountBTC = cy.get("#amountinput3");
         amountBTC.type(data.btc);
       });
@@ -139,12 +134,12 @@ class buyLimitBook {
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
         .get("div")
-        .first("div")
+        .first()
         .each(($div) => {
           cy.get("#book-asks > .book__rows > :nth-child(1)");
           cy.get(
             "#book-asks > .book__rows > :nth-child(1) > .book__row > :nth-child(4) > span"
-          ).click({ force: true });
+          ).click();
         });
       return this;
     });

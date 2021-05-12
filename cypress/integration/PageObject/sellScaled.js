@@ -1,11 +1,11 @@
 class sellScaled {
   requiredFields() {
     const distribution = cy.get("#radio-upwards > .circle");
-    distribution.click({ force: true });
+    distribution.click();
     const action = cy.get("#radio-sell > .circle");
-    action.click({ force: true });
+    action.click();
     const submit = cy.get("#submitButton");
-    submit.click({ force: true });
+    submit.click();
     const priceLower = cy
       .get(".order-errors")
       .get(".order-errors__wrapper")
@@ -46,23 +46,21 @@ class sellScaled {
           .get(
             ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
           )
-          .click({ force: true })
+          .click()
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click({ force: true });
+          .click();
         const selectTicker = cy
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click({ force: true });
-        //Read the current BTC/USD price
+        selectTicker.click();
         cy.get(":nth-child(2) > h5 > span").then(($btn) => {
           const txt1 = $btn.text();
           cy.get(":nth-child(2) > h5 > span").then(($btn) => {
             const txt2 = $btn.text();
             var pointNum = parseInt(txt2);
-            var amout = pointNum * 1002;
-            var value = amout + 100;
+            var amout = pointNum * 1030;
             const lowerUSD = cy.get("#priceinput3");
             lowerUSD.type(txt1);
             const upperUSD = cy.get("#priceinput4");
@@ -84,7 +82,7 @@ class sellScaled {
             const orderFrom = cy
               .get("#form-choose-exchange")
               .contains(data.wallet1);
-            orderFrom.click({ force: true });
+            orderFrom.click();
           });
         });
       });
@@ -93,11 +91,11 @@ class sellScaled {
   }
   submitButton() {
     const distribution = cy.get("#radio-upwards > .circle");
-    distribution.click({ force: true });
+    distribution.click();
     const action = cy.get("#radio-sell > .circle");
-    action.click({ force: true });
+    action.click();
     const submit = cy.get("#submitButton");
-    submit.click({ force: true });
+    submit.click();
     return this;
   }
   successMsg() {
@@ -115,17 +113,17 @@ class sellScaled {
     const filter = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
-    filter.click({ force: true });
+    filter.click();
     const type = cy.get(
       '[data-qa-id="orders-filter-type-exchange"] > .filter-select__selection-label'
     );
-    type.click({ force: true });
+    type.click();
     const side = cy.get(
       '[data-qa-id="orders-filter-side-sell"] > .filter-select__selection-label'
     );
-    side.click({ force: true });
+    side.click();
     const apply = cy.get(".filter-select__actions > .ui-button");
-    apply.click({ force: true });
+    apply.click();
     const appliedType = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-type-exchange"] > .filter-select__selection-label'
     );
@@ -142,12 +140,12 @@ class sellScaled {
         .get(".notification-text__text")
         .should("be.visible")
         .get("div.notification__skip")
-        .click({ force: true })
+        .click()
     );
     const ordersTable = cy
       .get('[data-qa-id="orders-table"]')
       .get("div")
-      .first("div")
+      .first()
       .each(($div) => {
         cy.get(
           '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
@@ -155,7 +153,7 @@ class sellScaled {
           .get(
             '[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
           )
-          .click({ force: true });
+          .click();
         const msgCancel = cy.waitUntil(() =>
           cy.get(".notification-text__text").should("be.visible")
         );
@@ -171,9 +169,9 @@ class sellScaled {
     const filter = cy.get(
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
     );
-    filter.click({ force: true });
+    filter.click();
     const reset = cy.get(".filter-select__reset-btn");
-    reset.click({ force: true });
+    reset.click();
     return this;
   }
 }
