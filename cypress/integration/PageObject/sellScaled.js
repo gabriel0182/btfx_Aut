@@ -172,6 +172,15 @@ class sellScaled {
     filter.click();
     const reset = cy.get(".filter-select__reset-btn");
     reset.click();
+    const selectAll = cy.get('[style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(1) > .ui-button')
+    .get('[style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(1) > .ui-button > .fa')
+    .click()
+    .get('.table-vir__header > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(2) > .ui-button')
+    .get('.table-vir__header > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(2) > .ui-button > .fa')
+    .click()
+    .get('.ui-modaldialog__footer')
+    .get('.ui-button--green')
+    .click()
     return this;
   }
 }

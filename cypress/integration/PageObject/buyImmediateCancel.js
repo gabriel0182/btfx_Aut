@@ -79,10 +79,7 @@ class buyImmediateCancel {
           .get('[href="/t/BTC:USD"]')
           .last();
         selectTicker.click();
-        cy.get(
-          "#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span"
-        )
-          .first()
+        cy.get(':nth-child(2) > h5 > span')
           .then(($btn) => {
             const txt = $btn.text();
             const distanceUSD = cy.get('[name="price"]');

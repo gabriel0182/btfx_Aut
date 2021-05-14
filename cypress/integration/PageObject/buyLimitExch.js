@@ -263,7 +263,7 @@ class buyLimitExch {
     const bookTable = cy.waitUntil(()=>
     cy.get('.split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body')
     .get('#book-bids')
-    .get('.book__order-i').should('be.visible')
+    .get('div.book__order-i.book__order-green').should('be.visible')
     .trigger('mouseover')
     .get('div.book__order-tooltip')
     .invoke('show')

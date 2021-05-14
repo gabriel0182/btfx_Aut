@@ -49,9 +49,7 @@ class sellFillKill {
           .get('[href="/t/BTC:USD"]')
           .last();
         selectTicker.click();
-        cy.get(
-          "#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span"
-        )
+        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
           .first()
           .then(($btn) => {
             let txt = $btn.text();
