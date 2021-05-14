@@ -18,11 +18,11 @@ class sellMarket {
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
-  orderInfo() {
+  validateMin() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
       const data = {
-        btc: testDataRow.btc,
+        min: testDataRow.min,
         ticker: testDataRow.ticker,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
@@ -35,16 +35,68 @@ class sellMarket {
           .get('[class="custom-scrollbar"]')
           .get('[href="/t/BTC:USD"]')
           .last();
-        selectTicker.click();
+        selectTicker.click({ force: true });
         const amountBTC = cy.get('[name="amount"]');
-        amountBTC.type(data.btc).wait(2000);
+        amountBTC.type(data.min);
+      });
+    });
+    const exchangeSell = cy.get("#sellButton");
+    exchangeSell.click();
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: minimum size for BTC/USD`)
+    );   
+    return this;
+  }
+  validateMax() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        max: testDataRow.max,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        )
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.clear()
+        .type(data.max);
+      });
+    });
+    const exchangeSell = cy.get("#sellButton");
+    exchangeSell.click();
+    const modal = cy.get('.ui-modaldialog__footer')
+    .get('.ui-modaldialog__footer > .ui-button--green')
+    modal.click()
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: maximum size for BTC/USD`)
+    );   
+    return this;
+  }
+  orderInfo() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        btc: testDataRow.btc,
+        ticker: testDataRow.ticker,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.clear()
+        .type(data.btc).wait(2000);
       });
     });
     return this;
   }
   sellButton() {
-    const exchangeBuy = cy.get("#sellButton");
-    exchangeBuy.click();
+    const exchangeSell = cy.get("#sellButton");
+    exchangeSell.click();
     return this;
   }
   successMsg() {

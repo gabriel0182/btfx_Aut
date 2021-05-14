@@ -17,6 +17,7 @@ When("I type the order required info", () => {
     limitExch.requiredFields();
     limitExch.validateMin();
     limitExch.validatePriceSet();
+    limitExch.validateMax();
     limitExch.orderInfo();
     
 });

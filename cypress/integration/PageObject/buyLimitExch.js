@@ -1,5 +1,3 @@
-import { should } from "chai";
-
 class buyLimitExch {
   trading() {
     const tradingTab = cy.waitUntil(() =>
@@ -110,7 +108,7 @@ class buyLimitExch {
         cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
           ($btn) => {
             const txt = $btn.text();
-            const priceUSD = cy.get('[name="price"]').type(txt);
+            const priceUSD = cy.get('#priceinput1').type(txt);
           }
         );
         const amountBTC = cy.get('[name="amount"]');
@@ -130,18 +128,53 @@ class buyLimitExch {
     );   
     return this;
   }
+  validateMax() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        max: testDataRow.max,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
+          ($btn) => {
+            const txt = $btn.text();
+            const priceUSD = cy.get('#priceinput1').clear({force:true})
+            .type(txt);
+          }
+        )
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.clear()
+        .type(data.max);
+      });
+    });
+    const exchangeBuy = cy.get("#buyButton");
+    exchangeBuy.click();
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: maximum size for BTC/USD`)
+    );   
+    return this;
+  }
   validatePriceSet(){
-    const priceUSD =
-    cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
-      ($btn) => {
-        const txt = $btn.text();
-        const priceUSD = cy.get('[name="price"]').type(txt);
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        max: testDataRow.max,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const priceUSD = cy.get('#priceinput1').clear()
+        .type(`${data.max}`);
       })
       const exchangeBuy = cy.get("#buyButton");
     exchangeBuy.click();
     const validateAlert = cy.get('.order-errors')
     .get('.order-errors__wrapper > li')
     .should('contain', 'Price set at more than 10% of the ticker price, aborting')
+    })
     return this;
   }
   orderInfo() {
@@ -157,7 +190,8 @@ class buyLimitExch {
         cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
           ($btn) => {
             const txt = $btn.text();
-            const priceUSD = cy.get('[name="price"]').clear().type(txt);
+            const priceUSD = cy.get('#priceinput1').clear({force:true})
+            .type(txt);
           }
         );
         const amountBTC = cy.get('[name="amount"]');

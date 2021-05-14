@@ -15,13 +15,10 @@ class limitSellExch {
     exchangeSell.click();
     const price = cy
       .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+      .get(".order-errors__wrapper")
+      .get("li");
     price.should("contain", "Price USD must be a number");
-    const btc = cy
-      .get(".order-errors")
-      .get('.order-errors__wrapper')
-    .get('li')
+    const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
@@ -67,6 +64,38 @@ class limitSellExch {
     );
     return this;
   }
+  validateMax() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        max: testDataRow.max,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
+          ($btn) => {
+            const txt = $btn.text();
+            const priceUSD = cy
+              .get("#priceinput1")
+              .clear({ force: true })
+              .type(txt);
+          }
+        );
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.clear().type(data.max);
+      });
+    });
+    const exchangeSell = cy.get("#sellButton");
+    exchangeSell.click();
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: maximum size for BTC/USD`)
+    );
+    return this;
+  }
   orderInfo() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
@@ -80,14 +109,14 @@ class limitSellExch {
         cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
           ($btn) => {
             const txt = $btn.text();
-            const priceUSD = cy.get('[name="price"]').clear()
-            .type(txt);
+            const priceUSD = cy
+              .get("#priceinput1")
+              .clear({ force: true })
+              .type(txt);
           }
         );
         const amountBTC = cy.get('[name="amount"]');
-        amountBTC.clear()
-        .type(data.btc)
-       .wait(2000);
+        amountBTC.clear().type(data.btc).wait(2000);
       });
     });
     return this;

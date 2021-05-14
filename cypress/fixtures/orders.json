@@ -13,6 +13,7 @@
     "price2": "35000",
     "btc": "0.0001",
     "min": "0.0000001",
+    "max":"99999999999",
     "orderCount": 2,
     "amountVariance": 1,
     "priceVariance": 1,

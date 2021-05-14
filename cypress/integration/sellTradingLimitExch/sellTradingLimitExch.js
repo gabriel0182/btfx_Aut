@@ -18,6 +18,7 @@ When("I type the order required info", () => {
     limitBuy.verifyFields();
     limitSell.requiredFields();
     limitSell.validateMin();
+    limitSell.validateMax();
     limitSell.orderInfo();
 });
 
