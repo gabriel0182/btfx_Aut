@@ -212,7 +212,7 @@ class buyLimitExch {
       const data = {
         btc: testDataRow.btc,
       };
-      context(`Generating a test for ${data.limitprice}`, () => {
+      context(`Generating a test for ${data.btc}`, () => {
         const msg = cy.waitUntil(() =>
           cy.get(".notification-text__text").should("be.visible")
         );
@@ -251,6 +251,28 @@ class buyLimitExch {
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-side-buy"] > .filter-select__selection-label'
     );
     appliedSide.should("contain", "Bids");
+    return this;
+  }
+  validateMarkers(){
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        btc: testDataRow.btc,
+      };
+      context(`Generating a test for ${data.btc}`, () => {
+    const bookTable = cy.waitUntil(()=>
+    cy.get('.split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body')
+    .get('#book-bids')
+    .get('.book__order-i').should('be.visible')
+    .trigger('mouseover')
+    .get('div.book__order-tooltip')
+    .invoke('show')
+    .should('contain','EXCHANGE LIMIT')
+    .get('div.book__order-tooltip > span')
+    .should('contain',`${data.btc}`)
+    )
+      })
+    })
     return this;
   }
   cancelOrder() {

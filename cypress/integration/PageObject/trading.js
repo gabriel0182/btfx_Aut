@@ -2,14 +2,38 @@
 
 class trading {
   currency() {
-    const tradingTab = cy.get(
-      ".header__nav-buttons-wrapper > .header__nav-trading"
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        ticker: testDataRow.ticker,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click()
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click();
+        const selectTicker = cy
+          .get('[class="custom-scrollbar"]')
+          .get('[href="/t/BTC:USD"]')
+          .last();
+        selectTicker.click();
+      });
+    });
+    const mainticker = cy.waitUntil(() =>
+      cy
+        .get(".main-ticker__container")
+        .should("be.visible")
+        .should("contain", "BTC/USD")
     );
-    tradingTab.click();
-    const selectCurrency = cy.get(
-      '[aria-rowindex="1"] > [style="flex: 0 1 83px;"] > .virtable__cellwrapper > .tickerlist__symbolcell'
-    );
-    selectCurrency.click({ force: true });
     return this;
   }
   bookZoomAdd() {
@@ -73,38 +97,6 @@ class trading {
     return this;
   }
   verifyCurrency() {
-    const testData = require("../../fixtures/orders.json");
-    testData.forEach((testDataRow) => {
-      const data = {
-        ticker: testDataRow.ticker,
-      };
-      context(`Generating a test for ${data.wallet1}`, () => {
-        const orderForm = cy.waitUntil(() =>
-          cy.get("#orderform-panel").should("be.visible").should("exist")
-        );
-        const searchTicker = cy.get("#ticker-search-input");
-        searchTicker.type(`${data.ticker}{enter}`);
-        const currency = cy
-          .get(
-            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click()
-          .get('[id="Item_USD"]')
-          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
-      });
-    });
-    const mainticker = cy.waitUntil(() =>
-      cy
-        .get(".main-ticker__container")
-        .should("be.visible")
-        .should("contain", "BTC/USD")
-    );
     const chart = cy.get(
       "#chart-header > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
     );

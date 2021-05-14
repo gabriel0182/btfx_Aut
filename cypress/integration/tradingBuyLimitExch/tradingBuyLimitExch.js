@@ -29,5 +29,6 @@ When("I select to Exchange Buy", () => {
 Then("I verify the limit order was created", () => {
     limitExch.successMsg();
     limitExch.orderFilter();
+    limitExch.validateMarkers();
     limitExch.cancelOrder();
 });
