@@ -17,6 +17,8 @@ Given("I go to Trading page", () => {
 When("I type the order required info", () => {
   stop.verifyFields();
   stop.requiredFields();
+  stop.validateMin();
+  stop.validateMax();
   stop.orderInfo();
 });
 

@@ -144,7 +144,7 @@ class buyStopTIF {
         )
           .get(
             '[style="flex: 1 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > ._2prYApikgYf4Vw1y8YDuKB > .trigger > .fa'
-          )
+          ).should('be.visible')
           .get('[class="trigger ui-tooltip ui-tooltip--cursor-pointer"]')
           .first()
           .trigger("mouseover")
