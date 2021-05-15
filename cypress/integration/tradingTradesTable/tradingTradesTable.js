@@ -17,6 +17,10 @@ When("I Select a currency", () => {
   trd.currency();
 });
 
+When("Test table sorting in all areas", () => {
+trades.sortingOrderHistory();
+});
+
 Then("I verify the trading table Market", () => {
   trades.validateMarket();
 });

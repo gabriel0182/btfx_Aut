@@ -8,6 +8,8 @@ Feature: Test Trading trades table
 
     When I Select a currency
 
+    When Test table sorting in all areas
+
     Then I verify the trading table Market
 
     Then I verify the trading table yours
