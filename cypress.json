@@ -30,7 +30,7 @@
   "viewportHeight": 720,
   "screenshotOnRunFailure": false,
   "videoOnRunFailure": false,
-  "video": true,
+  "video": false,
   "defaultCommandTimeout":50000,
   "numTestsKeptInMemory": 0,
   "responseTimeout": 10000,

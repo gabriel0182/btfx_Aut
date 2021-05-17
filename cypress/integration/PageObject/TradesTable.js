@@ -1,5 +1,3 @@
-
-
 class TradesTable {
   validateMarket() {
     const headers = cy.waitUntil(() =>
@@ -159,17 +157,16 @@ class TradesTable {
       );
     amountUp
       .click()
-      .get('span.table-vir__cell')
+      .get("span.table-vir__cell")
       .within(() => {
-        cy.get(
-          'div.virtable__cellwrapper.virtable__cellwrapper--rightalign'
-        )
+        cy.get("div.virtable__cellwrapper.virtable__cellwrapper--rightalign")
           .get('span[style="line-height: 20px;"]')
           .first()
           .should(($val) => {
             expect($val).not.to.be.null;
           });
-      });const amountDown = cy
+      });
+    const amountDown = cy
       .get(
         '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
       )
@@ -178,34 +175,164 @@ class TradesTable {
       );
     amountDown
       .click()
-      .get('span.table-vir__cell')
+      .get("span.table-vir__cell")
       .within(() => {
-        cy.get(
-          'div.virtable__cellwrapper.virtable__cellwrapper--rightalign'
-        )
+        cy.get("div.virtable__cellwrapper.virtable__cellwrapper--rightalign")
           .get('span[style="line-height: 20px;"]')
           .first()
           .should(($val) => {
             expect($val).not.to.be.null;
           });
       });
-      const ccyUp  = cy.get('[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper')
-      .get('[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up')
-      ccyUp.click()
+    const ccyUp = cy
+      .get(
+        '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    ccyUp
+      .click()
       .get('[aria-rowindex="1"]')
-      .get('span.table-vir__cell')
-      .get('[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50')
+      .get("span.table-vir__cell")
+      .get(
+        '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50'
+      )
       .first()
-        .should('contain','BTC')
-        const ccyDown  = cy.get('[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper')
-        .get('[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up')
-        ccyDown.click()
-        .get('[aria-rowindex="1"]')
-        .get('span.table-vir__cell')
-        .get('[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50')
-        .first()
-          .should('contain','BTC')
-      return this;
+      .should("contain", "BTC");
+    const ccyDown = cy
+      .get(
+        '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    ccyDown
+      .click()
+      .get('[aria-rowindex="1"]')
+      .get("span.table-vir__cell")
+      .get(
+        '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50'
+      )
+      .first()
+      .should("contain", "BTC");
+    const priceUp = cy
+      .get(
+        '[style="flex: 1 1 80px; min-width: 80px; max-width: 100px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 1 1 80px; min-width: 80px; max-width: 100px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    priceUp
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 1 1 80px; min-width: 80px; max-width: 100px;"] > .virtable__cellwrapper > :nth-child(1) > span'
+      )
+      .should(($val1) => {
+        expect($val1).not.to.be.null;
+      });
+    const priceDown = cy
+      .get(
+        '[style="flex: 1 1 80px; min-width: 80px; max-width: 100px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 1 1 80px; min-width: 80px; max-width: 100px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    priceDown
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 1 1 80px; min-width: 80px; max-width: 100px;"] > .virtable__cellwrapper > :nth-child(1) > span'
+      )
+      .should(($val2) => {
+        expect($val2).not.to.be.null;
+      });
+    const averageUp = cy
+      .get(
+        '[style="flex: 1 1 115px; min-width: 115px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 1 1 115px; min-width: 115px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    averageUp
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 1 1 115px; min-width: 115px;"] > .virtable__cellwrapper > :nth-child(1) > :nth-child(1)'
+      )
+      .should(($val3) => {
+        expect($val3).not.to.be.null;
+      });
+    const averageDown = cy
+      .get(
+        '[style="flex: 1 1 115px; min-width: 115px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 1 1 115px; min-width: 115px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    averageDown
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 1 1 115px; min-width: 115px;"] > .virtable__cellwrapper > :nth-child(1) > :nth-child(1)'
+      )
+      .should(($val4) => {
+        expect($val4).not.to.be.null;
+      });
+    const statusUp = cy
+      .get(
+        '[style="flex: 0 1 90px; min-width: 90px; display: flex; justify-content: center;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 90px; min-width: 90px; display: flex; justify-content: center;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    statusUp
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 0 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .ui-tooltip--underline > ._3ZT6FhS8zuiHfgB0PXtJOI'
+      )
+      .should("contain", "Cancelled");
+    const statusDown = cy
+      .get(
+        '[style="flex: 0 1 90px; min-width: 90px; display: flex; justify-content: center;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 90px; min-width: 90px; display: flex; justify-content: center;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    statusDown
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 0 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .ui-tooltip--underline > ._3ZT6FhS8zuiHfgB0PXtJOI'
+      )
+      .should("contain","Cancelled (slippage)");
+    const inactiveUp = cy
+      .get(
+        '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    inactiveUp
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 0 1 160px; min-width: 80px;"] > .virtable__cellwrapper'
+      )
+      .should(($val5) => {
+        expect($val5).not.to.be.null;
+      });
+    const inactiveDown = cy
+      .get(
+        '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      );
+    inactiveDown
+      .click()
+      .get(
+        '[aria-rowindex="1"] > [style="flex: 0 1 160px; min-width: 80px;"] > .virtable__cellwrapper'
+      )
+      .should(($val6) => {
+        expect($val6).not.to.be.null;
+      });
+    return this;
   }
 }
 export default TradesTable;
