@@ -49,12 +49,13 @@ class sellFillKill {
           .get('[href="/t/BTC:USD"]')
           .last();
         selectTicker.click();
-        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
-          .first()
+        cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
           .then(($btn) => {
             let txt = $btn.text();
+            var pointNum = parseInt(txt);
+            var amount = pointNum * 1005;
             const distanceUSD = cy.get('[name="price"]');
-            distanceUSD.type(`${txt}`);
+            distanceUSD.type(`${amount}`);
             const amountBTC = cy.get('[name="amount"]');
             amountBTC.type(data.btc);
             const orderFrom = cy
@@ -68,7 +69,10 @@ class sellFillKill {
   }
   sellButton() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click();
+    exchangeSell.click()
+    .get('.ui-modaldialog__footer')
+    .get('.ui-modaldialog__footer > .ui-button--green')
+    .click()
     return this;
   }
   successMsg() {

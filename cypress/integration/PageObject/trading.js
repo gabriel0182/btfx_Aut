@@ -236,10 +236,14 @@ class trading {
       ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
     );
     checkMaxbuy.click();
-    const compare = cy
-      .get(
-        '[style="height: 420px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(2) > .trigger-ledger-modal > div > .trigger > .avail'
-      )
+    const compare = 
+    cy.get('#balances-search-input')
+    .type('USD{enter}')
+      .get('span.table-vir__cell')
+      .get('div.selectable')
+      .get('span.ui-tooltip--cursor-pointer')
+      .get('span.total')
+      .first()
       .then(($val) => {
         const txt = $val.text();
         var pointNum = parseFloat(txt);

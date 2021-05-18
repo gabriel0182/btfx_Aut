@@ -53,15 +53,14 @@ class sellImmediateCancel {
           .last();
         selectTicker.click();
         //Read the current BTC/USD price
-        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
+        cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
         .then(
           ($btn) => {
             const txt = $btn.text();
             var pointNum = parseInt(txt);
-            var amout = pointNum * 900;
-            var value = amout + 100;
+            var amount = pointNum * 1005;
             const distanceUSD = cy.get('[name="price"]');
-            distanceUSD.type(txt);
+            distanceUSD.type(amount);
             const amountBTC = cy.get('[name="amount"]');
             amountBTC.type(data.btc);
             const orderFrom = cy
@@ -76,7 +75,10 @@ class sellImmediateCancel {
   }
   sellButton() {
     const exchangeSell = cy.get("#sellButton");
-    exchangeSell.click();
+    exchangeSell.click()
+    .get('.ui-modaldialog__footer')
+    .get('.ui-modaldialog__footer > .ui-button--green')
+    .click()
         return this;
   }
   successMsg() {

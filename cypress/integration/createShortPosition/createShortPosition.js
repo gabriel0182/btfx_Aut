@@ -21,5 +21,6 @@ When("I fill out all the required fields", () => {
 
 Then("I verify the position was created", () => {
   pst.successMsg();
+  pst.testSortingPositions();
   pst.cancelPosition();
 });
