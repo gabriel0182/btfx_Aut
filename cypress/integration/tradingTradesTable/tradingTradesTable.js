@@ -3,6 +3,7 @@
 import login from "../PageObject/login.js";
 import TradesTable from "../PageObject/TradesTable.js";
 import trading from "../PageObject/trading.js";
+import sellScaled from "../PageObject/sellScaled.js";
 
 const staging = new login();
 const trades = new TradesTable();
@@ -18,7 +19,7 @@ When("I Select a currency", () => {
 });
 
 When("Test table sorting in all areas", () => {
-trades.sortingOrderHistory();
+  trades.sortingOrderHistory();
 });
 
 Then("I verify the trading table Market", () => {
@@ -26,5 +27,5 @@ Then("I verify the trading table Market", () => {
 });
 
 Then("I verify the trading table yours", () => {
-    trades.validateYours();
+  trades.validateYours();
 });

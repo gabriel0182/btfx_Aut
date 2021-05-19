@@ -118,13 +118,18 @@ class buyScaled {
         cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
           ($btn) => {
             const txt1 = $btn.text();
-            cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
-              ($btn) => {
+            cy.get(
+              "#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span"
+            )
+              .first()
+              .then(($btn) => {
                 const txt2 = $btn.text();
+                var pointNum = parseInt(txt2);
+                var amount = pointNum * 1005;
                 const lowerUSD = cy.get("#priceinput3");
-                lowerUSD.type(txt1);
+                lowerUSD.type(txt2);
                 const uperUSD = cy.get("#priceinput4");
-                uperUSD.type(txt2);
+                uperUSD.type(amount);
                 const amountBTC = cy.get("#amountinput5");
                 amountBTC.type(data.btc);
                 const count = cy.get(
@@ -143,8 +148,7 @@ class buyScaled {
                   .get("#form-choose-exchange")
                   .contains(data.wallet1);
                 orderFrom.click();
-              }
-            );
+              });
           }
         );
       });
@@ -193,6 +197,217 @@ class buyScaled {
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-side-buy"] > .filter-select__selection-label'
     );
     appliedSide.should("contain", "Bids");
+    return this;
+  }
+  sortingOrdersTable() {
+    const pairUp = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 1 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 1 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 160px; min-width: 160px; max-width: 160px;"]'
+      )
+      .first()
+      .should("contain", "BTC/USD");
+    const pairDown = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 1 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 1 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 160px; min-width: 160px; max-width: 160px;"]'
+      )
+      .first()
+      .should("contain", "BTC/USD");
+    const contextUp = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > [style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > [style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '[style="height: 75px; width: 100%;"] > .table-vir__row-odd > [style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]'
+      )
+      .should("contain", "Exchange");
+    const contextDown = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > [style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > [style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '[style="height: 75px; width: 100%;"] > .table-vir__row-odd > [style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]'
+      )
+      .should("contain", "Exchange");
+    const typeUp = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 0 1 71px; min-width: 71px; max-width: 71px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 71px; min-width: 71px; max-width: 71px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 130px; min-width: 90px; max-width: 400px;"] > .virtable__cellwrapper > [style="line-height: 25px;"] > .pval-nopad > span'
+      )
+      .should(($val) => {
+        expect($val).not.to.be.null;
+      });
+    const typeDown = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 0 1 71px; min-width: 71px; max-width: 71px;"] > .table__title-titlewrapper'
+      )
+      .get(
+        '[style="flex: 0 1 71px; min-width: 71px; max-width: 71px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 130px; min-width: 90px; max-width: 400px;"] > .virtable__cellwrapper > [style="line-height: 25px;"] > .pval-nopad > span'
+      )
+      .should(($val) => {
+        expect($val).not.to.be.null;
+      });
+    const priceUp = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(6)'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(6) > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(".table-vir__row-odd > :nth-child(6) > .virtable__cellwrapper")
+      .should(($val) => {
+        expect($val).not.to.be.null;
+      });
+    const priceDown = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(6)'
+      )
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(6) > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(".table-vir__row-odd > :nth-child(6) > .virtable__cellwrapper")
+      .should(($val) => {
+        expect($val).not.to.be.null;
+      });
+    const statusUp = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 1 1 90px; min-width: 90px; display: flex; justify-content: center;"]'
+      )
+      .get(
+        '[style="flex: 1 1 90px; min-width: 90px; display: flex; justify-content: center;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY'
+      )
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .trigger > ._3ZT6FhS8zuiHfgB0PXtJOI'
+      )
+      .should("contain", "Active");
+    const statusDown = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 1 1 90px; min-width: 90px; display: flex; justify-content: center;"]'
+      )
+      .get(
+        '[style="flex: 1 1 90px; min-width: 90px; display: flex; justify-content: center;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY'
+      )
+      .get(
+        '.table-vir__row-odd > [style="flex: 1 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .trigger > ._3ZT6FhS8zuiHfgB0PXtJOI'
+      )
+      .should("contain", "Active");
+    const placedUp = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 0 1 140px; min-width: 120px; max-width: 140px; display: flex; justify-content: flex-end;"]'
+      )
+      .get(
+        '[style="flex: 0 1 140px; min-width: 120px; max-width: 140px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 0 1 140px; min-width: 120px; max-width: 140px;"] > .virtable__cellwrapper'
+      )
+      .should(($val) => {
+        expect($val).not.to.be.null;
+      });
+    const placedDown = cy
+      .get(
+        '[data-qa-id="orders-table"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header'
+      )
+      .get(
+        '[style="flex: 0 1 140px; min-width: 120px; max-width: 140px; display: flex; justify-content: flex-end;"]'
+      )
+      .get(
+        '[style="flex: 0 1 140px; min-width: 120px; max-width: 140px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
+      )
+      .click()
+      .get('[style="height: 75px; width: 100%;"] > .table-vir__row-odd')
+      .get(
+        '.table-vir__row-odd > [style="flex: 0 1 140px; min-width: 120px; max-width: 140px;"] > .virtable__cellwrapper'
+      )
+      .should(($val) => {
+        expect($val).not.to.be.null;
+      });
     return this;
   }
   cancelOrder() {

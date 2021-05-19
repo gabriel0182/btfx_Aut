@@ -53,7 +53,7 @@ class sellImmediateCancel {
           .last();
         selectTicker.click();
         //Read the current BTC/USD price
-        cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
+        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
         .then(
           ($btn) => {
             const txt = $btn.text();

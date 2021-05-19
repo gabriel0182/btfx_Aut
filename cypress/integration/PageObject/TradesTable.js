@@ -69,21 +69,33 @@ class TradesTable {
   }
   sortingOrderHistory() {
     const pairUp = cy
-      .get(
-        '[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    pairUp.click();
-    const pairDown = cy
-      .get(
-        '[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    pairDown.click();
+    .get('div.themed-border')
+    .get('div.table-vir__cell-sortable')
+    .within(()=>{
+      cy.get('span.table__title-titlewrapper')
+      .contains('Pair')
+      .click()
+    })
+    .get('[aria-rowindex="1"]')
+      .get('div.table-vir__row-even')
+      .get('span.table-vir__cell>')
+      .first()
+      .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
+      .should('contain','BTC/USD')
+    const pairDown =  cy
+    .get('div.themed-border')
+    .get('div.table-vir__cell-sortable')
+    .within(()=>{
+      cy.get('span.table__title-titlewrapper')
+      .contains('Pair')
+      .click()
+    })
+    .get('[aria-rowindex="1"]')
+      .get('div.table-vir__row-even')
+      .get('span.table-vir__cell>')
+      .first()
+      .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
+      .should('contain','BTC/USD')
     const contextUp = cy
       .get(
         '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper'
@@ -93,11 +105,11 @@ class TradesTable {
       );
     contextUp
       .click()
-      .get('[style="height: 5000px; width: 100%;"] > [aria-rowindex="1"]')
-      .get(
-        '[style="height: 5000px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(3)'
-      )
+      .get('[aria-rowindex="1"]')
+      .get('div.table-vir__row-even')
+      .get('span.table-vir__cell>')
       .first()
+      .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
       .should("contain", "Exchange");
     const contextDown = cy
       .get(
@@ -108,11 +120,11 @@ class TradesTable {
       );
     contextDown
       .click()
-      .get('[style="height: 5000px; width: 100%;"] > [aria-rowindex="1"]')
-      .get(
-        '[style="height: 5000px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(3)'
-      )
+      .get('[aria-rowindex="1"]')
+      .get('div.table-vir__row-even')
+      .get('span.table-vir__cell>')
       .first()
+      .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
       .should("contain", "Margin");
     const typeUp = cy
       .get(
@@ -301,7 +313,7 @@ class TradesTable {
       .get(
         '[aria-rowindex="1"] > [style="flex: 0 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .ui-tooltip--underline > ._3ZT6FhS8zuiHfgB0PXtJOI'
       )
-      .should("contain","Cancelled (slippage)");
+      .should("contain","Ioc canceled");
     const inactiveUp = cy
       .get(
         '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'

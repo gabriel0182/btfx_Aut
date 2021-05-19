@@ -49,7 +49,7 @@ class sellFillKill {
           .get('[href="/t/BTC:USD"]')
           .last();
         selectTicker.click();
-        cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
+        cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
           .then(($btn) => {
             let txt = $btn.text();
             var pointNum = parseInt(txt);

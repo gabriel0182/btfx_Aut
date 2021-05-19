@@ -97,7 +97,10 @@ class buyImmediateCancel {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton");
-    exchangeBuy.click();
+    exchangeBuy.click()
+    .get('.ui-modaldialog__footer')
+    .get('.ui-modaldialog__footer > .ui-button--green')
+    .click();
     return this;
   }
   successMsg() {

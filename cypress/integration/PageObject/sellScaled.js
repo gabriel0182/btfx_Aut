@@ -55,9 +55,9 @@ class sellScaled {
           .get('[href="/t/BTC:USD"]')
           .last();
         selectTicker.click();
-        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+        cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').then(($btn) => {
           const txt1 = $btn.text();
-          cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+          cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').then(($btn) => {
             const txt2 = $btn.text();
             var pointNum = parseInt(txt2);
             var amout = pointNum * 1030;
