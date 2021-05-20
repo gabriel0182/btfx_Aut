@@ -83,9 +83,9 @@ class buyImmediateCancel {
           .then(($btn) => {
             const txt = $btn.text();
             var pointNum = parseInt(txt);
-            var amount = pointNum * 1012;
+            var amount = pointNum * 1015;
             const distanceUSD = cy.get('[name="price"]');
-            distanceUSD.type(txt);
+            distanceUSD.type(amount);
             const amountBTC = cy.get('[name="amount"]');
             amountBTC.type(data.btc);
             const orderFrom = cy

@@ -17,5 +17,3 @@ Feature: Test Trading Page page
     Then I verify the alerts in order book table
 
     Then I verify the order book precision and aggregation
-
-    Then I Verify Balance table is shown

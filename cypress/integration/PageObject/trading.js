@@ -236,36 +236,24 @@ class trading {
       ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
     );
     checkMaxbuy.click();
-    const compare = 
-    cy.get('#balances-search-input')
-    .type('USD{enter}')
-      .get('span.table-vir__cell')
-      .get('div.selectable')
-      .get('span.ui-tooltip--cursor-pointer')
-      .get('span.total')
-      .first()
+    const compareBuy = cy
+    .get('[style="height: 672px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(2) > .trigger-ledger-modal > :nth-child(2) > .trigger > .avail')
       .then(($val) => {
-        const txt = $val.text();
+        const txt = $val.text()
         var pointNum = parseFloat(txt);
-        cy.get("#amountinput2")
-          .get("input#amountinput2.ui-labeledinput__input")
-          .should("contain.value", `${pointNum}`);
-      });
-    const checkMaxAsk = cy.get(
-      ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa"
-    );
+        cy.get('#amountinput2')
+        .get('input#amountinput2')
+        .should('contain.value',pointNum)
+    const checkMaxAsk = cy
+    .get(':nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator')
+    .get(':nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa')
     checkMaxAsk.click();
-    const compareAsk = cy
-      .get(
-        '[aria-rowindex="2"] > :nth-child(2) > .trigger-ledger-modal > div > .trigger > .avail'
-      )
-      .then(($val) => {
-        const txt = $val.text();
-        var pointNum = parseFloat(txt);
         cy.get("#amountinput2")
-          .get("input#amountinput2.ui-labeledinput__input")
-          .should("contain.value", `${pointNum}`);
-      });
+          .get('input.ui-labeledinput__input')
+          .should(($val) => {
+            expect($val).not.to.be.null;
+          });
+        });
     return this;
   }
   increaseDecreasePrecision() {

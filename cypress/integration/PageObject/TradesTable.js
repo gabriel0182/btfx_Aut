@@ -313,7 +313,7 @@ class TradesTable {
       .get(
         '[aria-rowindex="1"] > [style="flex: 0 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .ui-tooltip--underline > ._3ZT6FhS8zuiHfgB0PXtJOI'
       )
-      .should("contain","Ioc canceled");
+      .should("contain","Executed");
     const inactiveUp = cy
       .get(
         '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
