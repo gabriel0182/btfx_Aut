@@ -1,4 +1,5 @@
-[{
+[
+  {
     "wallet1": "Exchange",
     "wallet2": "Margin",
     "type1": "Stop",
@@ -13,12 +14,14 @@
     "price2": "35000",
     "btc": "0.0001",
     "min": "0.0000001",
-    "max":"99999999999",
+    "max": "99999999999",
     "orderCount": 2,
     "amountVariance": 1,
     "priceVariance": 1,
     "ticker": "BTC",
     "tranfer": "USD",
-    "tranferAmt": "1.0"
-
-}]
+    "tranferAmt": "1.0",
+    "hiddenAmt": "0.1",
+    "sellPartiall": "0.05"
+  }
+]

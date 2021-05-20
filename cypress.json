@@ -24,7 +24,8 @@
       "buyLimitBookExch.feature",
       "sellLimitBookExc.feature",
       "buyScaledExchange.feature",
-      "sellScaledExchange.feature"
+      "sellScaledExchange.feature",
+      "testPartialHidden.feature"
     ],
     "viewportWidth": 1280,
   "viewportHeight": 720,

@@ -82,6 +82,8 @@ class buyImmediateCancel {
         cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
           .then(($btn) => {
             const txt = $btn.text();
+            var pointNum = parseInt(txt);
+            var amount = pointNum * 1012;
             const distanceUSD = cy.get('[name="price"]');
             distanceUSD.type(txt);
             const amountBTC = cy.get('[name="amount"]');
