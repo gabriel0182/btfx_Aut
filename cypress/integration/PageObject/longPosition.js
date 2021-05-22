@@ -29,7 +29,7 @@ class longPosition {
           .get(".themed-react-select__value-container")
           .should('be.visible')
         )
-        selectType.type(`${data.type}{enter}{enter}`)
+        selectType.type(`${data.type}{enter}{enter}`).blur({force:true})
         const Long = cy.waitUntil(() =>
           cy
             .get(".ui-radioinput > :nth-child(1)")

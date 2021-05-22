@@ -29,7 +29,7 @@ class shortPosition {
             .get(".themed-react-select__value-container")
             .should("be.visible")
         );
-        selectType.type(`${data.type}{enter}`);
+        selectType.type(`${data.type}{enter}`).blur({force:true})
         const short = cy.waitUntil(() =>
           cy
             .get("div.ui-radioinput")
