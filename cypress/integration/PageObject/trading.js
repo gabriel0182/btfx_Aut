@@ -236,8 +236,9 @@ class trading {
       ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
     );
     checkMaxbuy.click();
-    const compareBuy = cy
-    .get('[style="height: 672px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(2) > .trigger-ledger-modal > :nth-child(2) > .trigger > .avail')
+    const compareBuy = cy.get('#balances-search-input')
+    .type('USD','{enter}')
+    .get('[data-qa-id="balancesTable"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .custom-scrollbar > [style="height: 64px; width: 100%;"] > .table-vir__row-even > :nth-child(2) > .trigger-ledger-modal > :nth-child(2) > .trigger > .avail')
       .then(($val) => {
         const txt = $val.text()
         var pointNum = parseFloat(txt);
