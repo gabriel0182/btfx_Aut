@@ -75,10 +75,11 @@ class buyStop {
         );
         const searchTicker = cy.get("#ticker-search-input");
         searchTicker.type(`${data.ticker}{enter}`);
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
           cy.get(":nth-child(2) > h5 > span").then(($btn) => {
             const txt = $btn.text();
             var pointNum = parseInt(txt);

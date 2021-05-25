@@ -22,12 +22,13 @@ class trading {
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
         const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
-      });
-    });
+        .get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
+      })
+    })
     const mainticker = cy.waitUntil(() =>
       cy
         .get(".main-ticker__container")

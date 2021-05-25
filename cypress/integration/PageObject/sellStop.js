@@ -38,10 +38,11 @@ class sellStop {
         );
         const searchTicker = cy.get("#ticker-search-input");
         searchTicker.type(`${data.ticker}{enter}`);
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
           cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
         .then(($btn) => {
           const txt = $btn.text();

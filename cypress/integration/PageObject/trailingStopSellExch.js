@@ -46,11 +46,11 @@ class trailingStopSellExch {
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
+          const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+          .within(()=>{
+            cy.get('[href="/t/BTC:USD"]')
+            .click()
+          })
         //Read the current BTC/USD price
         cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
           ($btn) => {

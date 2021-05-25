@@ -69,33 +69,27 @@ class TradesTable {
   }
   sortingOrderHistory() {
     const pairUp = cy
-    .get('div.themed-border')
-    .get('div.table-vir__cell-sortable')
-    .within(()=>{
-      cy.get('span.table__title-titlewrapper')
-      .contains('Pair')
-      .click()
-    })
-    .get('[aria-rowindex="1"]')
-      .get('div.table-vir__row-even')
-      .get('span.table-vir__cell>')
+      .get("div.themed-border")
+      .get("div.table-vir__cell-sortable")
+      .within(() => {
+        cy.get("span.table__title-titlewrapper").contains("Pair").click();
+      })
+      .get('[aria-rowindex="1"]')
       .first()
       .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
-      .should('contain','BTC/USD')
-    const pairDown =  cy
-    .get('div.themed-border')
-    .get('div.table-vir__cell-sortable')
-    .within(()=>{
-      cy.get('span.table__title-titlewrapper')
-      .contains('Pair')
-      .click()
-    })
-    .get('[aria-rowindex="1"]')
-      .get('div.table-vir__row-even')
-      .get('span.table-vir__cell>')
+      .get(':nth-child(1) > span')
+        .should("contain", "BTC/USD")
+    const pairDown = cy
+      .get("div.themed-border")
+      .get("div.table-vir__cell-sortable")
+      .within(() => {
+        cy.get("span.table__title-titlewrapper").contains("Pair").click();
+      })
+      .get('[aria-rowindex="1"]')
       .first()
       .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
-      .should('contain','BTC/USD')
+      .get(':nth-child(1) > span')
+        .should("contain", "BTC/USD")
     const contextUp = cy
       .get(
         '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper'
@@ -106,11 +100,10 @@ class TradesTable {
     contextUp
       .click()
       .get('[aria-rowindex="1"]')
-      .get('div.table-vir__row-even')
-      .get('span.table-vir__cell>')
       .first()
-      .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
-      .should("contain", "Exchange");
+        .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
+        .get(':nth-child(1) > span')
+        .should("contain", "BTC/USD");
     const contextDown = cy
       .get(
         '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper'
@@ -121,11 +114,12 @@ class TradesTable {
     contextDown
       .click()
       .get('[aria-rowindex="1"]')
-      .get('div.table-vir__row-even')
-      .get('span.table-vir__cell>')
       .first()
-      .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
-      .should("contain", "Margin");
+        .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
+        .get(':nth-child(1) > span')
+        .should(($val) => {
+          expect($val).not.to.be.null;
+        });
     const typeUp = cy
       .get(
         '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(4) > .table__title-titlewrapper'
@@ -135,14 +129,11 @@ class TradesTable {
       );
     typeUp
       .click()
-      .get('[style="height: 5000px; width: 100%;"] > [aria-rowindex="1"]')
-      .within(() => {
-        cy.get("span.table-vir__cell")
-          .get(":nth-child(4)")
-          .first()
-          .invoke("text")
-          .should("contain", "Fill or kill");
-      });
+      .get('[aria-rowindex="1"]')
+      .first()
+        .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
+        .get(':nth-child(1) > span')
+        .should("contain", "Fill or kill");
     const typeDown = cy
       .get(
         '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(4) > .table__title-titlewrapper'
@@ -152,14 +143,11 @@ class TradesTable {
       );
     typeDown
       .click()
-      .get('[style="height: 5000px; width: 100%;"] > [aria-rowindex="1"]')
-      .within(() => {
-        cy.get("span.table-vir__cell")
-          .get(":nth-child(4)")
-          .first()
-          .invoke("text")
-          .should("contain", "Trailing stop");
-      });
+      .get('[aria-rowindex="1"]')
+      .first()
+        .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
+        .get(':nth-child(1) > span')
+        .should("contain", "Trailing stop");
     const amountUp = cy
       .get(
         '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
@@ -169,15 +157,13 @@ class TradesTable {
       );
     amountUp
       .click()
-      .get("span.table-vir__cell")
-      .within(() => {
-        cy.get("div.virtable__cellwrapper.virtable__cellwrapper--rightalign")
+      .get('[aria-rowindex="1"]')
+      .first()
           .get('span[style="line-height: 20px;"]')
-          .first()
+          .get(':nth-child(1) > span')
           .should(($val) => {
             expect($val).not.to.be.null;
-          });
-      });
+          })
     const amountDown = cy
       .get(
         '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
@@ -187,15 +173,13 @@ class TradesTable {
       );
     amountDown
       .click()
-      .get("span.table-vir__cell")
-      .within(() => {
-        cy.get("div.virtable__cellwrapper.virtable__cellwrapper--rightalign")
+      .get('[aria-rowindex="1"]')
+      .first()
           .get('span[style="line-height: 20px;"]')
-          .first()
+          .get(':nth-child(1) > span')
           .should(($val) => {
             expect($val).not.to.be.null;
           });
-      });
     const ccyUp = cy
       .get(
         '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper'
@@ -206,7 +190,6 @@ class TradesTable {
     ccyUp
       .click()
       .get('[aria-rowindex="1"]')
-      .get("span.table-vir__cell")
       .get(
         '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50'
       )
@@ -222,7 +205,6 @@ class TradesTable {
     ccyDown
       .click()
       .get('[aria-rowindex="1"]')
-      .get("span.table-vir__cell")
       .get(
         '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50'
       )
@@ -313,7 +295,7 @@ class TradesTable {
       .get(
         '[aria-rowindex="1"] > [style="flex: 0 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .ui-tooltip--underline > ._3ZT6FhS8zuiHfgB0PXtJOI'
       )
-      .should("contain","Executed");
+      .should("contain", "Executed");
     const inactiveUp = cy
       .get(
         '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'

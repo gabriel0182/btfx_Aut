@@ -49,11 +49,11 @@ class sellStopLimitExch {
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
+          const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+          .within(()=>{
+            cy.get('[href="/t/BTC:USD"]')
+            .click()
+          })
         cy.get(
           "#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span"
         )
