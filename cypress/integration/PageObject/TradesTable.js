@@ -194,7 +194,9 @@ class TradesTable {
         '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50'
       )
       .first()
-      .should("contain", "BTC");
+      .should(($val1) => {
+        expect($val1).not.to.be.null;
+      });
     const ccyDown = cy
       .get(
         '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .table__title-titlewrapper'
@@ -295,7 +297,9 @@ class TradesTable {
       .get(
         '[aria-rowindex="1"] > [style="flex: 0 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > .ui-tooltip--underline > ._3ZT6FhS8zuiHfgB0PXtJOI'
       )
-      .should("contain", "Executed");
+      .should(($val1) => {
+        expect($val1).not.to.be.null;
+      });
     const inactiveUp = cy
       .get(
         '[style="flex: 0 1 160px; min-width: 80px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
