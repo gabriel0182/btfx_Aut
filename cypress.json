@@ -25,7 +25,8 @@
       "sellLimitBookExc.feature",
       "buyScaledExchange.feature",
       "sellScaledExchange.feature",
-      "testPartialHidden.feature"
+      "testPartialHidden.feature",
+      "fundingCreateBid.feature"
     ],
     "viewportWidth": 1280,
   "viewportHeight": 720,
