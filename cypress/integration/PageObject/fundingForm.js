@@ -1,4 +1,4 @@
-class fundingBid {
+class fundingForm {
   goFundingPage() {
     const fundingTab = cy.waitUntil(() =>
       cy
@@ -113,6 +113,10 @@ class fundingBid {
       .get(".ui-modaldialog__footer")
       .get(".ui-modaldialog__footer > .ui-button--green")
       .click()
+      .get("div.bfx-ui-of-sr")
+      .within(() => {
+        cy.get("button.ui-button--green").click();
+      })
       const notification = cy.waitUntil(()=>
       cy.get(".notification-text__text")
       .should("contain", "Invalid offer: incorrect amount, minimum is 50 dollar or equivalent in USD.")
@@ -136,6 +140,10 @@ class fundingBid {
       .get(".ui-modaldialog__footer")
       .get(".ui-modaldialog__footer > .ui-button--green")
       .click()
+      .get("div.bfx-ui-of-sr")
+      .within(() => {
+        cy.get("button.ui-button--green").click();
+      })
       .get(".notification-text__text")
       .should("contain", "Invalid offer: minimum lending period is 2 days.")
       .get(".notification__skip")
@@ -157,11 +165,111 @@ class fundingBid {
       .get(".ui-modaldialog__footer")
       .get(".ui-modaldialog__footer > .ui-button--green")
       .click()
+      .get("div.bfx-ui-of-sr")
+      .within(() => {
+        cy.get("button.ui-button--green").click();
+      })
       .get(".notification-text__text")
       .should("contain", "Invalid offer: maximum lending period is 120 days.")
       .get(".notification__skip")
       .click({ multiple: true }, { force: true });
     return this;
   }
+  validateFundingForm(){
+    const hidden = 
+    cy
+    .get('div.offerform__checkboxwrapper')
+    .within(()=>{
+      cy.get(':nth-child(1) > label')
+      .should('be.visible',true)
+      .and('contain.text','Hidden')
+    })
+    const ffr = 
+    cy
+    .get('div.offerform__checkboxwrapper')
+    .within(()=>{
+      cy.get(':nth-child(2) > label')
+      .should('be.visible',true)
+      .and('contain.text','FRR')
+      .click().blur({force:true})
+    })
+    .get('div.offerform__checkboxwrapper')
+    .within(()=>{
+      cy.get(':nth-child(3) > label')
+      .should('have.attr','aria-checked','false')
+      .get('div.ui-labeledcheckbox__container.small.disabled')
+      .first()
+      .should('be.visible')
+      })
+      .get('div.offerform__checkboxwrapper')
+    .within(()=>{
+      cy.get(':nth-child(4) > label')
+      .should('have.attr','aria-checked','false')
+      .get('div.ui-labeledcheckbox__container.small.disabled')
+      .last()
+      .should('be.visible')
+      })
+      const frrVariable = cy
+      .get('div.offerform__checkboxwrapper')
+      .within(()=>{
+        cy.get(':nth-child(2) > label')
+        .click().blur({force:true})
+      })
+      cy
+    .get('div.offerform__checkboxwrapper')
+    .within(()=>{
+      cy.get(':nth-child(3) > label')
+      .should('be.visible',true)
+      .and('contain.text','FRR Δ VARIABLE')
+      .click().blur({force:true})
+    })
+    .get('div.offerform__checkboxwrapper')
+    .within(()=>{
+      cy.get(':nth-child(2) > label')
+      .should('have.attr','aria-checked','false')
+      .get('div.ui-labeledcheckbox__container.small.disabled')
+      .last()
+      .should('be.visible')
+      })
+      .get('div.offerform__checkboxwrapper')
+      .within(()=>{
+        cy.get(':nth-child(4) > label')
+        .should('have.attr','aria-checked','false')
+        .get('div.ui-labeledcheckbox__container.small.disabled')
+        .last()
+        .should('be.visible')
+        })
+        const frrFixed = cy
+        .get('div.offerform__checkboxwrapper')
+        .within(()=>{
+          cy.get(':nth-child(3) > label')
+          .click().blur({force:true})
+        })
+        cy
+      .get('div.offerform__checkboxwrapper')
+      .within(()=>{
+        cy.get(':nth-child(4) > label')
+        .should('be.visible',true)
+        .and('contain.text','FRR Δ FIXED')
+        .click().blur({force:true})
+      })
+      .get('div.offerform__checkboxwrapper')
+      .within(()=>{
+        cy.get(':nth-child(2) > label')
+        .should('have.attr','aria-checked','false')
+        .get('div.ui-labeledcheckbox__container.small.disabled')
+        .last()
+        .should('be.visible')
+        })
+        .get('div.offerform__checkboxwrapper')
+        .within(()=>{
+          cy.get(':nth-child(3) > label')
+          .should('have.attr','aria-checked','false')
+          .get('div.ui-labeledcheckbox__container.small.disabled')
+          .last()
+          .should('be.visible')
+          })
+    return this;
+  }
 }
-export default fundingBid;
+export default fundingForm;

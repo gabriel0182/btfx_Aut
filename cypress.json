@@ -26,14 +26,13 @@
       "buyScaledExchange.feature",
       "sellScaledExchange.feature",
       "testPartialHidden.feature",
-      "fundingCreateBid.feature"
+      "testFundingForm.feature"
     ],
     "viewportWidth": 1280,
   "viewportHeight": 720,
-  "screenshotOnRunFailure": true,
-  "videoUploadOnPasses": true,
-  "videoCompression": 0,
-  "defaultCommandTimeout":50000,
+  "screenshotOnRunFailure": false,
+  "videoUploadOnPasses": false,
+  "defaultCommandTimeout":30000,
   "numTestsKeptInMemory": 0,
   "responseTimeout": 10000,
   "requestTimeout": 10000,

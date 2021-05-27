@@ -43,7 +43,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
   );
   cy.on("uncaught:exception", (err, runnable) => {
     expect(err.message).to.include("t._innerWindow(...).widgetReady");
-    return false;
+    return true;
   })
     .get("#book-bids > .book__rows")
     .should("be.visible");

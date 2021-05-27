@@ -91,28 +91,28 @@ class TradesTable {
       .get(':nth-child(1) > span')
         .should("contain", "BTC/USD")
     const contextUp = cy
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    contextUp
+    .get('div.custom-scrollbar')
+    .within(()=>{
+      cy
+      .get('div.table-vir__cell-sortable')
+      .get('span.table__title-titlewrapper')
+      .contains('Context')
       .click()
-      .get('[aria-rowindex="1"]')
+    })
+          .get('[aria-rowindex="1"]')
       .first()
         .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
         .get(':nth-child(1) > span')
         .should("contain", "BTC/USD");
     const contextDown = cy
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(3) > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    contextDown
+    .get('div.custom-scrollbar')
+    .within(()=>{
+      cy
+      .get('div.table-vir__cell-sortable')
+      .get('span.table__title-titlewrapper')
+      .contains('Context')
       .click()
+    })
       .get('[aria-rowindex="1"]')
       .first()
         .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
