@@ -96,7 +96,7 @@ class fundingForm {
       .should("contain", "Amount is negative")
       .get(".notification__skip")
       .click({ multiple: true }, { force: true });
-      const validateMinAmount = cy
+    const validateMinAmount = cy
       .get("input#rateInput")
       .clear()
       .type("1")
@@ -116,13 +116,17 @@ class fundingForm {
       .get("div.bfx-ui-of-sr")
       .within(() => {
         cy.get("button.ui-button--green").click();
-      })
-      const notification = cy.waitUntil(()=>
-      cy.get(".notification-text__text")
-      .should("contain", "Invalid offer: incorrect amount, minimum is 50 dollar or equivalent in USD.")
-      .get(".notification__skip")
-      .click({ multiple: true }, { force: true })
-      );
+      });
+    const notification = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should(
+          "contain",
+          "Invalid offer: incorrect amount, minimum is 50 dollar or equivalent in USD."
+        )
+        .get(".notification__skip")
+        .click({ multiple: true }, { force: true })
+    );
     const validateMinPeriod = cy
       .get("input#rateInput")
       .clear()
@@ -148,7 +152,7 @@ class fundingForm {
       .should("contain", "Invalid offer: minimum lending period is 2 days.")
       .get(".notification__skip")
       .click({ multiple: true }, { force: true });
-      const validateMaxPeriod = cy
+    const validateMaxPeriod = cy
       .get("input#rateInput")
       .clear()
       .type("1")
@@ -175,100 +179,146 @@ class fundingForm {
       .click({ multiple: true }, { force: true });
     return this;
   }
-  validateFundingForm(){
-    const hidden = 
-    cy
-    .get('div.offerform__checkboxwrapper')
-    .within(()=>{
-      cy.get(':nth-child(1) > label')
-      .should('be.visible',true)
-      .and('contain.text','Hidden')
-    })
-    const ffr = 
-    cy
-    .get('div.offerform__checkboxwrapper')
-    .within(()=>{
-      cy.get(':nth-child(2) > label')
-      .should('be.visible',true)
-      .and('contain.text','FRR')
-      .click().blur({force:true})
-    })
-    .get('div.offerform__checkboxwrapper')
-    .within(()=>{
-      cy.get(':nth-child(3) > label')
-      .should('have.attr','aria-checked','false')
-      .get('div.ui-labeledcheckbox__container.small.disabled')
-      .first()
-      .should('be.visible')
+  validateFundingForm() {
+    const hidden = cy.get("div.offerform__checkboxwrapper").within(() => {
+      cy.get(":nth-child(1) > label")
+        .should("be.visible", true)
+        .and("contain.text", "Hidden");
+    });
+    const ffr = cy
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(2) > label")
+          .should("be.visible", true)
+          .and("contain.text", "FRR")
+          .click()
+          .blur({ force: true });
       })
-      .get('div.offerform__checkboxwrapper')
-    .within(()=>{
-      cy.get(':nth-child(4) > label')
-      .should('have.attr','aria-checked','false')
-      .get('div.ui-labeledcheckbox__container.small.disabled')
-      .last()
-      .should('be.visible')
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(3) > label")
+          .should("have.attr", "aria-checked", "false")
+          .get("div.ui-labeledcheckbox__container.small.disabled")
+          .first()
+          .should("be.visible");
       })
-      const frrVariable = cy
-      .get('div.offerform__checkboxwrapper')
-      .within(()=>{
-        cy.get(':nth-child(2) > label')
-        .click().blur({force:true})
-      })
-      cy
-    .get('div.offerform__checkboxwrapper')
-    .within(()=>{
-      cy.get(':nth-child(3) > label')
-      .should('be.visible',true)
-      .and('contain.text','FRR Δ VARIABLE')
-      .click().blur({force:true})
-    })
-    .get('div.offerform__checkboxwrapper')
-    .within(()=>{
-      cy.get(':nth-child(2) > label')
-      .should('have.attr','aria-checked','false')
-      .get('div.ui-labeledcheckbox__container.small.disabled')
-      .last()
-      .should('be.visible')
-      })
-      .get('div.offerform__checkboxwrapper')
-      .within(()=>{
-        cy.get(':nth-child(4) > label')
-        .should('have.attr','aria-checked','false')
-        .get('div.ui-labeledcheckbox__container.small.disabled')
-        .last()
-        .should('be.visible')
-        })
-        const frrFixed = cy
-        .get('div.offerform__checkboxwrapper')
-        .within(()=>{
-          cy.get(':nth-child(3) > label')
-          .click().blur({force:true})
-        })
-        cy
-      .get('div.offerform__checkboxwrapper')
-      .within(()=>{
-        cy.get(':nth-child(4) > label')
-        .should('be.visible',true)
-        .and('contain.text','FRR Δ FIXED')
-        .click().blur({force:true})
-      })
-      .get('div.offerform__checkboxwrapper')
-      .within(()=>{
-        cy.get(':nth-child(2) > label')
-        .should('have.attr','aria-checked','false')
-        .get('div.ui-labeledcheckbox__container.small.disabled')
-        .last()
-        .should('be.visible')
-        })
-        .get('div.offerform__checkboxwrapper')
-        .within(()=>{
-          cy.get(':nth-child(3) > label')
-          .should('have.attr','aria-checked','false')
-          .get('div.ui-labeledcheckbox__container.small.disabled')
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(4) > label")
+          .should("have.attr", "aria-checked", "false")
+          .get("div.ui-labeledcheckbox__container.small.disabled")
           .last()
-          .should('be.visible')
-          })
+          .should("be.visible");
+      });
+    const frrVariable = cy.get("div.offerform__checkboxwrapper").within(() => {
+      cy.get(":nth-child(2) > label").click().blur({ force: true });
+    });
+    cy.get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(3) > label")
+          .should("be.visible", true)
+          .and("contain.text", "FRR Δ VARIABLE")
+          .click()
+          .blur({ force: true });
+      })
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(2) > label")
+          .should("have.attr", "aria-checked", "false")
+          .get("div.ui-labeledcheckbox__container.small.disabled")
+          .last()
+          .should("be.visible");
+      })
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(4) > label")
+          .should("have.attr", "aria-checked", "false")
+          .get("div.ui-labeledcheckbox__container.small.disabled")
+          .last()
+          .should("be.visible");
+      });
+    const frrFixed = cy.get("div.offerform__checkboxwrapper").within(() => {
+      cy.get(":nth-child(3) > label").click().blur({ force: true });
+    });
+    cy.get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(4) > label")
+          .should("be.visible", true)
+          .and("contain.text", "FRR Δ FIXED")
+          .click()
+          .blur({ force: true });
+      })
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(2) > label")
+          .should("have.attr", "aria-checked", "false")
+          .get("div.ui-labeledcheckbox__container.small.disabled")
+          .last()
+          .should("be.visible");
+      })
+      .get("div.offerform__checkboxwrapper")
+      .within(() => {
+        cy.get(":nth-child(3) > label")
+          .should("have.attr", "aria-checked", "false")
+          .get("div.ui-labeledcheckbox__container.small.disabled")
+          .last()
+          .should("be.visible");
+      });
+    return this;
+  }
+  validateHighestBid() {
+    const highestBid = cy.get("div.bid-ask__container").within(() => {
+      cy.get(
+        ":nth-child(1) > .trigger > .orderform-bidask__label > :nth-child(1)"
+      ).click();
+    });
+    const rate = cy
+      .get(
+        ":nth-child(1) > .trigger > .orderform-bidask__label > :nth-child(1)"
+      )
+      .then(($btn) => {
+        let txt = $btn.text();
+        const readBid = cy.get("#rateInput").should("contain.value", `${txt}`);
+      });
+    return this;
+  }
+  validateLowestOffer() {
+    const highestBid = cy.get("div.bid-ask__container").within(() => {
+      cy.get(
+        ":nth-child(2) > .trigger > .orderform-bidask__label > :nth-child(1)"
+      ).click();
+    });
+    const rate = cy
+      .get(
+        ":nth-child(2) > .trigger > .orderform-bidask__label > :nth-child(1)"
+      )
+      .then(($btn) => {
+        let txt = $btn.text();
+        const readBid = cy.get("#rateInput").should("contain.value", `${txt}`);
+      });
+    return this;
+  }
+  validateOfferAll() {
+    const offerAmount = cy.get("div.ui-labeledinput__container").within(() => {
+      cy.get(".trigger > .fa").click();
+    });
+    const readFunds = cy
+      .get("#balances-search-input")
+      .clear()
+      .type("USD", "{enter}")
+      .get("div.custom-scrollbar.balances-table")
+      .get(
+        ":nth-child(4) > .trigger-ledger-modal > :nth-child(1) > .trigger > .total"
+      )
+      .then(($btn) => {
+        let txt = $btn.text();
+        var pointNum = Number(txt.replace(/[^0-9\.-]+/g,""));
+        cy.get("#amountInput")
+          .should("contain.value", `${pointNum}`)
+          .should(($val) => {
+            expect($val).not.to.be.null;
+          });
+      });
     return this;
   }
 }

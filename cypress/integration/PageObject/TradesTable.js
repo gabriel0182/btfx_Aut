@@ -1,3 +1,4 @@
+
 class TradesTable {
   validateMarket() {
     const headers = cy.waitUntil(() =>
@@ -91,11 +92,10 @@ class TradesTable {
       .get(':nth-child(1) > span')
         .should("contain", "BTC/USD")
     const contextUp = cy
-    .get('div.custom-scrollbar')
+    cy.get(':nth-child(2) > :nth-child(6) > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body > [style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header')
     .within(()=>{
       cy
-      .get('div.table-vir__cell-sortable')
-      .get('span.table__title-titlewrapper')
+      .get(':nth-child(3) > .table__title-titlewrapper > :nth-child(1)')
       .contains('Context')
       .click()
     })
@@ -103,60 +103,53 @@ class TradesTable {
       .first()
         .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
         .get(':nth-child(1) > span')
-        .should("contain", "BTC/USD");
+        .should("contain", "Exchange");
     const contextDown = cy
-    .get('div.custom-scrollbar')
+    cy.get(':nth-child(2) > :nth-child(6) > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body > [style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header')
     .within(()=>{
       cy
-      .get('div.table-vir__cell-sortable')
-      .get('span.table__title-titlewrapper')
+      .get(':nth-child(3) > .table__title-titlewrapper > :nth-child(1)')
       .contains('Context')
+      .click()
+    })
+    .get('[aria-rowindex="1"]')
+    .first()
+      .get('[style="flex: 0 1 160px; min-width: 160px; max-width: 160px;"]')
+      .get(':nth-child(1) > span')
+      .should("contain", "Exchange");  
+    const typeUp = cy
+    cy.get(':nth-child(2) > :nth-child(6) > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body > [style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header')
+    .within(()=>{
+      cy
+      .get(':nth-child(4) > .table__title-titlewrapper > :nth-child(1)')
+      .contains('Type')
       .click()
     })
       .get('[aria-rowindex="1"]')
       .first()
         .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
         .get(':nth-child(1) > span')
-        .should(($val) => {
-          expect($val).not.to.be.null;
-        });
-    const typeUp = cy
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(4) > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(4) > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    typeUp
-      .click()
-      .get('[aria-rowindex="1"]')
-      .first()
-        .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
-        .get(':nth-child(1) > span')
         .should("contain", "Fill or kill");
-    const typeDown = cy
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(4) > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header > :nth-child(4) > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    typeDown
+    const typeDown =  cy.get(':nth-child(2) > :nth-child(6) > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body > [style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header')
+    .within(()=>{
+      cy
+      .get(':nth-child(4) > .table__title-titlewrapper > :nth-child(1)')
+      .contains('Type')
       .click()
+    })
       .get('[aria-rowindex="1"]')
       .first()
         .get('[style="flex: 0 1 70px; min-width: 70px; max-width: 70px;"]')
         .get(':nth-child(1) > span')
         .should("contain", "Trailing stop");
     const amountUp = cy
-      .get(
-        '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    amountUp
+    cy.get(':nth-child(2) > :nth-child(6) > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body > [style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header')
+    .within(()=>{
+      cy
+      .get(':nth-child(5) > .table__title-titlewrapper > :nth-child(1)')
+      .contains('Amount')
       .click()
+    })
       .get('[aria-rowindex="1"]')
       .first()
           .get('span[style="line-height: 20px;"]')
@@ -165,14 +158,13 @@ class TradesTable {
             expect($val).not.to.be.null;
           })
     const amountDown = cy
-      .get(
-        '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'
-      )
-      .get(
-        '[style="flex: 1 1 110px; min-width: 60px; max-width: 400px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper > .sort-icons > .fa-sort-up'
-      );
-    amountDown
+    cy.get(':nth-child(2) > :nth-child(6) > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body > [style="height: 340px; overflow: auto hidden; width: 100%; position: relative;"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .table-vir__header')
+    .within(()=>{
+      cy
+      .get(':nth-child(5) > .table__title-titlewrapper > :nth-child(1)')
+      .contains('Amount')
       .click()
+    })
       .get('[aria-rowindex="1"]')
       .first()
           .get('span[style="line-height: 20px;"]')

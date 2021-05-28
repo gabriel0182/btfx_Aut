@@ -22,4 +22,7 @@ When("I verify the required fields", () => {
 
 Then("I verify the funding form", () => {
   form.validateFundingForm();
+  form.validateHighestBid();
+  form.validateLowestOffer();
+  form.validateOfferAll();
 });

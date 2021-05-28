@@ -42,7 +42,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
     }
   );
   cy.on("uncaught:exception", (err, runnable) => {
-    expect(err.message).to.include("t._innerWindow(...).widgetReady");
+    expect(err.message).to.contain("t._innerWindow(...).widgetReady");
     return true;
   })
     .get("#book-bids > .book__rows")
@@ -72,7 +72,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         }
       );
       cy.on("uncaught:exception", (err, runnable) => {
-        expect(err.message).to.include("t._innerWindow(...).widgetReady");
+        expect(err.message).to.contain("t._innerWindow(...).widgetReady");
         return false;
       });
       cy.fixture("sensitive/credentials.json").then((credentials) => {
