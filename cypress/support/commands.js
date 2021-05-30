@@ -31,7 +31,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
     {
       onBeforeLoad(win) {
         Object.defineProperty(win.navigator, "language", { value: 'en-GB' });
-        Object.defineProperty(win.navigator, "languages", ['en-GB'] );
+        Object.defineProperty(win.navigator, "languages", ['en-GB']);
         Object.defineProperty(win.navigator, "accept_languages", {
           value: ["en"],
         });
@@ -61,7 +61,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         {
           onBeforeLoad(win) {
             Object.defineProperty(win.navigator, "language", { value: 'en-GB' });
-            Object.defineProperty(win.navigator, "languages", ['en-GB'] );
+            Object.defineProperty(win.navigator, "languages", ['en-GB']);
             Object.defineProperty(win.navigator, "accept_languages", {
               value: ["en"],
             });
@@ -87,7 +87,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
           .click({ force: true })
           .get("#submit-login")
           .click({ force: true })
-          .task("generateOTP", `${credentials.totp_secre}`)
+          .task("generateOTP", `${credentials.otp_secret}`)
           .then((token) => {
             cy.get("#otp").type(token);
           });
