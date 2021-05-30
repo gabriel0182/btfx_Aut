@@ -100,11 +100,11 @@ class buyLimitExch {
         );
         const searchTicker = cy.get("#ticker-search-input");
         searchTicker.type(`${data.ticker}{enter}`);
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click({ force: true });
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
         cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
           ($btn) => {
             const txt = $btn.text();
@@ -212,7 +212,7 @@ class buyLimitExch {
       const data = {
         btc: testDataRow.btc,
       };
-      context(`Generating a test for ${data.limitprice}`, () => {
+      context(`Generating a test for ${data.btc}`, () => {
         const msg = cy.waitUntil(() =>
           cy.get(".notification-text__text").should("be.visible")
         );
@@ -251,6 +251,28 @@ class buyLimitExch {
       '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .filter-select__summary > [data-qa-id="orders-filter-summary-side-buy"] > .filter-select__selection-label'
     );
     appliedSide.should("contain", "Bids");
+    return this;
+  }
+  validateMarkers(){
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        btc: testDataRow.btc,
+      };
+      context(`Generating a test for ${data.btc}`, () => {
+    const bookTable = cy.waitUntil(()=>
+    cy.get('.split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body')
+    .get('#book-bids')
+    .get('div.book__order-i.book__order-green').should('be.visible')
+    .trigger('mouseover')
+    .get('div.book__order-tooltip')
+    .invoke('show')
+    .should('contain','EXCHANGE LIMIT')
+    .get('div.book__order-tooltip > span')
+    .should('contain',`${data.btc}`)
+    )
+      })
+    })
     return this;
   }
   cancelOrder() {

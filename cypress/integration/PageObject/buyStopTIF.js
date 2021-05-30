@@ -73,11 +73,11 @@ class buyStopTIF {
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
+          const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+          .within(()=>{
+            cy.get('[href="/t/BTC:USD"]')
+            .click()
+          })
         //Read the current BTC/USD price
         cy.get(":nth-child(2) > h5 > span").then(($btn) => {
           const txt = $btn.text();
@@ -144,7 +144,7 @@ class buyStopTIF {
         )
           .get(
             '[style="flex: 1 1 90px; min-width: 90px;"] > .virtable__cellwrapper > ._3gvQcbWp-vbomwHFC_BrJY > ._2prYApikgYf4Vw1y8YDuKB > .trigger > .fa'
-          )
+          ).should('be.visible')
           .get('[class="trigger ui-tooltip ui-tooltip--cursor-pointer"]')
           .first()
           .trigger("mouseover")

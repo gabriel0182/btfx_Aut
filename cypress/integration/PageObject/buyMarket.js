@@ -57,11 +57,11 @@ class buyMarket {
         );
         const searchTicker = cy.get("#ticker-search-input");
         searchTicker.type(`${data.ticker}{enter}`);
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click({ force: true });
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
         const amountBTC = cy.get('[name="amount"]');
         amountBTC.type(data.min);
       });

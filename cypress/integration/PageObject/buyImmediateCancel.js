@@ -74,19 +74,18 @@ class buyImmediateCancel {
           .get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
-        cy.get(
-          "#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span"
-        )
-          .first()
+          const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+          .within(()=>{
+            cy.get('[href="/t/BTC:USD"]')
+            .click()
+          })
+        cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)')
           .then(($btn) => {
             const txt = $btn.text();
+            var pointNum = parseInt(txt);
+            var amount = pointNum * 1015;
             const distanceUSD = cy.get('[name="price"]');
-            distanceUSD.type(txt);
+            distanceUSD.type(amount);
             const amountBTC = cy.get('[name="amount"]');
             amountBTC.type(data.btc);
             const orderFrom = cy
@@ -100,7 +99,10 @@ class buyImmediateCancel {
   }
   buyButton() {
     const exchangeBuy = cy.get("#buyButton");
-    exchangeBuy.click();
+    exchangeBuy.click()
+    .get('.ui-modaldialog__footer')
+    .get('.ui-modaldialog__footer > .ui-button--green')
+    .click();
     return this;
   }
   successMsg() {

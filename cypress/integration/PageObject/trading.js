@@ -2,14 +2,39 @@
 
 class trading {
   currency() {
-    const tradingTab = cy.get(
-      ".header__nav-buttons-wrapper > .header__nav-trading"
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        ticker: testDataRow.ticker,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const currency = cy
+          .get(
+            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
+          )
+          .click()
+          .get('[id="Item_USD"]')
+          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
+          .click();
+        const selectTicker = cy
+        .get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
+      })
+    })
+    const mainticker = cy.waitUntil(() =>
+      cy
+        .get(".main-ticker__container")
+        .should("be.visible")
+        .should("contain", "BTC/USD")
     );
-    tradingTab.click();
-    const selectCurrency = cy.get(
-      '[aria-rowindex="1"] > [style="flex: 0 1 83px;"] > .virtable__cellwrapper > .tickerlist__symbolcell'
-    );
-    selectCurrency.click({ force: true });
     return this;
   }
   bookZoomAdd() {
@@ -73,38 +98,6 @@ class trading {
     return this;
   }
   verifyCurrency() {
-    const testData = require("../../fixtures/orders.json");
-    testData.forEach((testDataRow) => {
-      const data = {
-        ticker: testDataRow.ticker,
-      };
-      context(`Generating a test for ${data.wallet1}`, () => {
-        const orderForm = cy.waitUntil(() =>
-          cy.get("#orderform-panel").should("be.visible").should("exist")
-        );
-        const searchTicker = cy.get("#ticker-search-input");
-        searchTicker.type(`${data.ticker}{enter}`);
-        const currency = cy
-          .get(
-            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click()
-          .get('[id="Item_USD"]')
-          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
-      });
-    });
-    const mainticker = cy.waitUntil(() =>
-      cy
-        .get(".main-ticker__container")
-        .should("be.visible")
-        .should("contain", "BTC/USD")
-    );
     const chart = cy.get(
       "#chart-header > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
     );
@@ -244,32 +237,25 @@ class trading {
       ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
     );
     checkMaxbuy.click();
-    const compare = cy
-      .get(
-        '[style="height: 420px; width: 100%;"] > [aria-rowindex="1"] > :nth-child(2) > .trigger-ledger-modal > div > .trigger > .avail'
-      )
+    const compareBuy = cy.get('#balances-search-input')
+    .type('USD','{enter}')
+    .get('[data-qa-id="balancesTable"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .custom-scrollbar > [style="height: 64px; width: 100%;"] > .table-vir__row-even > :nth-child(2) > .trigger-ledger-modal > :nth-child(2) > .trigger > .avail')
       .then(($val) => {
-        const txt = $val.text();
+        const txt = $val.text()
         var pointNum = parseFloat(txt);
-        cy.get("#amountinput2")
-          .get("input#amountinput2.ui-labeledinput__input")
-          .should("contain.value", `${pointNum}`);
-      });
-    const checkMaxAsk = cy.get(
-      ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa"
-    );
+        cy.get('#amountinput2')
+        .get('input#amountinput2')
+        .should('contain.value',pointNum)
+    const checkMaxAsk = cy
+    .get(':nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator')
+    .get(':nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa')
     checkMaxAsk.click();
-    const compareAsk = cy
-      .get(
-        '[aria-rowindex="2"] > :nth-child(2) > .trigger-ledger-modal > div > .trigger > .avail'
-      )
-      .then(($val) => {
-        const txt = $val.text();
-        var pointNum = parseFloat(txt);
         cy.get("#amountinput2")
-          .get("input#amountinput2.ui-labeledinput__input")
-          .should("contain.value", `${pointNum}`);
-      });
+          .get('input.ui-labeledinput__input')
+          .should(($val) => {
+            expect($val).not.to.be.null;
+          });
+        });
     return this;
   }
   increaseDecreasePrecision() {

@@ -42,8 +42,8 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
     }
   );
   cy.on("uncaught:exception", (err, runnable) => {
-    expect(err.message).to.include("t._innerWindow(...).widgetReady");
-    return false;
+    expect(err.message).to.contain("t._innerWindow(...).widgetReady");
+    return true;
   })
     .get("#book-bids > .book__rows")
     .should("be.visible");
@@ -72,7 +72,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         }
       );
       cy.on("uncaught:exception", (err, runnable) => {
-        expect(err.message).to.include("t._innerWindow(...).widgetReady");
+        expect(err.message).to.contain("t._innerWindow(...).widgetReady");
         return false;
       });
       cy.fixture("sensitive/credentials.json").then((credentials) => {
@@ -105,6 +105,26 @@ Cypress.Commands.add("visitBitfinexAndLogin", () => {
   cy.loginToBitfinexManually();
   cy.waitForPageToLoad();
 });
+Cypress.Commands.add("resolveUsResident", () => {
+  let residentChallege = cy.getCookie("ask_if_us_resident")
+  if (residentChallege.value) {
+    let session = cy.getCookie("_bfx_session");
+    cy.request("GET", "https://www.staging.bitfinex.com/_ws_token", {
+      cookie: `${session.name}=${session.value}`,
+    }).then((response) => {
+      cy.request({
+        method: "POST",
+        url: "https://api.staging.bitfinex.com/v1/account_us_resident",
+        body: { res: "false" },
+        headers: { "bfx-token": response.body.token, "content-type": "application/json;charset=UTF-8" }
+      }).then(r => {
+        cy.log(JSON.stringify(r))
+        cy.setCookie('ask_if_us_resident', 'false')
+        cy.reload()
+      })
+    })
+  }
+})
 
 function lookForSpinners() {
   return new Cypress.Promise((resolve, reject) => {

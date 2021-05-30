@@ -51,13 +51,14 @@ class sellScaled {
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
         const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
-        cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+          .get('div.virtable__cellwrapper--rightalign')
+          .within(()=>{
+            cy.get('[href="/t/BTC:USD"]')
+            .click()
+          })
+        cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').then(($btn) => {
           const txt1 = $btn.text();
-          cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+          cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').then(($btn) => {
             const txt2 = $btn.text();
             var pointNum = parseInt(txt2);
             var amout = pointNum * 1030;
@@ -167,11 +168,25 @@ class sellScaled {
   }
   cleanFilters() {
     const filter = cy.get(
-      '[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'
-    );
-    filter.click();
-    const reset = cy.get(".filter-select__reset-btn");
+      'div.ui-collapsible__header')
+      .within(()=>{
+        cy.get('a.filter-select__menu-btn')
+        .get('[data-qa-id="orders-filter-icon"]')
+        .first()
+        .click({force:true});
+      })
+    const reset = cy.get('div.ui-contextmenu__menu--left')
+    .get(".filter-select__reset-btn");
     reset.click();
+    const selectAll = cy.get('[style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(1) > .ui-button')
+    .get('[style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(1) > .ui-button > .fa')
+    .click()
+    .get('.table-vir__header > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(2) > .ui-button')
+    .get('.table-vir__header > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(2) > .ui-button > .fa')
+    .click()
+    .get('.ui-modaldialog__footer')
+    .get('.ui-button--green')
+    .click()
     return this;
   }
 }

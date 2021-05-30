@@ -62,12 +62,11 @@ class buyStop {
     btc.should("contain", "Amount BTC must be a number");
     return this;
   }
-  orderInfo() {
+  validateMin() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
       const data = {
-        wallet1: testDataRow.wallet1,
-        btc: testDataRow.btc,
+        min: testDataRow.min,
         ticker: testDataRow.ticker,
       };
       context(`Generating a test for ${data.wallet1}`, () => {
@@ -76,29 +75,79 @@ class buyStop {
         );
         const searchTicker = cy.get("#ticker-search-input");
         searchTicker.type(`${data.ticker}{enter}`);
-        const currency = cy
-          .get(
-            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
           .click()
-          .get('[id="Item_USD"]')
-          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click();
+        })
+          cy.get(":nth-child(2) > h5 > span").then(($btn) => {
+            const txt = $btn.text();
+            var pointNum = parseInt(txt);
+            var amout = pointNum * 1120;
+            var value = amout + 100;
+            const priceUSD = cy.get('[name="price"]').type(value);
+          });
+        selectTicker.click({ force: true });
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.type(data.min);
+      });
+    });
+    const exchangeBuy = cy.get("#buyButton");
+    exchangeBuy.click();
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: minimum size for BTC/USD`)
+    );   
+    return this;
+  }
+  validateMax() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        max: testDataRow.max,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        )
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.clear()
+        .type(data.max);
+      });
+    });
+    const exchangeBuy = cy.get("#buyButton");
+    exchangeBuy.click()
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: maximum size for BTC/USD`)
+    );   
+    return this;
+  }
+  orderInfo() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        wallet1: testDataRow.wallet1,
+        btc: testDataRow.btc,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
         //Read the current BTC/USD price
         cy.get(":nth-child(2) > h5 > span").then(($btn) => {
           const txt = $btn.text();
           var pointNum = parseInt(txt);
           var amout = pointNum * 1120;
           var value = amout + 100;
-          const priceUSD = cy.get('[name="price"]').type(value);
+          const priceUSD = cy.get('[name="price"]').clear({force:true})
+          .type(value);
         });
         const amountBTC = cy.get('[name="amount"]');
-        amountBTC.type(data.btc);
+        amountBTC.clear({force:true})
+        .type(data.btc);
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);

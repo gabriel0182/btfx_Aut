@@ -8,6 +8,7 @@ class login {
   }
 longIn(){
   cy.visitBitfinexAndLogin();
+  cy.resolveUsResident();
   return this;
 }
 verifyLoggedOn() {

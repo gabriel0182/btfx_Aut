@@ -25,5 +25,6 @@ When("I select to Exchange Submit", () => {
 Then("I verify the Scaled buy order from Exchange wallet was created", () => {
   buyScld.successMsg();
   buyScld.orderFilter();
+  buyScld.sortingOrdersTable();
   buyScld.cancelOrder();
 });

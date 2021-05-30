@@ -36,5 +36,3 @@ Then("I verify the order book precision and aggregation", () => {
   trd.bookZoomReduce();
   trd.increaseDecreasePrecision();
 });
-
-Then("I Verify Balance table is shown", () => {});

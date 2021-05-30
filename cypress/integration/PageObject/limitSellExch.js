@@ -36,11 +36,11 @@ class limitSellExch {
         );
         const searchTicker = cy.get("#ticker-search-input");
         searchTicker.type(`${data.ticker}{enter}`);
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click({ force: true });
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
         cy.get(".main-ticker__items > :nth-child(6) > :nth-child(2)").then(
           ($btn) => {
             const txt = $btn.text();

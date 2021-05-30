@@ -24,6 +24,76 @@ class sellStop {
     .get('li')
     btc.should("contain", "Amount BTC must be a number");
     return this;
+  } 
+  validateMin() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        min: testDataRow.min,
+        ticker: testDataRow.ticker,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        );
+        const searchTicker = cy.get("#ticker-search-input");
+        searchTicker.type(`${data.ticker}{enter}`);
+        const selectTicker = cy.get('div.virtable__cellwrapper--rightalign')
+        .within(()=>{
+          cy.get('[href="/t/BTC:USD"]')
+          .click()
+        })
+          cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
+        .then(($btn) => {
+          const txt = $btn.text();
+          var pointNum = parseInt(txt);
+          const priceUSD = cy.get('[name="price"]').clear({force:true})
+          .type(txt);
+        });
+        selectTicker.click({ force: true });
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.type(data.min);
+      });
+    });
+    const exchangeSell = cy.get("#sellButton")
+    exchangeSell.click();
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: minimum size for BTC/USD`)
+    );   
+    return this;
+  }
+  validateMax() {
+    const testData = require("../../fixtures/orders.json");
+    testData.forEach((testDataRow) => {
+      const data = {
+        max: testDataRow.max,
+      };
+      context(`Generating a test for ${data.wallet1}`, () => {
+        const orderForm = cy.waitUntil(() =>
+          cy.get("#orderform-panel").should("be.visible").should("exist")
+        )
+        cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
+        .then(($btn) => {
+          const txt = $btn.text();
+          var pointNum = parseInt(txt);
+          const priceUSD = cy.get('[name="price"]').clear({force:true})
+          .type(txt);
+        });
+        const amountBTC = cy.get('[name="amount"]');
+        amountBTC.clear()
+        .type(data.max);
+      });
+    });
+    const exchangeSell = cy.get("#sellButton")
+    exchangeSell.click();
+    const validateMsg = cy.waitUntil(() =>
+      cy
+        .get(".notification-text__text")
+        .should("contain", `Invalid order: maximum size for BTC/USD`)
+    );   
+    return this;
   }
   orderInfo() {
     const testData = require("../../fixtures/orders.json");
@@ -37,29 +107,16 @@ class sellStop {
         const orderForm = cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
-        const searchTicker = cy.get("#ticker-search-input");
-        searchTicker.type(`${data.ticker}{enter}`);
-        const currency = cy
-          .get(
-            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click()
-          .get('[id="Item_USD"]')
-          .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-          .click();
-        const selectTicker = cy
-          .get('[class="custom-scrollbar"]')
-          .get('[href="/t/BTC:USD"]')
-          .last();
-        selectTicker.click()
         cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').first()
         .then(($btn) => {
           const txt = $btn.text();
           var pointNum = parseInt(txt);
-          const priceUSD = cy.get('[name="price"]').type(txt);
+          const priceUSD = cy.get('#priceinput3').clear({force:true})
+          .type(txt);
         });
         const amountBTC = cy.get('[name="amount"]');
-        amountBTC.type(data.btc);
+        amountBTC.clear({force:true})
+        .type(data.btc);
         const orderFrom = cy
           .get("#form-choose-exchange")
           .contains(data.wallet1);

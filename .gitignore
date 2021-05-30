@@ -1,3 +1,4 @@
 node_modules
 **/cypress/videos
-**cypress/fixtures/sensitive
+**/cypress/screenshots
+**cypress/fixtures/sensitive/credentials.json
