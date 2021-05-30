@@ -103,6 +103,7 @@ Cypress.Commands.add("visitBitfinexHomepage", () => {
 
 Cypress.Commands.add("visitBitfinexAndLogin", () => {
   cy.loginToBitfinexManually();
+  cy.setCookie('ask_if_us_resident', 'false')
   cy.waitForPageToLoad();
 });
 Cypress.Commands.add("resolveUsResident", () => {
