@@ -4,6 +4,7 @@ import login from "../PageObject/login.js";
 import buyLimitExch from "../PageObject/buyLimitExch.js";
 import partialHidden from "../PageObject/partialHidden.js";
 
+
 const staging = new login();
 const limitExch = new buyLimitExch();
 const ptHidden = new partialHidden();
@@ -12,6 +13,7 @@ Given("I go to Trading page", () => {
   staging.landing();
   staging.longIn();
   limitExch.trading();
+  ptHidden.increasePrecision();
 });
 
 When("I place a hidden limit order at the spread price", () => {

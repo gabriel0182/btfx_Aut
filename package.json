@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "devDependencies": {
-    "cypress": "^7.3.0",
+    "cypress": "^7.4.0",
     "cypress-cucumber-preprocessor": "^2.5.5",
     "cypress-otp": "^1.0.3",
     "cypress-wait-until": "^1.7.1",

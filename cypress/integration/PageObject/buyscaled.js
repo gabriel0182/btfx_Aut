@@ -115,19 +115,14 @@ class buyScaled {
             .click()
           })
         //Read the current BTC/USD price
-        cy.get(".main-ticker__items > :nth-child(5) > :nth-child(2)").then(
-          ($btn) => {
-            const txt1 = $btn.text();
-            cy.get(
-              "#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span"
-            )
+            cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
               .first()
               .then(($btn) => {
-                const txt2 = $btn.text();
-                var pointNum = parseInt(txt2);
-                var amount = pointNum * 1005;
+                const txt = $btn.text();
+                var pointNum = Number(txt.replace(/[^0-9\.-]+/g,""));
+                var amount = pointNum + 10;
                 const lowerUSD = cy.get("#priceinput3");
-                lowerUSD.type(txt2);
+                lowerUSD.type(pointNum);
                 const uperUSD = cy.get("#priceinput4");
                 uperUSD.type(amount);
                 const amountBTC = cy.get("#amountinput5");
@@ -152,7 +147,6 @@ class buyScaled {
           }
         );
       });
-    });
     return this;
   }
   submitButton() {

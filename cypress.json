@@ -38,8 +38,8 @@
   "requestTimeout": 10000,
   "taskTimeout": 10000,
   "execTimeout": 100000,
-  "retries": 1,
-  "pageLoadTimeout": 50000,
+  "retries": 2,
+  "pageLoadTimeout": 30000,
   "chromeWebSecurity": false,
   "watchForFileChanges": false,
   "reporterOptions": {

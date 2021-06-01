@@ -56,14 +56,12 @@ class sellScaled {
             cy.get('[href="/t/BTC:USD"]')
             .click()
           })
-        cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').then(($btn) => {
-          const txt1 = $btn.text();
-          cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span').then(($btn) => {
-            const txt2 = $btn.text();
-            var pointNum = parseInt(txt2);
-            var amout = pointNum * 1030;
+          cy.get(':nth-child(2) > h5 > span').then(($btn) => {
+          const txt = $btn.text();
+          var pointNum = Number(txt.replace(/[^0-9\.-]+/g,""));
+            var amout = pointNum + 10;
             const lowerUSD = cy.get("#priceinput3");
-            lowerUSD.type(txt1);
+            lowerUSD.type(pointNum);
             const upperUSD = cy.get("#priceinput4");
             upperUSD.type(amout);
             const amountBTC = cy.get("#amountinput5");
@@ -87,7 +85,6 @@ class sellScaled {
           });
         });
       });
-    });
     return this;
   }
   submitButton() {

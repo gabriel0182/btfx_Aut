@@ -40,10 +40,12 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         "Accept-Language": "en",
       },
     }
-  );
+  )
   cy.on("uncaught:exception", (err, runnable) => {
-    expect(err.message).to.contain("t._innerWindow(...).widgetReady");
-    return true;
+    //expect(err.message).to.include('d is not a function');
+    //expect(err.message).to.include("t._innerWindow(...).widgetReady");
+    expect(err.message).to.include('');
+    return false;
   })
     .get("#book-bids > .book__rows")
     .should("be.visible");
@@ -72,7 +74,7 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
         }
       );
       cy.on("uncaught:exception", (err, runnable) => {
-        expect(err.message).to.contain("t._innerWindow(...).widgetReady");
+      //expect(err.message).to.include('Uncaught (in promise) TypeError: d is not a function');
         return false;
       });
       cy.fixture("sensitive/credentials.json").then((credentials) => {

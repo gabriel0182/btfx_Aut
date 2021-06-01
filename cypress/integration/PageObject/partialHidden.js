@@ -1,4 +1,20 @@
 class partialHidden {
+  increasePrecision() {
+    for (let n = 0; n < 4; n++) {
+    const increase = cy
+        .get(
+          '.split__main > .ui-panel > .collapsible > .ui-collapsible__header > [style="visibility: visible;"]'
+        )
+        .get("#book-agg-controls > :nth-child(2)")
+        .get("#book-agg-controls > :nth-child(2) > .ui-button")
+        .get('#book-agg-controls > :nth-child(2) > .ui-button > .fa')
+        .click();
+      const book = cy.waitUntil(()=>
+        cy.get("#book-bids > .book__rows").should("be.visible")
+      );
+    }
+    return this;
+  }
   placeLimit() {
     const testData = require("../../fixtures/orders.json");
     testData.forEach((testDataRow) => {
@@ -9,14 +25,13 @@ class partialHidden {
         const orderForm = cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
-        cy.get(
-          "#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span"
-        )
+        cy
+        .get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span')
           .first()
           .then(($btn) => {
             const txt = $btn.text();
-            var pointNum = parseInt(txt);
-            var amount = pointNum * 945;
+            var pointNum = Number(txt.replace(/[^0-9\.-]+/g,""));
+            var amount = pointNum + 1;
             const priceUSD = cy
               .get("#priceinput1")
               .clear({ force: true })
