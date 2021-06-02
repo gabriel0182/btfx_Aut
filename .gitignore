@@ -1,4 +1,6 @@
 node_modules
 **/cypress/videos
 **/cypress/screenshots
+**/cypress/report
+**/mochawesome-report
 **cypress/fixtures/sensitive/credentials.json

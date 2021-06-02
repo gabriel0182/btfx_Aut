@@ -7,7 +7,8 @@
     "cypress-cucumber-preprocessor": "^2.5.5",
     "cypress-otp": "^1.0.3",
     "cypress-wait-until": "^1.7.1",
-    "cypress-xpath": "^1.4.0"
+    "cypress-xpath": "^1.4.0",
+    "mochawesome": "^4.1.0"
   },
   "author": "",
   "license": "ISC",
@@ -17,5 +18,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "ls": "^0.2.1",
+    "mochawesome-merge": "^4.2.0",
+    "mochawesome-report-generator": "^5.2.0",
+    "rimraf": "^3.0.2",
+    "yargs": "^17.0.1"
+  }
 }
