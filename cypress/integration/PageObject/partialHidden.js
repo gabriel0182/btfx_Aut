@@ -1,6 +1,6 @@
 class partialHidden {
   increasePrecision() {
-    for (let n = 0; n < 4; n++) {
+    for (let n = 0; n < 5; n++) {
     const increase = cy
         .get(
           '.split__main > .ui-panel > .collapsible > .ui-collapsible__header > [style="visibility: visible;"]'

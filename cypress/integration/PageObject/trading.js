@@ -185,7 +185,7 @@ class trading {
         cy.get(
           "#book-asks > .book__rows > :nth-child(1) > .book__alert > .fa"
         ).click();
-      });
+      })
     const validateRemoveAskMsg = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
