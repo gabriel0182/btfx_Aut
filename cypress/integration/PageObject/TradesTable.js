@@ -203,7 +203,7 @@ class TradesTable {
         '[style="flex: 0 1 65px; min-width: 65px; max-width: 65px;"] > .show50'
       )
       .first()
-      .should("contain", "BTC");
+      .should("contain", "IOTA");
     const priceUp = cy
       .get(
         '[style="flex: 1 1 80px; min-width: 80px; max-width: 100px; display: flex; justify-content: flex-end;"] > .table__title-titlewrapper'

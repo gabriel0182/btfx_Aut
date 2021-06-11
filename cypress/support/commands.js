@@ -26,6 +26,12 @@
 
 Cypress.Commands.add("loginToBitfinexManually", () => {
   cy.setCookie('bfx_locale', 'en')
+  /*cy.fixture("sensitive/credentials.json").then((credentials) => {
+  cy.task("generateOTP", `${credentials.totp_secre}`)
+          .then((token) => {
+            console.log(token)
+          }).pause()
+        })*/
   cy.visitWithCloudFlareBypass(
     "https://bfx-ui-trading.staging.bitfinex.com/t",
     {
@@ -89,10 +95,23 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
           .click({ force: true })
           .get("#submit-login")
           .click({ force: true })
+          .get('#u2f-modal-wrap')
+          .get(':nth-child(6) > p > a')
+          .click()
+          const twoAF = cy.waitUntil(()=>
+            cy.get("input#otp")
+            .should('be.visible')
+          )
           .task("generateOTP", `${credentials.totp_secre}`)
           .then((token) => {
-            cy.get("#otp").type(token);
-          });
+            cy.get('#twofa-modal > .modal-content > :nth-child(1) > .pad-for-content > :nth-child(1) > .row > [style="max-width:385px;"] > #otp-form > .input-field > #otp')
+            .type(token)
+            .log(token)
+            })
+          /*.task("generateOTP", `${credentials.totp_secre}`)
+          .then((token) => {
+            console.log(token)
+          }).pause()*/
       });
     }
   });
