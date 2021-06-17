@@ -26,12 +26,13 @@ class partialHidden {
           cy.get("#orderform-panel").should("be.visible").should("exist")
         );
         cy
-        .get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span')
+        .get('#book-asks > .book__rows > :nth-child(1)')
+        .get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span')
           .first()
           .then(($btn) => {
             const txt = $btn.text();
             var pointNum = Number(txt.replace(/[^0-9\.-]+/g,""));
-            var amount = pointNum + 1;
+            var amount = pointNum - 100;
             const priceUSD = cy
               .get("#priceinput1")
               .clear({ force: true })

@@ -28,8 +28,8 @@
       "testPartialHidden.feature",
       "testFundingForm.feature"
     ],
-    "viewportWidth": 1280,
-  "viewportHeight": 720,
+    "viewportWidth": 1480,
+  "viewportHeight": 980,
   "screenshotOnRunFailure": true,
   "videoUploadOnPasses": true,
   "defaultCommandTimeout":50000,
