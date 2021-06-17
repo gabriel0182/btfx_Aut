@@ -1,59 +1,33 @@
 {
-
-    "testFiles": [
-      "tradingPage.feature",
-      "tradingTradesTable.feature",
-      "balanceQuickTransfer.feature",
-      "createLongPosition.feature",
-      "createShortPosition.feature",
-      "tradingBuyLimitExch.feature",
-      "sellTradingLimitExch.feature",
-      "buyMarketMargin.feature",
-      "sellMarketMargin.feature",
-      "tradingBuyStop.feature",
-      "tradingSellStop.feature",
-      "buyStopMarginTIF.feature",
-      "tradingBuyStopLimitExch.feature",
-      "tradingSellStopLimitExch.feature",
-      "buyTrailingStopExch.feature",
-      "sellTrailingStopExch.feature",
-      "buyFillKillExch.feature",
-      "sellFillKillExch.feature",
-      "buyImmediateOrCancelExch.feature",
-      "sellImmediateOrCancelExch.feature",
-      "buyLimitBookExch.feature",
-      "sellLimitBookExc.feature",
-      "buyScaledExchange.feature",
-      "sellScaledExchange.feature",
-      "testPartialHidden.feature",
-      "testFundingForm.feature"
-    ],
-    "viewportWidth": 1480,
-  "viewportHeight": 980,
-  "screenshotOnRunFailure": true,
-  "videoUploadOnPasses": true,
-  "defaultCommandTimeout":50000,
-  "numTestsKeptInMemory": 0,
-  "responseTimeout": 10000,
-  "requestTimeout": 10000,
-  "taskTimeout": 10000,
-  "execTimeout": 100000,
-  "retries": 2,
-  "pageLoadTimeout": 50000,
-  "chromeWebSecurity": false,
-  "watchForFileChanges": false,
-  "reporterOptions": {
-    "mochaFile": "cypress/reports/junit/test-results.[hash].xml",
-    "testsuitesTitle": false
+	"testFiles": "**/*.feature",
+	"viewportWidth": 1480,
+	"viewportHeight": 980,
+	"screenshotOnRunFailure": true,
+	"video": true,
+	"videoUploadOnPasses": false,
+	"defaultCommandTimeout": 50000,
+	"numTestsKeptInMemory": 50,
+	"responseTimeout": 10000,
+	"requestTimeout": 10000,
+	"taskTimeout": 10000,
+	"execTimeout": 100000,
+	"retries": {
+    "runMode": 2,
+    "openMode": 0
   },
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "/cypress.json"
-      ],
-      "url": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json"
-    }
-  ],
+	"pageLoadTimeout": 50000,
+	"chromeWebSecurity": false,
+	"watchForFileChanges": false,
+	"reporterOptions": {
+		"mochaFile": "cypress/reports/junit/test-results.[hash].xml",
+		"testsuitesTitle": false
+	},
+	"json.schemas": [
+		{
+			"fileMatch": ["/cypress.json"],
+			"url": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json"
+		}
+	],
 
-  "supportFile": "cypress/support/commands.js"
-} 
+	"supportFile": "cypress/support/commands.js"
+}

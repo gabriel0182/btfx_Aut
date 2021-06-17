@@ -1,21 +1,22 @@
 {
-  "name": "testrp",
-  "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {
-    "cypress": "^7.5.0",
-    "cypress-cucumber-preprocessor": "^2.5.5",
-    "cypress-otp": "^1.0.3",
-    "cypress-wait-until": "^1.7.1",
-    "cypress-xpath": "^1.4.0"
-  },
-  "author": "",
-  "license": "ISC",
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "description": ""
+	"name": "testrp",
+	"version": "1.0.0",
+	"main": "index.js",
+	"devDependencies": {
+		"cypress": "^7.5.0",
+		"cypress-cucumber-preprocessor": "^2.5.5",
+		"cypress-otp": "^1.0.3",
+		"cypress-wait-until": "^1.7.1",
+		"cypress-xpath": "^1.4.0",
+		"prettier": "2.3.1"
+	},
+	"author": "",
+	"license": "ISC",
+	"cypress-cucumber-preprocessor": {
+		"nonGlobalStepDefinitions": true
+	},
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"description": ""
 }

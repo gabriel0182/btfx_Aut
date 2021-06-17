@@ -15,24 +15,24 @@
 const cucumber = require('cypress-cucumber-preprocessor').default
 
 module.exports = (on, config) => {
-  on('file:preprocessor', cucumber())
-  on("task", {
-    generateOTP: require("cypress-otp")
-  })
-  on('before:browser:launch', (browser, launchOptions) => {
-    if (browser.name === 'chrome') {
-      args.push('--lang=de');
-      return launchOptions;
-    }
-    if (browser.name === 'firefox') {
-      launchOptions.args.push('--lang=de');
-      return launchOptions;
-    }
-  })
-  on('before:browser:launch', (browser, launchOptions) => {
-    if (browser.family === 'chromium' && browser.name !== 'electron') {
-      launchOptions.preferences.default.intl= ('--lang=de' )
-      return launchOptions;
-    }
-  })
+	on('file:preprocessor', cucumber())
+	on('task', {
+		generateOTP: require('cypress-otp'),
+	})
+	on('before:browser:launch', (browser, launchOptions) => {
+		if (browser.name === 'chrome') {
+			args.push('--lang=de')
+			return launchOptions
+		}
+		if (browser.name === 'firefox') {
+			launchOptions.args.push('--lang=de')
+			return launchOptions
+		}
+	})
+	on('before:browser:launch', (browser, launchOptions) => {
+		if (browser.family === 'chromium' && browser.name !== 'electron') {
+			launchOptions.preferences.default.intl = '--lang=de'
+			return launchOptions
+		}
+	})
 }
