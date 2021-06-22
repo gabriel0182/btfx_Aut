@@ -23,10 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+const urlApiPub = 'https://api-pub.staging.bitfinex.com/v2'
 
 Cypress.Commands.add('loginToBitfinexManually', () => {
-	// cy.intercept('POST', 'https://www.staging.bitfinex.com/sessions').as('sessions')
-	// cy.intercept('POST', 'https://www.staging.bitfinex.com/sessions/otp_submit').as('otpSubmit')
+	cy.intercept('POST', 'https://www.staging.bitfinex.com/sessions').as('sessions')
+	cy.intercept('POST', 'https://www.staging.bitfinex.com/sessions/otp_submit').as('otpSubmit')
+	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
+	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
+
 	cy.setCookie('bfx_locale', 'en')
 	/*cy.fixture("sensitive/credentials.json").then((credentials) => {
   cy.task("generateOTP", `${credentials.totp_secre}`)
@@ -52,12 +56,14 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 		expect(err.message).to.include('')
 		return false
 	})
-		.get('#book-bids > .book__rows')
-		.should('be.visible')
+	cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
+	cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)
+	// .get('#book-bids > .book__rows')
+	// .should('be.visible')
 	let session = cy.getCookie('_bfx_session')
 	cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
 		cookie: `${session.name}=${session.value}`,
-	}).then(response => {
+	}).then((response) => {
 		let token = response.body.token
 		if (token.length > 0) {
 			return this
@@ -79,7 +85,7 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 				//expect(err.message).to.include('Uncaught (in promise) TypeError: d is not a function');
 				return false
 			})
-			cy.fixture('sensitive/credentials.json').then(credentials => {
+			cy.fixture('sensitive/credentials.json').then((credentials) => {
 				cy.get('.header__login-button')
 					.should('be.visible')
 					.click({ force: true })
@@ -99,12 +105,12 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 					//   .should('be.visible')
 					// )
 					.task('generateOTP', `${credentials.otp_secret}`)
-					.then(token => {
-						//cy.wait('@sessions').its('response.statusCode').should('eq', 200)
+					.then((token) => {
+						cy.wait('@sessions').its('response.statusCode').should('eq', 200)
 						cy.get('#twofa-modal').should('be.visible')
 						cy.get('#otp-form').within(() => {
 							cy.get('[data-otp=autosubmit]').type(token).log(token)
-							// cy.wait('@otpSubmit').its('response.statusCode').should('eq', 200)
+							cy.wait('@otpSubmit').its('response.statusCode').should('eq', 200)
 						})
 						// cy.get('#twofa-modal > .modal-content > :nth-child(1) > .pad-for-content > :nth-child(1) > .row > [style="max-width:385px;"] > #otp-form > .input-field > #otp')
 						// .type(token)
@@ -129,27 +135,29 @@ Cypress.Commands.add('visitBitfinexAndLogin', () => {
 	cy.waitForPageToLoad()
 })
 Cypress.Commands.add('resolveUsResident', () => {
-	let residentChallege = cy.getCookie('ask_if_us_resident')
-	if (residentChallege.value) {
-		let session = cy.getCookie('_bfx_session')
-		cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
-			cookie: `${session.name}=${session.value}`,
-		}).then(response => {
-			cy.request({
-				method: 'POST',
-				url: 'https://api.staging.bitfinex.com/v1/account_us_resident',
-				body: { res: 'false' },
-				headers: {
-					'bfx-token': response.body.token,
-					'content-type': 'application/json;charset=UTF-8',
-				},
-			}).then(r => {
-				cy.log(JSON.stringify(r))
-				cy.setCookie('ask_if_us_resident', 'false')
-				cy.reload()
+	cy.getCookie('ask_if_us_resident').then((residentChallege) => {
+		if (residentChallege.value) {
+			cy.getCookie('_bfx_session').then((session) => {
+				cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
+					cookie: `${session.name}=${session.value}`,
+				}).then((response) => {
+					cy.request({
+						method: 'POST',
+						url: 'https://api.staging.bitfinex.com/v1/account_us_resident',
+						body: { res: 'false' },
+						headers: {
+							'bfx-token': response.body.token,
+							'content-type': 'application/json;charset=UTF-8',
+						},
+					}).then((res) => {
+						cy.log(JSON.stringify(res))
+						cy.setCookie('ask_if_us_resident', 'false')
+						cy.reload()
+					})
+				})
 			})
-		})
-	}
+		}
+	})
 })
 
 function lookForSpinners() {
@@ -182,8 +190,8 @@ Cypress.Commands.add('waitForPageToLoad', () => {
   })*/
 })
 
-Cypress.Commands.add('visitWithCloudFlareBypass', route => {
-	cy.fixture('sensitive/credentials.json').then(credentials => {
+Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
+	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		const headers = {
 			'CF-Access-Client-Id': credentials.cloudflare_id,
 			'CF-Access-Client-Secret': credentials.cloudflare_secret,

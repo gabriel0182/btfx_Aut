@@ -1,13 +1,14 @@
 class buyFillKill {
 	trading() {
-		const tradingTab = cy.waitUntil(() =>
-			cy
-				.get('.header__nav-buttons-wrapper > .header__nav-trading')
-				.should('be.visible')
-				.click()
-				.get('#book-bids > .book__rows')
-				.should('be.visible')
-		)
+		//const tradingTab = cy.waitUntil(() =>
+		cy.get('.header__nav-buttons-wrapper').within(() => {
+			cy.get('[data-qa-id="header-link-trading"]').should('be.visible').click()
+		})
+		cy.get('.book__main').within(() => {
+			cy.get('#book-bids').should('be.visible')
+			cy.get('#book-asks').should('be.visible')
+		})
+		//	)
 		return this
 	}
 	requiredFields() {
@@ -42,7 +43,7 @@ class buyFillKill {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				btc: testDataRow.btc,
@@ -65,7 +66,7 @@ class buyFillKill {
 				})
 				cy.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = parseInt(txt)
 						var amount = pointNum * 1200
@@ -94,7 +95,7 @@ class buyFillKill {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				price: testDataRow.price,
 				btc: testDataRow.btc,

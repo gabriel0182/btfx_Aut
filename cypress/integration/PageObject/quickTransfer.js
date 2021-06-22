@@ -1,73 +1,57 @@
 class quickTransfer {
-	selectCurrency() {
-		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
-			const data = {
-				tranfer: testDataRow.tranfer,
-			}
-			context(`Generating a test for ${data.tranfer}`, () => {
-				const search = cy.get('#balances-search-input')
-				search.type(`${data.tranfer}{enter}`)
-			})
-			const selectUSD = cy
-				.get('div.balances__symbolcell')
-				.get('span.show-soft')
-				.contains(`${data.tranfer}`)
-			selectUSD.click()
-		})
-		return this
-	}
-	selectSource() {
-		const source = cy.get('.overlay-transfer-link').get('.overlay-transfer-link > :nth-child(1)')
-		source.click()
-		return this
-	}
-	selectDestination() {
-		const destination = cy
-			.get('tbody > :nth-child(2) > :nth-child(2)')
-			.get('tbody > :nth-child(2) > :nth-child(2) > .trigger > span')
-		destination.click()
-		const exchange = cy
-			.get('.balances-transfer > table > tbody > :nth-child(1) > :nth-child(2)')
-			.get('tbody > :nth-child(1) > :nth-child(2) > .trigger > span')
-		exchange.click()
-		return this
-	}
-	tranferAmount() {
-		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
-			const data = {
-				tranferAmt: testDataRow.tranferAmt,
-			}
-			context(`Generating a test for ${data.tranferAmt}`, () => {
-				const amount = cy
-					.get('.ui-modaldialog__body')
-					.get(
-						'.balance-transfer__form-input > .ui-labeledinput__container > div > .ui-labeledinput__input'
-					)
-					.clear()
-				amount.type(data.tranferAmt)
+	static selectCurrency() {
+		cy.fixture('orders').then((order) => {
+			cy.get('#balances-search-input').type(`${order[0].tranfer}`)
+			cy.get('[data-qa-id="balancesTable"]').within(() => {
+				cy.get('[data-qa-id="balancesTable-row"]')
+					.first()
+					.within(() => {
+						cy.get('[data-qa-id="balancesTable-row-cell"]')
+							.first()
+							.contains(`${order[0].tranfer}`)
+							.click()
+					})
 			})
 		})
-		const transferButton = cy.get('.balance-transfer__form-button')
-		transferButton.click().wait(1000)
-		return this
 	}
-	successMsg() {
-		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
-			const data = {
-				tranferAmt: testDataRow.tranferAmt,
-			}
-			context(`Generating a test for ${data.tranferAmt}`, () => {
-				const verifyMsg = cy.waitUntil(() =>
-					cy
-						.get('.notification-text__text')
-						.should('contain', `${data.tranferAmt} US Dollar transfered from Margin to Exchange`)
-				)
-			})
+
+	static selectSource() {
+		cy.get('#bal-overlay').within(() => {
+			cy.log('Click on the Transfer button from exchange wallet')
+			cy.get('a').contains('Transfer').click()
 		})
-		return this
+		cy.get('.balances-transfer').within(() => {
+			cy.log('Selecting source of transfer')
+			cy.get('tbody>tr').eq(0).first('td').click()
+		})
+	}
+
+	static selectDestination() {
+		cy.get('.balances-transfer').within(() => {
+			cy.log('Select destination of transfer')
+			cy.get('tbody>tr').eq(1).children('.balances-transfer__destination').click()
+		})
+	}
+
+	static tranferAmount() {
+		const apiUrlStaging = 'https://api.staging.bitfinex.com/v2'
+		cy.intercept('POST', `${apiUrlStaging}/auth/w/transfer`).as('transfer')
+		cy.fixture('orders').then((order) => {
+			cy.get('[data-qa-id="modal-dialog"]').within(() => {
+				cy.log('Type the amount to transfer')
+				cy.get('input[type=text]').clear().type(order[0].tranferAmt)
+			})
+			const confirmationMsg = `${order[0].tranferAmt} US Dollar transfered from Exchange to Margin`
+			cy.log('Click on the Transfer button')
+			cy.get('button[type=button]').contains('Transfer').click()
+			cy.wait('@transfer').then((xhr) => {
+				expect(xhr.response.statusCode, 'statusCode: ').to.be.equal(200)
+				expect(xhr.response.body[7], 'Confirmation Message: ').to.be.equal(confirmationMsg)
+				expect(xhr.response.body[6], 'Success: ').to.be.equal('SUCCESS')
+			})
+			cy.log('Confirmating the success transfer message')
+			cy.get('.notification-text__text').should('contain', confirmationMsg)
+		})
 	}
 }
 export default quickTransfer
