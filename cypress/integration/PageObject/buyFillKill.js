@@ -1,6 +1,5 @@
 class buyFillKill {
-	trading() {
-		//const tradingTab = cy.waitUntil(() =>
+	static trading() {
 		cy.get('.header__nav-buttons-wrapper').within(() => {
 			cy.get('[data-qa-id="header-link-trading"]').should('be.visible').click()
 		})
@@ -8,108 +7,82 @@ class buyFillKill {
 			cy.get('#book-bids').should('be.visible')
 			cy.get('#book-asks').should('be.visible')
 		})
-		//	)
-		return this
 	}
-	requiredFields() {
-		const buy = cy.get('#buyButton')
-		buy.click()
-		const distance = cy.get('.order-errors').get('.order-errors__wrapper').get('li')
-		distance.should('contain', 'Price USD must be a number')
-		const btc = cy.get('.order-errors').get('.order-errors__wrapper').get('li')
-		btc.should('contain', 'Amount BTC must be a number')
-		return this
-	}
-	verifyFields() {
-		const orderType = cy.waitUntil(() =>
-			cy
-				.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-				.click()
-				.get('ul.dropdown-content')
-		)
-		const selectOrder = cy.waitUntil(() =>
-			cy.get('ul.dropdown-content').within(() => {
-				cy.get('#orderFormDropdownItem_fillorkill')
-					.get('[data-qa-id="order-form__order-type-dropdown-menu-item-fillorkill"]')
-					.click()
+	static requiredFields() {
+		const orderErrors = ['Price USD must be a number', 'Amount BTC must be a number']
+		cy.get('#buyButton').as('buyButton')
+		cy.get('@buyButton').click()
+		cy.get('.order-errors').within(() => {
+			cy.get('ul>li').each((element, index) => {
+				cy.wrap(element).should('be.visible').invoke('text').should('include', orderErrors[index])
 			})
-		)
-		const marginWallet = cy.get('#form-choose-margin')
-		cy.get('#form-choose-margin > span')
-		marginWallet.click()
-		const reduceOnlyMargin = cy.get('.orderform__field > .ui-labeledcheckbox__container > label')
-		reduceOnlyMargin.should('be.visible')
-		return this
+		})
 	}
-	orderInfo() {
-		const testData = require('../../fixtures/orders.json')
-		testData.forEach((testDataRow) => {
-			const data = {
-				wallet1: testDataRow.wallet1,
-				btc: testDataRow.btc,
-				ticker: testDataRow.ticker,
-			}
-			context(`Generating a test for ${data.wallet1}`, () => {
-				const orderForm = cy.waitUntil(() =>
-					cy.get('#orderform-panel').should('be.visible').should('exist')
-				)
-				const searchTicker = cy.get('#ticker-search-input')
-				searchTicker.type(`${data.ticker}{enter}`)
-				const currency = cy
-					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-					.click()
-					.get('[id="Item_USD"]')
-					.get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
-					.click()
-				const selectTicker = cy.get('div.virtable__cellwrapper--rightalign').within(() => {
-					cy.get('[href="/t/BTC:USD"]').click()
+	static verifyFields() {
+		cy.get('[data-qa-id="order-form__order-type-dropdown"]').click()
+		cy.get('[data-qa-id="order-form__order-type-dropdown-menu"]').within(() => {
+			cy.get('[data-qa-id="order-form__order-type-dropdown-menu-item-fillorkill"]').click()
+		})
+
+		cy.get('#form-choose-margin').click()
+		cy.get('.orderform__field').within(() => {
+			cy.get('[data-qa-id="reduceOnly-checkbox-label"]').should('be.visible')
+		})
+	}
+	static orderInfo() {
+		cy.fixture('orders').then((order) => {
+			context(`Generating a test for ${order[0].wallet1}`, () => {
+				cy.get('#orderform-panel').should('be.visible').should('exist')
+				cy.get('#ticker-search-input').as('searchTicker')
+				cy.get('@searchTicker').type(`${order[0].ticker}{enter}`)
+				cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
+				cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
+					cy.get('[id="Item_USD"]').click()
 				})
+
+				cy.get('.tickerlist__container').within(() => {
+					cy.get('.tickerlist__lastprice').as('currencyLastPrice')
+					cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
+					cy.get('@currencyLastPrice').click()
+				})
+
+				//TO refine
 				cy.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
 					.then(($btn) => {
 						const txt = $btn.text()
-						var pointNum = parseInt(txt)
-						var amount = pointNum * 1200
-						var value = amount + 100
+						let pointNum = parseInt(txt)
+						let amount = pointNum * 1200
+						let value = amount + 100
 						localStorage.setItem('price', value)
-						const distanceUSD = cy.get('[name="price"]')
-						distanceUSD.type(amount)
-						const amountBTC = cy.get('[name="amount"]')
-						amountBTC.type(data.btc)
-						const orderFrom = cy.get('#form-choose-exchange').contains(data.wallet1)
-						orderFrom.click().wait(2000)
+						cy.get('[name="price"]').as('distanceUSD')
+						cy.get('@distanceUSD').type(amount)
+						cy.get('[name="amount"]').as('amountBTC')
+						cy.get('@amountBTC').type(order[0].btc)
+						cy.get('#form-choose-exchange').contains(order[0].wallet1).as('orderFrom')
+						cy.get('@orderFrom').click().wait(2000)
 					})
 			})
 		})
-		return this
 	}
-	buyButton() {
-		const exchangeBuy = cy.get('#buyButton')
-		exchangeBuy.click()
-		const abovealert = cy
-			.get('.ui-modaldialog__container')
-			.get('.ui-modaldialog__footer')
-			.get('.ui-modaldialog__footer > .ui-button--green')
-		abovealert.click()
-		return this
+	static buyButton() {
+		cy.get('#buyButton').as('buyButton')
+		cy.get('@buyButton').click()
+		cy.get('[data-qa-id="modal-dialog"]').within(() => {
+			cy.get('[data-qa-id="modal-dialog-action-button"]').contains('Okay').click()
+		})
 	}
-	successMsg() {
+	static successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach((testDataRow) => {
-			const data = {
-				price: testDataRow.price,
-				btc: testDataRow.btc,
-			}
-			context(`Generating a test for ${data.price}`, () => {
+		cy.fixture('orders').then((order) => {
+			context(`Generating a test for ${order[0].price}`, () => {
+				const confirmationMsg = `Exchange fok buy order of ${order[0].btc} BTC has been fully executed`
 				const msg = cy.waitUntil(() => cy.get('.notification-text__text').should('be.visible'))
 				const verifyMsg = cy.waitUntil(() =>
-					cy
-						.get('.notification-text__text')
-						.should('contain', `Exchange fok buy order of ${data.btc} BTC has been fully executed`)
+					cy.get('.notification-text__text').should('contain', confirmationMsg)
 				)
 			})
 		})
-		return this
 	}
 }
 export default buyFillKill
