@@ -10,8 +10,7 @@ class buyFillKill {
 	}
 	static requiredFields() {
 		const orderErrors = ['Price USD must be a number', 'Amount BTC must be a number']
-		cy.get('#buyButton').as('buyButton')
-		cy.get('@buyButton').click()
+		cy.get('#buyButton').click()
 		cy.get('.order-errors').within(() => {
 			cy.get('ul>li').each((element, index) => {
 				cy.wrap(element).should('be.visible').invoke('text').should('include', orderErrors[index])
@@ -33,8 +32,7 @@ class buyFillKill {
 		cy.fixture('orders').then((order) => {
 			context(`Generating a test for ${order[0].wallet1}`, () => {
 				cy.get('#orderform-panel').should('be.visible').should('exist')
-				cy.get('#ticker-search-input').as('searchTicker')
-				cy.get('@searchTicker').type(`${order[0].ticker}{enter}`)
+				cy.get('#ticker-search-input').type(`${order[0].ticker}{enter}`)
 				cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 				cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
 					cy.get('[id="Item_USD"]').click()
@@ -44,11 +42,15 @@ class buyFillKill {
 					cy.get('.tickerlist__lastprice').as('currencyLastPrice')
 					cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
 					cy.get('@currencyLastPrice').click()
+					cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)
 				})
 
-				//TO refine
-				cy.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span')
+				cy.get('#book-asks')
+					.find('.book__row')
 					.first()
+					.children(4)
+					.find('span')
+					.eq(0)
 					.then(($btn) => {
 						const txt = $btn.text()
 						let pointNum = parseInt(txt)
@@ -60,27 +62,23 @@ class buyFillKill {
 						cy.get('[name="amount"]').as('amountBTC')
 						cy.get('@amountBTC').type(order[0].btc)
 						cy.get('#form-choose-exchange').contains(order[0].wallet1).as('orderFrom')
-						cy.get('@orderFrom').click().wait(2000)
+						cy.get('@orderFrom').click()
 					})
 			})
 		})
 	}
 	static buyButton() {
-		cy.get('#buyButton').as('buyButton')
-		cy.get('@buyButton').click()
+		cy.get('#buyButton').click()
 		cy.get('[data-qa-id="modal-dialog"]').within(() => {
 			cy.get('[data-qa-id="modal-dialog-action-button"]').contains('Okay').click()
 		})
 	}
 	static successMsg() {
-		const testData = require('../../fixtures/orders.json')
 		cy.fixture('orders').then((order) => {
 			context(`Generating a test for ${order[0].price}`, () => {
 				const confirmationMsg = `Exchange fok buy order of ${order[0].btc} BTC has been fully executed`
-				const msg = cy.waitUntil(() => cy.get('.notification-text__text').should('be.visible'))
-				const verifyMsg = cy.waitUntil(() =>
-					cy.get('.notification-text__text').should('contain', confirmationMsg)
-				)
+				cy.waitUntil(() => cy.get('.notification-text__text').should('be.visible'))
+				cy.waitUntil(() => cy.get('.notification-text__text').should('contain', confirmationMsg))
 			})
 		})
 	}

@@ -4,13 +4,8 @@ class quickTransfer {
 			cy.get('#balances-search-input').type(`${order[0].tranfer}`)
 			cy.get('[data-qa-id="balancesTable"]').within(() => {
 				cy.get('[data-qa-id="balancesTable-row"]')
-					.first()
-					.within(() => {
-						cy.get('[data-qa-id="balancesTable-row-cell"]')
-							.first()
-							.contains(`${order[0].tranfer}`)
-							.click()
-					})
+					.contains(new RegExp(`^${order[0].tranfer}$`, 'g'))
+					.click()
 			})
 		})
 	}

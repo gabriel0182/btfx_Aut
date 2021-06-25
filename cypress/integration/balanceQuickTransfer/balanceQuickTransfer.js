@@ -5,12 +5,11 @@ import buyFillKill from '../PageObject/buyFillKill.js'
 import quickTransfer from '../PageObject/quickTransfer.js'
 
 const staging = new login()
-const buyFK = new buyFillKill()
 
 Given('I go to Trading page', () => {
 	staging.landing()
 	staging.longIn()
-	buyFK.trading()
+	buyFillKill.trading()
 })
 
 When('I select the currency from the balance', () => {
