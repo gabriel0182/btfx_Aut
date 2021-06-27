@@ -94,17 +94,17 @@ Cypress.Commands.add("loginToBitfinexManually", () => {
           .get("button")
           .click({ force: true })
           .get("#submit-login")
-          .click({ force: true })
+          /*.click({ force: true })
           .get('#u2f-modal-wrap')
           .get(':nth-child(6) > p > a')
-          .click()
+          .click()*/
           const twoAF = cy.waitUntil(()=>
             cy.get("input#otp")
             .should('be.visible')
           )
           .task("generateOTP", `${credentials.totp_secre}`)
           .then((token) => {
-            cy.get('#twofa-modal > .modal-content > :nth-child(1) > .pad-for-content > :nth-child(1) > .row > [style="max-width:385px;"] > #otp-form > .input-field > #otp')
+            cy.get("input#otp")
             .type(token)
             .log(token)
             })

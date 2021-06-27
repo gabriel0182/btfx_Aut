@@ -15,14 +15,9 @@ class buyLimitBook {
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
-      .get("div")
-      .first()
-      .each(($div) => {
-        cy.get("#book-asks > .book__rows > :nth-child(1)");
-        cy.get(
-          "#book-asks > .book__rows > :nth-child(1) > .book__row > :nth-child(4) > span"
-        ).click();
-      });
+      .get('div[style="min-width: 25%;"]')
+        .last()
+      .click();
     const btc = cy.get(".order-errors").get(".order-errors__wrapper").get("li");
     btc.should("contain", "Amount BTC must be a number");
     return this;

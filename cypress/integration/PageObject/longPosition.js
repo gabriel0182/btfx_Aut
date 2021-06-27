@@ -19,17 +19,17 @@ class longPosition {
     const testData = require("../../fixtures/positions.json");
     testData.forEach((testDataRow) => {
       const data = {
-        type: testDataRow.type,
+        type2: testDataRow.type2,
         amount: testDataRow.amount,
       };
-      context(`Generating a test for ${data.type}`, () => {
+      context(`Generating a test for ${data.type2}`, () => {
         const selectType = cy.waitUntil(() =>
         cy
           .get(".ui-modaldialog__body")
           .get(".themed-react-select__value-container")
           .should('be.visible')
         )
-        selectType.type(`${data.type}{enter}{enter}`).blur({force:true})
+        selectType.type(`${data.type2}{enter}{enter}`).blur({force:true})
         const Long = cy.waitUntil(() =>
           cy
             .get(".ui-radioinput > :nth-child(1)")

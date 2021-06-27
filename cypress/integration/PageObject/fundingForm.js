@@ -267,11 +267,7 @@ class fundingForm {
     return this;
   }
   validateHighestBid() {
-    const highestBid = cy.get("div.bid-ask__container").within(() => {
-      cy.get(
-        ":nth-child(1) > .trigger > .orderform-bidask__label > :nth-child(1)"
-      ).click();
-    });
+    const highestBid = cy.get('.orderform-bidask__label > :nth-child(1)').click();
     const rate = cy
       .get(
         ":nth-child(1) > .trigger > .orderform-bidask__label > :nth-child(1)"

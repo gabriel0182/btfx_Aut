@@ -113,13 +113,10 @@ class trading {
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
       )
-      .get("div")
-      .first("div")
-      .each(($div) => {
-        cy.get(
+      .get(
           "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
-        ).click();
-      });
+        ).first()
+        .click();
     const validateBidMsg = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
@@ -132,16 +129,13 @@ class trading {
         cy.get("div.fa-times").click();
       });
     const removeBidAlert = cy
-      .get(
-        ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
-      )
-      .get("div")
-      .first()
-      .each(($div) => {
-        cy.get(
-          "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
-        ).click();
-      });
+    .get(
+      ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
+    )
+    .get(
+        "#book-bids > .book__rows > :nth-child(1) > .book__alert > .fa"
+      ).first()
+      .click();
     const validateMsgAlert = cy.waitUntil(() =>
       cy
         .get(".notification-text__text")
@@ -239,7 +233,9 @@ class trading {
     checkMaxbuy.click();
     const compareBuy = cy.get('#balances-search-input')
     .type('USD','{enter}')
-    .get('[data-qa-id="balancesTable"] > [style="overflow: visible; height: 0px; width: 0px;"] > [tabindex="-1"] > .custom-scrollbar > [style="height: 64px; width: 100%;"] > .table-vir__row-even > :nth-child(2) > .trigger-ledger-modal > :nth-child(2) > .trigger > .avail')
+    .get('span.trigger.ui-tooltip.ui-tooltip--cursor-help.ui-tooltip--cursor-pointer')
+    .get('span.avail')
+    .first()
       .then(($val) => {
         const txt = $val.text()
         var pointNum = parseFloat(txt);
