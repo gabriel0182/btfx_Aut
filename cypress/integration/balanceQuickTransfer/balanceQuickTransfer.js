@@ -1,35 +1,26 @@
 ///  <reference types="cypress"/>
 
-import login from "../PageObject/login.js";
-import buyFillKill from "../PageObject/buyFillKill.js";
-import quickTransfer from "../PageObject/quickTransfer.js";
+import login from '../PageObject/login.js'
+import buyFillKill from '../PageObject/buyFillKill.js'
+import quickTransfer from '../PageObject/quickTransfer.js'
 
-const staging = new login();
-const buyFK = new buyFillKill();
-const transfer = new quickTransfer();
+const staging = new login()
 
-Given("I go to Trading page", () => {
-  staging.landing();
-  staging.longIn();
-  buyFK.trading();
-});
+Given('I go to Trading page', () => {
+	staging.landing()
+	staging.longIn()
+	buyFillKill.trading()
+})
 
-When("I select the currency from the balance", () => {
-  transfer.selectCurrency();
-});
+When('I select the currency from the balance', () => {
+	quickTransfer.selectCurrency()
+})
 
-When("I select Source For USD Transfer", () => {
-  transfer.selectSource();
-});
+When('I select Source and Destination for USD Transfer', () => {
+	quickTransfer.selectSource()
+	quickTransfer.selectDestination()
+})
 
-When("I select Destination For USD Transfer", () => {
-  transfer.selectDestination();
-});
-
-When("I type the amount and confirm the transaction", () => {
-  transfer.tranferAmount();
-});
-
-Then("I verify the quick transfer was made", () => {
-  transfer.successMsg();
-});
+Then('I transfer the amount and confirm the transaction', () => {
+	quickTransfer.tranferAmount()
+})

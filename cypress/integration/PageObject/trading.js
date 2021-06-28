@@ -280,4 +280,4 @@ class trading {
     return this;
   }
 }
-export default trading;
+export default trading

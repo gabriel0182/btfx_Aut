@@ -1,5 +1,5 @@
 class fundingForm {
-  goFundingPage() {
+  static goFundingPage() {
     const fundingTab = cy.waitUntil(() =>
       cy
         .get(":nth-child(3) > .header__nav-button")
@@ -18,7 +18,7 @@ class fundingForm {
     );
     return this;
   }
-  selectTicker() {
+  static selectTicker() {
     const testData = require("../../fixtures/funding.json");
     testData.forEach((testDataRow) => {
       const data = {
@@ -45,7 +45,7 @@ class fundingForm {
       return this;
     });
   }
-  requiredFields() {
+  static requiredFields() {
     const usdBid = cy.get("div.bfx-ui-of-sr").within(() => {
       cy.get("button.ui-button--green").click();
     });
@@ -179,7 +179,7 @@ class fundingForm {
       .click({ multiple: true }, { force: true });
     return this;
   }
-  validateFundingForm() {
+  static validateFundingForm() {
     const hidden = cy.get("div.offerform__checkboxwrapper").within(() => {
       cy.get(":nth-child(1) > label")
         .should("be.visible", true)
@@ -266,7 +266,7 @@ class fundingForm {
       });
     return this;
   }
-  validateHighestBid() {
+  static validateHighestBid() {
     const highestBid = cy.get('.orderform-bidask__label > :nth-child(1)').click();
     const rate = cy
       .get(
@@ -278,7 +278,7 @@ class fundingForm {
       });
     return this;
   }
-  validateLowestOffer() {
+  static validateLowestOffer() {
     const highestBid = cy.get("div.bid-ask__container").within(() => {
       cy.get(
         ":nth-child(2) > .trigger > .orderform-bidask__label > :nth-child(1)"
@@ -294,7 +294,7 @@ class fundingForm {
       });
     return this;
   }
-  validateOfferAll() {
+  static validateOfferAll() {
     const offerAmount = cy.get("div.ui-labeledinput__container").within(() => {
       cy.get(".trigger > .fa").click();
     });
@@ -318,4 +318,4 @@ class fundingForm {
     return this;
   }
 }
-export default fundingForm;
+export default fundingForm

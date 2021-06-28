@@ -1,27 +1,26 @@
 ///  <reference types="cypress"/>
 
-import login from "../PageObject/login.js";
-import buyFillKill from "../PageObject/buyFillKill.js";
+import login from '../PageObject/login.js'
+import buyFillKill from '../PageObject/buyFillKill.js'
 
-const staging = new login();
-const buyFK = new buyFillKill();
+const staging = new login()
 
-Given("I go to Trading page", () => {
-  staging.landing();
-  staging.longIn();
-  buyFK.trading();
-});
+Given('I go to Trading page', () => {
+	staging.landing()
+	staging.longIn()
+	buyFillKill.trading()
+})
 
-When("I type the order required info", () => {
-    buyFK.verifyFields();
-    buyFK.requiredFields();
-    buyFK.orderInfo();
-});
+When('I type the order required info', () => {
+	buyFillKill.verifyFields()
+	buyFillKill.requiredFields()
+	buyFillKill.orderInfo()
+})
 
-When("I select to Exchange Buy", () => {
-    buyFK.buyButton();
-});
+When('I select to Exchange Buy', () => {
+	buyFillKill.buyButton()
+})
 
-Then("I verify the Fill or Kill buy order from Exchange wallet was created", () => {
-    buyFK.successMsg();
-});
+Then('I verify the Fill or Kill buy order from Exchange wallet was created', () => {
+	buyFillKill.successMsg()
+})

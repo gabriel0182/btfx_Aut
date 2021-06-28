@@ -1,31 +1,31 @@
 ///  <reference types="cypress"/>
 
-import login from "../PageObject/login.js";
-import sellStopLimitExch from "../PageObject/sellStopLimitExch.js";
-import stopLimitExch from "../PageObject/stopLimitExch.js";
+import login from '../PageObject/login.js'
+import sellStopLimitExch from '../PageObject/sellStopLimitExch.js'
+import stopLimitExch from '../PageObject/stopLimitExch.js'
 
-const staging = new login();
-const sellstopLmt = new sellStopLimitExch();
-const stopLmt = new stopLimitExch();
+const staging = new login()
+const sellstopLmt = new sellStopLimitExch()
+const stopLmt = new stopLimitExch()
 
-Given("I go to Trading page", () => {
-  staging.landing();
-  staging.longIn();
-  sellstopLmt.trading();
-});
+Given('I go to Trading page', () => {
+	staging.landing()
+	staging.longIn()
+	sellstopLmt.trading()
+})
 
-When("I type the order required info", () => {
-    stopLmt.verifyFields();
-    sellstopLmt.requiredFields();
-    sellstopLmt.orderInfo();
-});
+When('I type the order required info', () => {
+	stopLmt.verifyFields()
+	sellstopLmt.requiredFields()
+	sellstopLmt.orderInfo()
+})
 
-When("I select to Exchange sell from Exchange wallet", () => {
-    sellstopLmt.sellButton();
-});
+When('I select to Exchange sell from Exchange wallet', () => {
+	sellstopLmt.sellButton()
+})
 
-Then("I verify the stop limit order was created", () => {
-    sellstopLmt.successMsg();
-    sellstopLmt.orderFilter();
-    sellstopLmt.cancelOrder();
-});
+Then('I verify the stop limit order was created', () => {
+	sellstopLmt.successMsg()
+	sellstopLmt.orderFilter()
+	sellstopLmt.cancelOrder()
+})

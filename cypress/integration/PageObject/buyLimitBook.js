@@ -162,4 +162,4 @@ class buyLimitBook {
     return this;
   }
 }
-export default buyLimitBook;
+export default buyLimitBook

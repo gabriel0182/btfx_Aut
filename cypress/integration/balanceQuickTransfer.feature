@@ -8,10 +8,6 @@ Feature: Test balance quick transfer
 
     When I select the currency from the balance
 
-    And I select Source For USD Transfer
+    And I select Source and Destination for USD Transfer
 
-    And I select Destination For USD Transfer
-
-    And I type the amount and confirm the transaction
-
-    Then I verify the quick transfer was made
+    Then I transfer the amount and confirm the transaction

@@ -1,5 +1,7 @@
 [
-  {
-    "ticker": "USD"
-  }
+	{
+		"ticker": "USD",
+		"rate":"0.00001",
+		"amount": "50"
+	}
 ]
