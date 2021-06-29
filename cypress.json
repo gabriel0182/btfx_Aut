@@ -25,7 +25,8 @@
 		"buyScaledExchange.feature",
 		"sellScaledExchange.feature",
 		"testPartialHidden.feature",
-		"testFundingForm.feature"
+		"testFundingForm.feature",
+		"providedFunding.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
@@ -35,7 +36,7 @@
 	"defaultCommandTimeout": 50000,
 	"numTestsKeptInMemory": 50,
 	"responseTimeout": 10000,
-	"requestTimeout": 10000,
+	"requestTimeout": 20000,
 	"taskTimeout": 10000,
 	"execTimeout": 100000,
 	"retries": {
