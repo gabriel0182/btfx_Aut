@@ -26,9 +26,7 @@ class provided {
 				cy.get('.ui-collapsible__body').within(() => {
 					cy.get('#rateInput').clear().type(`${offer[0].rate}`)
 					cy.get('#amountInput').clear().type(`${offer[0].amount}`)
-					cy.get('span.trigger.ui-tooltip.ui-tooltip--underline.ui-tooltip--cursor-help')
-						.contains('MAX')
-						.click()
+					cy.get('.ui-buysellinputindicator').children(2).contains('MAX').click()
 				})
 			})
 		})
