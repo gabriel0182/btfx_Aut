@@ -10,9 +10,9 @@ Feature: Test Trading Page page
 
     Then I verify the graph is shown
 
-    Then I verify the Order from best bid / ask
-
     Then I verify the Order form max buy / sell
+
+    Then I verify the Order from best bid / ask
 
     Then I verify the alerts in order book table
 

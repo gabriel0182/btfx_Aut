@@ -181,7 +181,6 @@ class trading {
     cy.wait('@trading').its('response.statusCode').should('eq', 200)
     cy.waitUntil(() =>
     cy.get('span.ui-fieldlabel__innertag')
-    .next('span')
     .should('be.visible')
     )
     cy.get('.ui-buysellinputindicator')
@@ -218,34 +217,43 @@ class trading {
     })
   }
   static checkMaxValue() {
-    const priceUSD = cy.get("#priceinput1");
-    priceUSD.clear().type("1");
-    const checkMaxbuy = cy.get(
-      ":nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
-    );
-    checkMaxbuy.click();
-    const compareBuy = cy.get('#balances-search-input')
+    cy.get("#priceinput1")
+    .clear().type("1");
+    cy.get('div.ui-buysellinputindicator')
+    .last()
+    .within(()=>{
+      cy.get('i')
+      .first()
+      .click()
+    })
+    .click();
+    cy.get('#balances-search-input')
     .type('USD','{enter}')
-    .get('span.trigger.ui-tooltip.ui-tooltip--cursor-help.ui-tooltip--cursor-pointer')
-    .get('span.avail')
-    .first()
+    //cy.get('.table-vir__row-odd > :nth-child(2) > .trigger-ledger-modal > :nth-child(1) > .trigger > .total')
+    .get('[data-qa-id="balancesTable-row-cell"]')
+    .eq(5)
+      .get('.trigger')
+      .get('span.avail')
+      .eq(3)
       .then(($val) => {
         const txt = $val.text()
-        var pointNum = parseFloat(txt);
+        var pointNum = Number(txt.replace(/[^0-9\.-]+/g,''))
         cy.get('#amountinput2')
         .get('input#amountinput2')
         .should('contain.value',pointNum)
-    const checkMaxAsk = cy
-    .get(':nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator')
-    .get(':nth-child(2) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa')
-    checkMaxAsk.click();
+        cy.get('div.ui-buysellinputindicator')
+        .last()
+        .within(()=>{
+          cy.get('i')
+          .last()
+          .click()
+        })
         cy.get("#amountinput2")
           .get('input.ui-labeledinput__input')
           .should(($val) => {
             expect($val).not.to.be.null;
           });
         });
-    return this;
   }
   static increaseDecreasePrecision() {
     for (let n = 0; n < 2; n++) {
