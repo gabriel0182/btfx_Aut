@@ -29,8 +29,8 @@ class quickTransfer {
 	}
 
 	static tranferAmount() {
-		const apiUrlStaging = 'https://api.staging.bitfinex.com/v2'
-		cy.intercept('POST', `${apiUrlStaging}/auth/w/transfer`).as('transfer')
+		const apiStagingUrl = 'https://api.staging.bitfinex.com'
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/transfer`).as('transfer')
 		cy.fixture('orders').then((order) => {
 			cy.get('[data-qa-id="modal-dialog"]').within(() => {
 				cy.log('Type the amount to transfer')
