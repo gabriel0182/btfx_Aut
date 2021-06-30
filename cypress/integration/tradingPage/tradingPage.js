@@ -4,7 +4,7 @@ import login from '../PageObject/login.js'
 import trading from '../PageObject/trading.js'
 
 const staging = new login()
-const trd = new trading()
+
 
 Given('I go to Trading page', () => {
 	staging.landing()
@@ -12,27 +12,27 @@ Given('I go to Trading page', () => {
 })
 
 When('I Select a currency', () => {
-	trd.currency()
+	trading.currency()
 })
 
 Then('I verify the graph is shown', () => {
-	trd.verifyCurrency()
+	trading.verifyCurrency()
 })
 
 Then('I verify the Order from best bid / ask', () => {
-	trd.checkBestValue()
+	trading.checkBestValue()
 })
 
 Then('I verify the Order form max buy / sell', () => {
-	trd.checkMaxValue()
+	//trading.checkMaxValue()
 })
 
 Then('I verify the alerts in order book table', () => {
-	trd.addAlert()
+	//trading.addAlert()
 })
 
 Then('I verify the order book precision and aggregation', () => {
-	trd.bookZoomAdd()
-	trd.bookZoomReduce()
-	trd.increaseDecreasePrecision()
+	//trading.bookZoomAdd()
+	//trading.bookZoomReduce()
+	//trading.increaseDecreasePrecision()
 })

@@ -1,43 +1,34 @@
 ///  <reference types="cypress"/>
 
 class trading {
-  currency() {
-    const testData = require("../../fixtures/orders.json");
-    testData.forEach((testDataRow) => {
-      const data = {
-        ticker: testDataRow.ticker,
-      };
-      context(`Generating a test for ${data.wallet1}`, () => {
-        const orderForm = cy.waitUntil(() =>
+ static currency() {
+  cy.fixture('orders').then((trading) => {
+    context(`Generating a test for ${trading[0].ticker}`, () => {
+   cy.waitUntil(() =>
           cy.get("#orderform-panel").should("be.visible").should("exist")
-        );
-        const searchTicker = cy.get("#ticker-search-input");
-        searchTicker.type(`${data.ticker}{enter}`);
-        const currency = cy
-          .get(
-            ":nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap"
-          )
-          .click()
-          .get('[id="Item_USD"]')
+   )
+      cy.get("#ticker-search-input")
+        .type(`${trading[0].ticker}{enter}`)
+        cy.get('[data-qa-id="ticker-list-pair-filter"]')
+        .click()
+          cy.get('[id="Item_USD"]')
           .get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
           .click();
-        const selectTicker = cy
-        .get('div.virtable__cellwrapper--rightalign')
+        cy.get('div.virtable__cellwrapper--rightalign')
         .within(()=>{
           cy.get('[href="/t/BTC:USD"]')
           .click()
         })
       })
     })
-    const mainticker = cy.waitUntil(() =>
+    cy.waitUntil(() =>
       cy
         .get(".main-ticker__container")
         .should("be.visible")
         .should("contain", "BTC/USD")
     );
-    return this;
   }
-  bookZoomAdd() {
+  static bookZoomAdd() {
     for (let n = 0; n < 10; n++) {
       const increase = cy
         .get(
@@ -67,7 +58,7 @@ class trading {
       });
     return this;
   }
-  bookZoomReduce() {
+  static bookZoomReduce() {
     for (let n = 0; n < 10; n++) {
       const decrease = cy
         .get(
@@ -97,18 +88,16 @@ class trading {
       });
     return this;
   }
-  verifyCurrency() {
-    const chart = cy.get(
-      "#chart-header > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
-    );
-    chart.should("be.visible", true);
-    const chartLabel = cy.get(
-      "#chart-header > .collapsible > .ui-collapsible__header > :nth-child(1)"
-    );
-    chartLabel.should("contain", "BTC/USD");
-    return this;
+  static verifyCurrency() {
+    cy.get('div#chart-header')
+    .get('div.ui-collapsible__header')
+    .within(()=>{
+      cy.get('span.show50')
+      .should("be.visible", true)
+      .should("contain", "BTC/USD")
+    })
   }
-  addAlert() {
+  static addAlert() {
     const setBidAlert = cy
       .get(
         ".split__main > .ui-panel > .collapsible > .ui-collapsible__body-wrapper > .ui-collapsible__body"
@@ -187,44 +176,48 @@ class trading {
     );
     return this;
   }
-  checkBestValue() {
-    const values = cy.waitUntil(() => {
-      cy.get(
-        ":nth-child(1) > .top-bidask__wrapper > .orderform-bidask__label > .trigger > :nth-child(2) > div > :nth-child(1)"
-      ).should("be.visible");
-      return this;
-    });
-    const priceBid = cy.get(
-      ":nth-child(1) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(1) > .fa"
-    );
-    priceBid.click();
-    const compareBid = cy;
-    cy.get(
-      ":nth-child(1) > .top-bidask__wrapper > .orderform-bidask__label > .trigger > :nth-child(2) > div > :nth-child(1)"
-    ).then(($val) => {
+  static checkBestValue() {
+    cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as('trading')
+    cy.wait('@trading').its('response.statusCode').should('eq', 200)
+    cy.waitUntil(() =>
+    cy.get('span.ui-fieldlabel__innertag')
+    .next('span')
+    .should('be.visible')
+    )
+    cy.get('.ui-buysellinputindicator')
+    .within(()=>{
+      cy.get('i')
+      .first()
+      .click()
+    }) 
+    cy.get('span.ui-fieldlabel__innertag')
+    .contains('Bid')
+    .next('span')
+    .then(($val) => {
       const txt = $val.text();
-      var pointNum = parseFloat(txt);
+      var pointNum = Number(txt.replace(/[^0-9\.-]+/g,''))
       cy.get("#priceinput1")
         .get("input#priceinput1.ui-labeledinput__input")
         .should("contain.value", `${pointNum}`);
-    });
-    const priceAsk = cy.get(
-      ":nth-child(1) > .orderform__field > .ui-labeledinput__container > .ui-fieldlabel__container > .ui-buysellinputindicator > :nth-child(2) > .fa"
-    );
-    priceAsk.click();
-    const compareAsk = cy;
-    cy.get(
-      ":nth-child(2) > .top-bidask__wrapper > .orderform-bidask__label > .trigger > :nth-child(2) > div > :nth-child(1)"
-    ).then(($val) => {
+    })
+    cy.get('.ui-buysellinputindicator')
+    .within(()=>{
+      cy.get('i.bfx-red-text')
+      .first()
+      .click()
+    }) 
+    cy.get('span.ui-fieldlabel__innertag')
+    .contains('Ask')
+    .next('span')
+    .then(($val) => {
       const txt = $val.text();
-      var pointNum = parseFloat(txt);
+      var pointNum = Number(txt.replace(/[^0-9\.-]+/g,''))
       cy.get("#priceinput1")
         .get("input#priceinput1.ui-labeledinput__input")
         .should("contain.value", `${pointNum}`);
-    });
-    return this;
+    })
   }
-  checkMaxValue() {
+  static checkMaxValue() {
     const priceUSD = cy.get("#priceinput1");
     priceUSD.clear().type("1");
     const checkMaxbuy = cy.get(
@@ -254,7 +247,7 @@ class trading {
         });
     return this;
   }
-  increaseDecreasePrecision() {
+  static increaseDecreasePrecision() {
     for (let n = 0; n < 2; n++) {
       const decrease = cy
         .get(
