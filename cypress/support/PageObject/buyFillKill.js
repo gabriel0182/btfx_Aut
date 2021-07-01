@@ -50,13 +50,11 @@ class buyFillKill {
 					.first()
 					.children(4)
 					.find('span')
-					.eq(0)
+					.eq(2)
 					.then(($btn) => {
 						const txt = $btn.text()
-						let pointNum = parseInt(txt)
-						let amount = pointNum * 1200
-						let value = amount + 100
-						localStorage.setItem('price', value)
+						var pointNum = Number(txt.replace(/[^0-9\.-]+/g,''))
+						let amount = pointNum + 1000
 						cy.get('[name="price"]').as('distanceUSD')
 						cy.get('@distanceUSD').type(amount)
 						cy.get('[name="amount"]').as('amountBTC')
