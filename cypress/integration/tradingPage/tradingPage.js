@@ -20,7 +20,7 @@ Then('I verify the graph is shown', () => {
 })
 
 Then('I verify the Order form max buy / sell', () => {
-	trading.checkMaxValue()
+	//trading.checkMaxValue()
 })
 
 Then('I verify the Order from best bid / ask', () => {
@@ -28,7 +28,7 @@ Then('I verify the Order from best bid / ask', () => {
 })
 
 Then('I verify the alerts in order book table', () => {
-	//trading.addAlert()
+	trading.addAlert()
 })
 
 Then('I verify the order book precision and aggregation', () => {

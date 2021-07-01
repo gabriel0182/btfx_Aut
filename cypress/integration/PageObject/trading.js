@@ -30,63 +30,53 @@ class trading {
   }
   static bookZoomAdd() {
     for (let n = 0; n < 10; n++) {
-      const increase = cy
-        .get(
-          ".split__main > .ui-panel > .collapsible > .ui-collapsible__header"
-        )
-        .get(
-          '.split__main > .ui-panel > .collapsible > .ui-collapsible__header > [style="visibility: visible;"]'
-        )
-        .get("#book-agg-controls > :nth-child(6)")
-        .get(":nth-child(6) > .ui-button")
-        .get(":nth-child(6) > .ui-button > .fa");
-      increase.click();
+      cy.get('span#book-agg-controls')
+      .within(()=>{
+        cy.get('i.fa-search-plus')
+        .click();
+      })
     }
-    const bookTable = cy
-      .get(
-        '#book-bids > .book__rows > :nth-child(4) > [style="width: 65px; min-width: 65px; max-width: 65px;"]'
-      )
+    cy.waitUntil(()=>
+    cy.get("#book-bids")
+    .within(()=>{
+      cy.get('.book__row')
+      .first()
       .invoke("css", "background-color")
       .then((background) => {
-        cy.get(
-          '#book-bids > .book__rows > :nth-child(4) > [style="width: 65px; min-width: 65px; max-width: 65px;"] > span'
-        )
+      cy.get('span')
+      .eq(4)
           .invoke("attr", "style", `background-color: ${background}`)
           .then((element) => {
             expect(element).to.have.css("background-color", background);
-          });
-      });
-    return this;
+          })
+        })
+      })
+  )
   }
   static bookZoomReduce() {
     for (let n = 0; n < 10; n++) {
-      const decrease = cy
-        .get(
-          ".split__main > .ui-panel > .collapsible > .ui-collapsible__header"
-        )
-        .get(
-          '.split__main > .ui-panel > .collapsible > .ui-collapsible__header > [style="visibility: visible;"]'
-        )
-        .get("#book-agg-controls > :nth-child(5)")
-        .get("#book-agg-controls > :nth-child(5) > .ui-button")
-        .get(":nth-child(5) > .ui-button > .fa");
-      decrease.click();
+      cy.get('span#book-agg-controls')
+      .within(()=>{
+        cy.get('i.fa-search-minus')
+        .click();
+      })
     }
-    const book = cy
-      .get(
-        '#book-bids > .book__rows > :nth-child(4) > [style="width: 65px; min-width: 65px; max-width: 65px;"]'
-      )
+    cy.waitUntil(()=>
+    cy.get("#book-bids")
+    .within(()=>{
+      cy.get('.book__row')
+      .first()
       .invoke("css", "background-color")
       .then((background) => {
-        cy.get(
-          '#book-bids > .book__rows > :nth-child(4) > [style="width: 65px; min-width: 65px; max-width: 65px;"] > span'
-        )
+      cy.get('span')
+      .eq(4)
           .invoke("attr", "style", `background-color: ${background}`)
           .then((element) => {
             expect(element).to.have.css("background-color", background);
-          });
-      });
-    return this;
+          })
+        })
+      })
+  )
   }
   static verifyCurrency() {
     cy.get('div#chart-header')
@@ -179,10 +169,6 @@ class trading {
   static checkBestValue() {
     cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as('trading')
     cy.wait('@trading').its('response.statusCode').should('eq', 200)
-    cy.waitUntil(() =>
-    cy.get('span.ui-fieldlabel__innertag')
-    .should('be.visible')
-    )
     cy.get('.ui-buysellinputindicator')
     .within(()=>{
       cy.get('i')
@@ -229,7 +215,6 @@ class trading {
     .click();
     cy.get('#balances-search-input')
     .type('USD','{enter}')
-    //cy.get('.table-vir__row-odd > :nth-child(2) > .trigger-ledger-modal > :nth-child(1) > .trigger > .total')
     .get('[data-qa-id="balancesTable-row-cell"]')
     .eq(5)
       .get('.trigger')
@@ -248,37 +233,71 @@ class trading {
           .last()
           .click()
         })
-        cy.get("#amountinput2")
-          .get('input.ui-labeledinput__input')
-          .should(($val) => {
-            expect($val).not.to.be.null;
-          });
+        cy.get('#balances-search-input')
+        .clear()
+    .type('BTC','{enter}')
+    .get('[data-qa-id="balancesTable-row-cell"]')
+      .get('.trigger')
+      .get('span.avail')
+      .first()
+      .then(($val) => {
+        const txt = $val.text()
+        var pointNum = Number(txt.replace(/[^0-9\.-]+/g,''))
+        cy.get('#amountinput2')
+        .get('input#amountinput2')
+        .should('contain.value',pointNum)
+      })
         });
   }
   static increaseDecreasePrecision() {
     for (let n = 0; n < 2; n++) {
-      const decrease = cy
-        .get(
-          '.split__main > .ui-panel > .collapsible > .ui-collapsible__header > [style="visibility: visible;"]'
-        )
-        .get("#book-agg-controls > :nth-child(1)")
-        .get("#book-agg-controls > :nth-child(1) > .ui-button")
-        .get("#book-agg-controls > :nth-child(1) > .ui-button > .fa")
+      cy.get('span#book-agg-controls')
+      .within(()=>{
+        cy.get('i.fa-minus')
+        .first()
         .click();
-      const bookDescreased = 
-        cy.get("#book-bids > .book__rows").should("be.visible");
+      })
+       cy.waitUntil(()=>
+        cy.get("#book-bids")
+        .within(()=>{
+          cy.get('.book__row')
+          .first()
+          .should("be.visible")
+        })
+       )
+       cy.waitUntil(()=>
+        cy.get("#book-asks")
+        .within(()=>{
+          cy.get('.book__row')
+          .first()
+          .should("be.visible")
+        })
+      )
     }
-    const increase = cy
-        .get(
-          '.split__main > .ui-panel > .collapsible > .ui-collapsible__header > [style="visibility: visible;"]'
-        )
-        .get("#book-agg-controls > :nth-child(2)")
-        .get("#book-agg-controls > :nth-child(2) > .ui-button")
-        .get('#book-agg-controls > :nth-child(2) > .ui-button > .fa')
+    for (let n = 0; n < 2; n++) {
+      cy.get('span#book-agg-controls')
+      .within(()=>{
+        cy.get('i.fa-plus')
+        .first()
         .click();
-      const book = 
-        cy.get("#book-bids > .book__rows").should("be.visible");
-    return this;
+      })
+      cy.waitUntil(()=>
+      cy.get("#book-bids")
+      .within(()=>{
+        cy.get('.book__row')
+        .first()
+        .should("be.visible")
+      })
+     )
+     cy.waitUntil(()=>
+      cy.get("#book-asks")
+      .within(()=>{
+        cy.get('.book__row')
+        .first()
+        .should("be.visible")
+      })
+    )
+    }
   }
 }
 export default trading
