@@ -10,18 +10,17 @@ class longPosition {
 	static requiredInfo() {
 		cy.intercept(`${apiStagingUrl}/v1/lendbook/USD?filter=LIMIT_ONLY`).as('limitOnly')
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/position/increase`).as('increase')
+
 		cy.fixture('positions').then((position) => {
-			context(`Generating a test for ${position[0].type}`, () => {
-				cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
-					cy.contains('Select').type(`${position[0].type}{enter}{enter}`)
-					cy.get('.ui-radioinput').within(() => {
-						cy.contains('Long').click()
-						cy.wait('@limitOnly').its('response.statusCode').should('eq', 200)
-					})
-					cy.contains('Amount').next().type(position[0].amount)
-					cy.contains('Proceed').click()
-					cy.wait('@increase').its('response.statusCode').should('eq', 200)
+			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
+				cy.contains('Select').type(`${position[0].type}{enter}{enter}`)
+				cy.get('.ui-radioinput').within(() => {
+					cy.contains('Long').click()
+					cy.wait('@limitOnly').its('response.statusCode').should('eq', 200)
 				})
+				cy.contains('Amount').next().type(position[0].amount)
+				cy.contains('Proceed').click()
+				cy.wait('@increase').its('response.statusCode').should('eq', 200)
 			})
 		})
 	}
@@ -36,17 +35,15 @@ class longPosition {
 
 	static cancelPosition() {
 		cy.fixture('positions').then((position) => {
-			context(`Generating a test for ${position[0].amount}`, () => {
-				cy.get('[data-qa-id="positions-table-row"]').within(() => {
-					cy.get('[type="button"]').first().click()
-				})
-				cy.get('[data-qa-id="modal-dialog"]').within(() => {
-					cy.get('[data-qa-id="modal-dialog-action-button"]').contains('Okay').click()
-				})
-				cy.wait('@stats').its('response.statusCode').should('eq', 200)
-				const confirmationMsg = `Margin market sell order of ${position[0].amount} BTC has been fully executed`
-				cy.get('.notification-text__text').should('contain', confirmationMsg)
+			cy.get('[data-qa-id="positions-table-row"]').within(() => {
+				cy.get('[type="button"]').first().click()
 			})
+			cy.get('[data-qa-id="modal-dialog"]').within(() => {
+				cy.get('[data-qa-id="modal-dialog-action-button"]').contains('Okay').click()
+			})
+			cy.wait('@stats').its('response.statusCode').should('eq', 200)
+			const confirmationMsg = `Margin market sell order of ${position[0].amount} BTC has been fully executed`
+			cy.get('.notification-text__text').should('contain', confirmationMsg)
 		})
 	}
 }
