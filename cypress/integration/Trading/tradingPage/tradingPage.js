@@ -5,7 +5,6 @@ import trading from '../../../support/PageObject/trading.js'
 
 const staging = new login()
 
-
 Given('I go to Trading page', () => {
 	staging.landing()
 	staging.longIn()

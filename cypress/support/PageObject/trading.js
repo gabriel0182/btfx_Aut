@@ -120,38 +120,42 @@ class trading {
 	static checkBestValue() {
 		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as('trading')
 		cy.wait('@trading').its('response.statusCode').should('eq', 200)
-		cy.get('.ui-buysellinputindicator').within(() => {
-			cy.get('i').first().click()
-		})
+
+		cy.get('.ui-buysellinputindicator')
+			.first()
+			.within(() => {
+				cy.get('i').first().click()
+			})
+
 		cy.get('span.ui-fieldlabel__innertag')
 			.contains('Bid')
 			.next('span')
 			.then(($val) => {
 				const txt = $val.text()
-				var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
-				cy.get('#priceinput1')
-					.get('input#priceinput1.ui-labeledinput__input')
-					.should('contain.value', `${pointNum}`)
+				let pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
+				cy.get('#priceinput1').should('contain.value', `${pointNum}`)
 			})
-		cy.get('.ui-buysellinputindicator').within(() => {
-			cy.get('i.bfx-red-text').first().click()
-		})
+
+		cy.get('.ui-buysellinputindicator')
+			.first()
+			.within(() => {
+				cy.get('i').last().click()
+			})
+
 		cy.get('span.ui-fieldlabel__innertag')
 			.contains('Ask')
 			.next('span')
 			.then(($val) => {
 				const txt = $val.text()
 				let pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
-				cy.get('#priceinput1')
-					.get('input#priceinput1.ui-labeledinput__input')
-					.should('contain.value', `${pointNum}`)
+				cy.get('#priceinput1').should('contain.value', `${pointNum}`)
 			})
 	}
 
 	static checkMaxValue() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/calc/order/avail`).as('amountAvailable')
 		cy.get('#priceinput1').clear().type('1')
-		cy.get('div.ui-buysellinputindicator')
+		cy.get('.ui-buysellinputindicator')
 			.last()
 			.within(() => {
 				cy.get('i').first().click()
