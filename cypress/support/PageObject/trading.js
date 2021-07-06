@@ -25,8 +25,8 @@ class trading {
 
 	static bookZoomAdd() {
 		for (let n = 0; n < 10; n++) {
-			cy.get('span#book-agg-controls').within(() => {
-				cy.get('i.fa-search-plus').click()
+			cy.get('#book-agg-controls').within(() => {
+				cy.get('span').eq(5).click()
 			})
 		}
 		cy.waitUntil(() =>
@@ -48,8 +48,8 @@ class trading {
 
 	static bookZoomReduce() {
 		for (let n = 0; n < 10; n++) {
-			cy.get('span#book-agg-controls').within(() => {
-				cy.get('i.fa-search-minus').click()
+			cy.get('#book-agg-controls').within(() => {
+				cy.get('span').eq(4).click()
 			})
 		}
 		cy.waitUntil(() =>
@@ -76,45 +76,42 @@ class trading {
 	}
 
 	static addAlert() {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('deleteAlert')
+
 		cy.get('#book-bids').within(() => {
-			cy.get('.book__row').first().get('i.fa-bell').first().click()
+			cy.get('.book__row').first().find('.book__alert').click()
+			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
 		})
-		cy.waitUntil(() =>
-			cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
-		)
-		cy.get('div.standalone-notification-drawer__item')
-			.get('div.notification__skip')
-			.within(() => {
-				cy.get('div.fa-times').click()
-			})
+
+		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
+
+		cy.get('div.notification__skip').click()
+
 		cy.get('#book-bids').within(() => {
-			cy.get('.book__row').first().get('i.fa-bell').first().click()
+			cy.get('.book__row').first().find('.book__alert').click()
+			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
 		})
-		cy.waitUntil(() =>
-			cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
-		)
-		cy.get('div.standalone-notification-drawer__item')
-			.get('div.notification__skip')
-			.within(() => {
-				cy.get('div.fa-times').click()
-			})
+
+		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
+
+		cy.get('div.notification__skip').click()
+
 		cy.get('#book-asks').within(() => {
-			cy.get('.book__row').first().get('i.fa-bell').first().click()
+			cy.get('.book__row').first().find('.book__alert').click()
+			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
 		})
-		cy.waitUntil(() =>
-			cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
-		)
-		cy.get('div.standalone-notification-drawer__item')
-			.get('div.notification__skip')
-			.within(() => {
-				cy.get('div.fa-times').click()
-			})
+
+		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
+
+		cy.get('div.notification__skip').click()
+
 		cy.get('#book-asks').within(() => {
-			cy.get('.book__row').first().get('i.fa-bell').first().click()
+			cy.get('.book__row').first().find('.book__alert').click()
+			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
 		})
-		cy.waitUntil(() =>
-			cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
-		)
+
+		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
 	}
 
 	static checkBestValue() {
@@ -194,9 +191,12 @@ class trading {
 	}
 
 	static increaseDecreasePrecision() {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/settings/set`).as('setSetting')
+
 		for (let n = 0; n < 2; n++) {
-			cy.get('span#book-agg-controls').within(() => {
-				cy.get('i.fa-minus').first().click()
+			cy.get('#book-agg-controls').within(() => {
+				cy.get('span').eq(0).click()
+				cy.wait('@setSetting').its('response.statusCode').should('eq', 200)
 			})
 			cy.waitUntil(() =>
 				cy.get('#book-bids').within(() => {
@@ -211,7 +211,8 @@ class trading {
 		}
 		for (let n = 0; n < 2; n++) {
 			cy.get('span#book-agg-controls').within(() => {
-				cy.get('i.fa-plus').first().click()
+				cy.get('span').eq(1).click()
+				cy.wait('@setSetting').its('response.statusCode').should('eq', 200)
 			})
 			cy.waitUntil(() =>
 				cy.get('#book-bids').within(() => {
