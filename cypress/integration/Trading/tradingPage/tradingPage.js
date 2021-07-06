@@ -3,12 +3,10 @@
 import login from '../../../support/PageObject/login.js'
 import trading from '../../../support/PageObject/trading.js'
 
-const staging = new login()
-
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 })
 
 When('I Select a currency', () => {
