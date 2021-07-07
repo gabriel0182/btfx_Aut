@@ -2,11 +2,6 @@
 
 import trading from '../../../support/PageObject/trading.js'
 
-// Given('I go to Trading page', () => {
-// 	staging.landing()
-// 	staging.longIn()
-// })
-
 When('I Select a currency', () => {
 	trading.currency()
 })
