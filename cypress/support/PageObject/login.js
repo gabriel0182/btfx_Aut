@@ -9,7 +9,7 @@ class login {
 	}
 	static longIn() {
 		cy.visitBitfinexAndLogin()
-		cy.resolveUsResident()
+		//cy.resolveUsResident()
 	}
 	static verifyLoggedOn() {
 		cy.waitUntil(() =>

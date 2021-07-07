@@ -3,9 +3,6 @@
 import TradesTable from '../../../support/PageObject/TradesTable.js'
 import trading from '../../../support/PageObject/trading.js'
 
-const trades = new TradesTable()
-const trd = new trading()
-
 When('I Select a currency', () => {
 	trading.currency()
 })
