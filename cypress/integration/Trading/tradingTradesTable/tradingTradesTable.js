@@ -5,7 +5,7 @@ import TradesTable from '../../../support/PageObject/TradesTable.js'
 import trading from '../../../support/PageObject/trading.js'
 
 
-Given('I go to Trading page', () => {
+Given('I went to the Trading page', () => {
 	login.landing()
 	login.longIn()
 })
@@ -14,14 +14,14 @@ When('I Select a currency', () => {
 	trading.currency()
 })
 
-When('Test table sorting in all areas', () => {
+When('The sorting order History table should work', () => {
 	TradesTable.sortingOrderHistory()
 })
 
-Then('I verify the trading table Market', () => {
+Then('The trading table Market should work', () => {
 	TradesTable.validateMarket()
 })
 
-Then('I verify the trading table yours', () => {
+Then('The trading table yours should work', () => {
 	TradesTable.validateYours()
 })
