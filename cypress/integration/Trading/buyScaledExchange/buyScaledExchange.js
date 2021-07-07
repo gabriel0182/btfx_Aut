@@ -1,15 +1,8 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import buyScaled from '../../../support/PageObject/buyScaled.js'
 
-const staging = new login()
 const buyScld = new buyScaled()
-
-Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
-})
 
 When('I type the order required info', () => {
 	buyScld.trading()
