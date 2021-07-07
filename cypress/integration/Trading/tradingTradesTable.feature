@@ -1,15 +1,19 @@
 Feature: Test Trading trades table
 
-  @focus
+  Background: Go to trading page
 
-  Scenario: Test Trading trades table
-
-    Given I go to Trading page
+    Given I went to the Trading page
 
     When I Select a currency
 
-    When Test table sorting in all areas
+  Scenario: Sorting Order History Table
 
-    Then I verify the trading table Market
+    Then The sorting order History table should work
 
-    Then I verify the trading table yours
+   Scenario: Trading table Market
+
+    Then The trading table Market should work
+
+     Scenario: Trading table Yours
+
+    Then The trading table yours should work

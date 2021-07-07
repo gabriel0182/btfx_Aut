@@ -2,23 +2,22 @@
 
 import TradesTable from '../../../support/PageObject/TradesTable.js'
 import trading from '../../../support/PageObject/trading.js'
-import sellScaled from '../../../support/PageObject/sellScaled.js'
 
 const trades = new TradesTable()
 const trd = new trading()
 
 When('I Select a currency', () => {
-	trd.currency()
+	trading.currency()
 })
 
-When('Test table sorting in all areas', () => {
-	trades.sortingOrderHistory()
+When('The sorting order History table should work', () => {
+	TradesTable.sortingOrderHistory()
 })
 
-Then('I verify the trading table Market', () => {
-	trades.validateMarket()
+Then('The trading table Market should work', () => {
+	TradesTable.validateMarket()
 })
 
-Then('I verify the trading table yours', () => {
-	trades.validateYours()
+Then('The trading table yours should work', () => {
+	TradesTable.validateYours()
 })
