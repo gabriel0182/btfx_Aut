@@ -4,13 +4,12 @@ import login from '../../../support/PageObject/login.js'
 import buyStopTIF from '../../../support/PageObject/buyStopTIF.js'
 import buyStop from '../../../support/PageObject/buyStop.js'
 
-const staging = new login()
 const stopTIF = new buyStopTIF()
 const stopBuy = new buyStop()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	stopTIF.trading()
 })
 

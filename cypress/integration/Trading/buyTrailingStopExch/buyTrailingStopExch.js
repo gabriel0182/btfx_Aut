@@ -3,12 +3,11 @@
 import login from '../../../support/PageObject/login.js'
 import trailingStopExch from '../../../support/PageObject/trailingStopExch.js'
 
-const staging = new login()
 const trailingStop = new trailingStopExch()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	trailingStop.trading()
 })
 

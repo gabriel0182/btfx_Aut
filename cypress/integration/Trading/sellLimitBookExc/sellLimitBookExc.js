@@ -4,13 +4,12 @@ import login from '../../../support/PageObject/login.js'
 import buyLimitBook from '../../../support/PageObject/buyLimitBook.js'
 import sellLimitBook from '../../../support/PageObject/sellLimitBook.js'
 
-const staging = new login()
 const limitBk = new buyLimitBook()
 const sellLimitBk = new sellLimitBook()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	sellLimitBk.trading()
 })
 

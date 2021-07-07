@@ -2,16 +2,14 @@
 
 import login from '../../../support/PageObject/login.js'
 
-const staging = new login()
-
 Given('I visit the homepage', () => {
-	staging.landing()
+	login.landing()
 })
 
 When('I type my user, pass and login', () => {
-	staging.longIn()
+	login.longIn()
 })
 
 Then('I verify my user is logged on', () => {
-	staging.verifyLoggedOn()
+	login.verifyLoggedOn()
 })

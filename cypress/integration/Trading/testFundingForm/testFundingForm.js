@@ -3,12 +3,11 @@
 import login from '../../../support/PageObject/login.js'
 import fundingForm from '../../../support/PageObject/fundingForm.js'
 
-const staging = new login()
 const form = new fundingForm()
 
 Given('I go to funding page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	form.goFundingPage()
 })
 

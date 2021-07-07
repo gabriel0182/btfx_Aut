@@ -3,11 +3,9 @@
 import login from '../../../support/PageObject/login.js'
 import buyFillKill from '../../../support/PageObject/buyFillKill.js'
 
-const staging = new login()
-
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	buyFillKill.trading()
 })
 

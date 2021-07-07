@@ -4,13 +4,12 @@ import login from '../../../support/PageObject/login.js'
 import limitSellExch from '../../../support/PageObject/limitSellExch.js'
 import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
 
-const staging = new login()
 const limitSell = new limitSellExch()
 const limitBuy = new buyLimitExch()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	limitSell.trading()
 })
 

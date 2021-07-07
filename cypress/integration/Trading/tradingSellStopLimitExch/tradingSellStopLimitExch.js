@@ -4,13 +4,12 @@ import login from '../../../support/PageObject/login.js'
 import sellStopLimitExch from '../../../support/PageObject/sellStopLimitExch.js'
 import stopLimitExch from '../../../support/PageObject/stopLimitExch.js'
 
-const staging = new login()
 const sellstopLmt = new sellStopLimitExch()
 const stopLmt = new stopLimitExch()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	sellstopLmt.trading()
 })
 

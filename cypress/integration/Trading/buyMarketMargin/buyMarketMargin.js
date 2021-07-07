@@ -3,12 +3,11 @@
 import login from '../../../support/PageObject/login.js'
 import buyMarket from '../../../support/PageObject/buyMarket.js'
 
-const staging = new login()
 const buyMk = new buyMarket()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	buyMk.trading()
 })
 

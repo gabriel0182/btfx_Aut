@@ -4,13 +4,12 @@ import login from '../../../support/PageObject/login.js'
 import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
 import partialHidden from '../../../support/PageObject/partialHidden.js'
 
-const staging = new login()
 const limitExch = new buyLimitExch()
 const ptHidden = new partialHidden()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	limitExch.trading()
 	ptHidden.increasePrecision()
 })

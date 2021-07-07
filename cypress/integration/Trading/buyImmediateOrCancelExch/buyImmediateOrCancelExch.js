@@ -3,12 +3,11 @@
 import login from '../../../support/PageObject/login.js'
 import buyImmediateCancel from '../../../support/PageObject/buyImmediateCancel.js'
 
-const staging = new login()
 const buyIC = new buyImmediateCancel()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	buyIC.trading()
 })
 

@@ -4,13 +4,12 @@ import login from '../../../support/PageObject/login.js'
 import sellFillKill from '../../../support/PageObject/sellFillKill.js'
 import buyFillKill from '../../../support/PageObject/buyFillKill.js'
 
-const staging = new login()
 const sellFK = new sellFillKill()
 const buyFK = new buyFillKill()
 
 Given('I go to Trading page', () => {
-	staging.landing()
-	staging.longIn()
+	login.landing()
+	login.longIn()
 	sellFK.trading()
 })
 
