@@ -1,8 +1,7 @@
 Feature: Test Trading trades table
 
-  Background: Go to trading page
-
-    Given I went to the Trading page
+ Background: Go to Ad form
+  Given I go to Trading page
 
     When I Select a currency
 

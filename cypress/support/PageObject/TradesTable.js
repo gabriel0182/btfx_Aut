@@ -85,7 +85,7 @@ class TradesTable {
 				.get('span.table-vir__cell')
 				.get('span')
 				.eq(3)
-			.should('contain', 'BTC/USD')
+			.should('contain', 'USDt/USD')
 			})
 		cy
 			.get('div.themed-border')
@@ -130,7 +130,7 @@ class TradesTable {
 					.get('span.table-vir__cell')
 					.get('span')
 					.eq(8)
-					.should('contain', 'Margin')
+					.should('contain', 'Exchange')
 				})
 				cy
 				.get('div.themed-border')
