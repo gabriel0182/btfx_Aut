@@ -40,12 +40,12 @@ class buyStopTIF {
 	}
 	orderInfo() {
 		let now = new Date()
-		var year = now.getUTCFullYear()
+		let year = now.getUTCFullYear()
 		let month = ('0' + (now.getMonth() + 1)).slice(-2)
-		var day = ('0' + (now.getDate() + 1)).slice(-2)
-		var date = `${year}"-"${month}"-"${day}" ""03:00:30"`
+		let day = ('0' + (now.getDate() + 1)).slice(-2)
+		let date = `${year}"-"${month}"-"${day}" ""03:00:30"`
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 				ticker: testDataRow.ticker,
@@ -66,7 +66,7 @@ class buyStopTIF {
 					cy.get('[href="/t/BTC:USD"]').click()
 				})
 				//Read the current BTC/USD price
-				cy.get(':nth-child(2) > h5 > span').then($btn => {
+				cy.get(':nth-child(2) > h5 > span').then(($btn) => {
 					const txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amout = pointNum * 1160
@@ -98,7 +98,7 @@ class buyStopTIF {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -118,7 +118,7 @@ class buyStopTIF {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -164,7 +164,7 @@ class buyStopTIF {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -173,7 +173,7 @@ class buyStopTIF {
 					)
 					.click()
 				const testData = require('../../fixtures/orders.json')
-				testData.forEach(testDataRow => {
+				testData.forEach((testDataRow) => {
 					const data = {
 						btc: testDataRow.btc,
 					}
