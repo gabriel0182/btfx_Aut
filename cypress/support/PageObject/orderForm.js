@@ -203,5 +203,26 @@ class orderform {
 			)
 		})
 	}
+	static buyLimitOrder() {
+		cy.get('[data-qa-id="order-form"]').within(() => {
+			cy.get('div#form-choose-exchange').contains('Exchange').click()
+			cy.fixture('orders').then((btc) => {
+				cy.waitUntil(() =>
+					cy
+						.get('[name="amount"]')
+						.clear()
+						.type(`${btc[0].btc}`)
+						.get('div.bid')
+						.within(() => {
+							cy.get('span').eq(2).click()
+						})
+						.get('div.orderform')
+						.within(() => {
+							cy.get('#buyButton').click()
+						})
+				)
+			})
+		})
+	}
 }
 export default orderform

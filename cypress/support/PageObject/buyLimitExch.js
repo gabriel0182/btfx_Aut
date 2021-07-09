@@ -1,22 +1,4 @@
 class buyLimitExch {
-	validatePriceSet() {
-		const testData = require('../../fixtures/orders.json')
-		testData.forEach((testDataRow) => {
-			const data = {
-				max: testDataRow.max,
-			}
-			context(`Generating a test for ${data.wallet1}`, () => {
-				const priceUSD = cy.get('#priceinput1').clear().type(`${data.max}`)
-			})
-			const exchangeBuy = cy.get('#buyButton')
-			exchangeBuy.click()
-			const validateAlert = cy
-				.get('.order-errors')
-				.get('.order-errors__wrapper > li')
-				.should('contain', 'Price set at more than 10% of the ticker price, aborting')
-		})
-		return this
-	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
@@ -43,23 +25,7 @@ class buyLimitExch {
 		exchangeBuy.click()
 		return this
 	}
-	successMsg() {
-		const testData = require('../../fixtures/orders.json')
-		testData.forEach((testDataRow) => {
-			const data = {
-				btc: testDataRow.btc,
-			}
-			context(`Generating a test for ${data.btc}`, () => {
-				const msg = cy.waitUntil(() => cy.get('.notification-text__text').should('be.visible'))
-				const validateMsg = cy.waitUntil(() =>
-					cy
-						.get('.notification-text__text')
-						.should('contain', `Created exchange limit buy order of ${data.btc} BTC`)
-				)
-			})
-		})
-		return this
-	}
+
 	orderFilter() {
 		const filter = cy.get(
 			'[style="display: flex; align-items: center; min-width: 200px;"] > .filter-select > .ui-contextmenu__wrapper > .btn'

@@ -2,6 +2,7 @@
 
 import tickers from '../../../support/PageObject/tickers'
 import orderForm from '../../../support/PageObject/orderForm'
+import messages from '../../../support/PageObject/messages'
 
 When('I Select a currency', () => {
 	tickers.selectTicker()
@@ -17,17 +18,15 @@ When('I type the order required info', () => {
 	orderForm.validateMin()
 	orderForm.validateMax()
 	orderForm.validateMaxPrice()
-	/*
-	limitExch.orderInfo()*/
 })
 
 When('I select to Exchange Buy', () => {
-	//limitExch.buyButton()
+	orderForm.buyLimitOrder()
 })
 
 Then('I verify the limit order was created', () => {
-	/*limitExch.successMsg()
-	limitExch.orderFilter()
+	messages.buyLimitConfirm()
+	/*limitExch.orderFilter()
 	limitExch.validateMarkers()
 	limitExch.cancelOrder()*/
 })
