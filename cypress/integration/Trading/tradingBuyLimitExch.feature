@@ -4,7 +4,9 @@ Feature: Test Creating a limit buy order from exchange wallet
 
   Scenario:Create a limit buy order from exchange wallet
 
-    Given I go to Trading page
+    Background: Go to Ad form
+  Given I go to Trading page
+  When I Select a currency
 
     When I type the order required info
 

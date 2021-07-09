@@ -1,10 +1,11 @@
 Feature: Test Creating a Limit (Order Book) buy order from Exchange wallet
 
-  @focus
+ Background: Go to Ad form
+  Given I go to Trading page
+  When I Select a currency
+
 
   Scenario: Create a Limit (Order Book) buy order from Exchange wallet
-
-    Given I go to Trading page
 
     When I type the order required info
 

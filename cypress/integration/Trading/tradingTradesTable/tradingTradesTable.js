@@ -1,20 +1,21 @@
 ///  <reference types="cypress"/>
 
-import TradesTable from '../../../support/PageObject/TradesTable.js'
-import trading from '../../../support/PageObject/trading.js'
+import tickers from '../../../support/PageObject/tickers.js'
+import trades from '../../../support/PageObject/trades.js'
+import orderHistory from '../../../support/PageObject/orderHistory.js'
 
 When('I Select a currency', () => {
-	trading.currency()
+	tickers.selectTicker()
 })
 
 When('The sorting order History table should work', () => {
-	TradesTable.sortingOrderHistory()
+	orderHistory.sortingOrderHistory()
 })
 
 Then('The trading table Market should work', () => {
-	TradesTable.validateMarket()
+	trades.validateMarket()
 })
 
 Then('The trading table yours should work', () => {
-	TradesTable.validateYours()
+	trades.validateYours()
 })

@@ -1,29 +1,27 @@
 ///  <reference types="cypress"/>
 
-import trading from '../../../support/PageObject/trading.js'
+import orderBook from '../../../support/PageObject/orderBook.js'
+import orderform from '../../../support/PageObject/orderform.js'
+import tickers from '../../../support/PageObject/tickers'
 
 When('I Select a currency', () => {
-	trading.currency()
-})
-
-Then('I verify the graph is shown', () => {
-	trading.verifyCurrency()
+	tickers.selectTicker()
 })
 
 Then('I verify the Order form max buy / sell', () => {
-	trading.checkMaxValue()
+	orderform.checkMaxValue()
 })
 
 Then('I verify the Order from best bid / ask', () => {
-	trading.checkBestValue()
+	orderform.checkBestValue()
 })
 
 Then('I verify the alerts in order book table', () => {
-	trading.addAlert()
+	orderBook.addAlert()
 })
 
 Then('I verify the order book precision and aggregation', () => {
-	trading.bookZoomAdd()
-	trading.bookZoomReduce()
-	trading.increaseDecreasePrecision()
+	orderBook.bookZoomAdd()
+	orderBook.bookZoomReduce()
+	orderBook.increaseDecreasePrecision()
 })

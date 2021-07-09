@@ -4,9 +4,6 @@ Feature: Test Trading Page page
   Given I go to Trading page
   When I Select a currency
 
-  Scenario: Trading Page Loads
-  Then I verify the graph is shown
-
   Scenario: Max buy/sell
   Then I verify the Order form max buy / sell
 

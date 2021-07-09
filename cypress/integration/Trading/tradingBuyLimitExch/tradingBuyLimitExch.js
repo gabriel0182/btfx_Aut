@@ -1,32 +1,33 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
-import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
+import tickers from '../../../support/PageObject/tickers'
+import orderForm from '../../../support/PageObject/orderForm'
 
-const limitExch = new buyLimitExch()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	limitExch.trading()
+When('I Select a currency', () => {
+	tickers.selectTicker()
 })
 
 When('I type the order required info', () => {
-	limitExch.verifyFields()
-	limitExch.requiredFields()
-	limitExch.validateMin()
-	limitExch.validatePriceSet()
-	limitExch.validateMax()
-	limitExch.orderInfo()
+	orderForm.selectLimitOrder()
+	orderForm.selectExchangeWallet()
+	orderForm.verifyLimitExchangeFields()
+	orderForm.selectMarginWallet()
+	orderForm.verifyLimitMarginFields()
+	orderForm.verifyLimitRequiredFields()
+	orderForm.validateMin()
+	orderForm.validateMax()
+	orderForm.validateMaxPrice()
+	/*
+	limitExch.orderInfo()*/
 })
 
 When('I select to Exchange Buy', () => {
-	limitExch.buyButton()
+	//limitExch.buyButton()
 })
 
 Then('I verify the limit order was created', () => {
-	limitExch.successMsg()
+	/*limitExch.successMsg()
 	limitExch.orderFilter()
 	limitExch.validateMarkers()
-	limitExch.cancelOrder()
+	limitExch.cancelOrder()*/
 })
