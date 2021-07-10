@@ -3,30 +3,44 @@
 import tickers from '../../../support/PageObject/tickers'
 import orderForm from '../../../support/PageObject/orderForm'
 import messages from '../../../support/PageObject/messages'
+import ordersTable from '../../../support/PageObject/ordersTable'
+import orderBook from '../../../support/PageObject/orderBook'
 
 When('I Select a currency', () => {
 	tickers.selectTicker()
 })
 
-When('I type the order required info', () => {
+Then('Limit order min-max price should work', () => {
 	orderForm.selectLimitOrder()
-	orderForm.selectExchangeWallet()
-	orderForm.verifyLimitExchangeFields()
-	orderForm.selectMarginWallet()
-	orderForm.verifyLimitMarginFields()
-	orderForm.verifyLimitRequiredFields()
+	orderForm.validateMaxPrice()
 	orderForm.validateMin()
 	orderForm.validateMax()
-	orderForm.validateMaxPrice()
+})
+Then('Limit order Exchange field should be shown', () => {
+	orderForm.selectExchangeWallet()
+	orderForm.verifyLimitExchangeFields()
+})
+Then('Limit order Margin field should be shown', () => {
+	orderForm.selectMarginWallet()
+	orderForm.verifyLimitMarginFields()
 })
 
-When('I select to Exchange Buy', () => {
+Then('Buy Limit order required field message should be shown', () => {
+	orderForm.verifyLimitRequiredFields()
+})
+
+Then('A Buy Limit order from Exchange wallet should be created', () => {
 	orderForm.buyLimitOrder()
+	messages.buyLimitConfirm()
 })
 
-Then('I verify the limit order was created', () => {
-	messages.buyLimitConfirm()
-	/*limitExch.orderFilter()
-	limitExch.validateMarkers()
-	limitExch.cancelOrder()*/
+Then('A Buy Limit order green marker should be shown', () => {
+	orderBook.validateMarkers()
+})
+Then('Filter should work', () => {
+	ordersTable.orderFilterBidExch()
+})
+Then('A Buy Limit order from Exchange wallet should be cancelled', () => {
+	ordersTable.cancelOrder()
+	messages.cancelLimitOrder()
 })

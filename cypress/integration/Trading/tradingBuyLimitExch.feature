@@ -1,15 +1,32 @@
 Feature: Test Creating a limit buy order from exchange wallet
 
-  @focus
 
-  Scenario:Create a limit buy order from exchange wallet
-
-    Background: Go to Ad form
   Given I go to Trading page
   When I Select a currency
 
-    When I type the order required info
+   Scenario: Order form/Limit order Validations
 
-   And I select to Exchange Buy
+   Given I go to Trading page
+  When I Select a currency
 
-    Then I verify the limit order was created
+   Then Limit order min-max price should work
+   Then Limit order Exchange field should be shown
+   Then Limit order Margin field should be shown
+   Then Buy Limit order required field message should be shown
+
+   Scenario: Order form/Create Limit buy Order
+   Given I go to Trading page
+  When I Select a currency
+    Then A Buy Limit order from Exchange wallet should be created
+
+    Scenario: OrderBook /Validate Markers
+    Given I go to Trading page
+  When I Select a currency
+    Then A Buy Limit order green marker should be shown
+
+    Scenario: Orders Table /Validate Filters and Cancel Orders
+    Given I go to Trading page
+  When I Select a currency
+    Then Filter should work 
+    Then A Buy Limit order from Exchange wallet should be cancelled
+

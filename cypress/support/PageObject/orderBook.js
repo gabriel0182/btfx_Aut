@@ -120,5 +120,24 @@ class orderBook {
 			)
 		}
 	}
+	static validateMarkers() {
+		cy.fixture('orders').then((btc) => {
+			cy.waitUntil(() =>
+				cy
+					.get('div.book__main')
+					.get('#book-bids')
+					.within(() => {
+						cy.get('div.book__order-i.book__order-green').should('be.visible')
+					})
+					.get('div.book__order-i.book__order-green')
+					.trigger('mouseover')
+					.get('div.book__order-tooltip')
+					.invoke('show')
+					.should('contain', 'EXCHANGE LIMIT')
+					.get('div.book__order-tooltip > span')
+					.should('contain', `${btc[0].btc}`)
+			)
+		})
+	}
 }
 export default orderBook
