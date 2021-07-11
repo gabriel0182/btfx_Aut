@@ -9,6 +9,16 @@ class messages {
 			)
 		})
 	}
+	static sellLimitConfirm() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should('contain', `Created exchange limit sell order of ${order[0].btc} BTC`)
+			)
+		})
+	}
 	static cancelLimitOrder() {
 		cy.fixture('orders').then((order) => {
 			cy.waitUntil(() =>
@@ -16,6 +26,16 @@ class messages {
 					.get('.notification-text__text')
 					.should('be.visible')
 					.should('contain', `Exchange limit buy order of ${order[0].btc} BTC has been canceled`)
+			)
+		})
+	}
+	static cancelSellLimitOrder() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should('contain', `Exchange limit sell order of ${order[0].btc} BTC has been canceled`)
 			)
 		})
 	}

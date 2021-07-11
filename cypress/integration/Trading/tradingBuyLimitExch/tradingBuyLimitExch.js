@@ -10,26 +10,8 @@ When('I Select a currency', () => {
 	tickers.selectTicker()
 })
 
-Then('Limit order min-max price should work', () => {
-	orderForm.selectLimitOrder()
-	orderForm.validateMaxPrice()
-	orderForm.validateMin()
-	orderForm.validateMax()
-})
-Then('Limit order Exchange field should be shown', () => {
-	orderForm.selectExchangeWallet()
-	orderForm.verifyLimitExchangeFields()
-})
-Then('Limit order Margin field should be shown', () => {
-	orderForm.selectMarginWallet()
-	orderForm.verifyLimitMarginFields()
-})
-
-Then('Buy Limit order required field message should be shown', () => {
-	orderForm.verifyLimitRequiredFields()
-})
-
 Then('A Buy Limit order from Exchange wallet should be created', () => {
+	orderForm.selectLimitOrder()
 	orderForm.buyLimitOrder()
 	messages.buyLimitConfirm()
 })

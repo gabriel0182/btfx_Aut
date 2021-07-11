@@ -1,32 +1,26 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
-import limitSellExch from '../../../support/PageObject/limitSellExch.js'
-import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
+import tickers from '../../../support/PageObject/tickers'
+import orderForm from '../../../support/PageObject/orderForm'
+import messages from '../../../support/PageObject/messages'
+import ordersTable from '../../../support/PageObject/ordersTable'
 
-const limitSell = new limitSellExch()
-const limitBuy = new buyLimitExch()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	limitSell.trading()
+When('I Select a currency', () => {
+	tickers.selectTicker()
 })
 
-When('I type the order required info', () => {
-	limitBuy.verifyFields()
-	limitSell.requiredFields()
-	limitSell.validateMin()
-	limitSell.validateMax()
-	limitSell.orderInfo()
+Then('A Sell Limit order from Exchange wallet should be created', () => {
+	orderForm.selectExchangeWallet()
+	orderForm.sellLimitOrder()
+	messages.sellLimitConfirm()
 })
 
-When('I select to Exchange sell', () => {
-	limitSell.sellButton()
+Then('Filter should work', () => {
+	ordersTable.orderFilterAskExch()
 })
 
-Then('I verify the limit sell order was created', () => {
-	limitSell.successMsg()
-	limitSell.orderFilter()
-	limitSell.cancelSellOrder()
+Then('A Sell Limit order from Exchange wallet should be cancelled', () => {
+	ordersTable.cancelOrder()
+	messages.cancelSellLimitOrder()
+	ordersTable.clearFilters()
 })
