@@ -17,6 +17,7 @@ Then('A Sell Limit order from Exchange wallet should be created', () => {
 
 Then('Filter should work', () => {
 	ordersTable.orderFilterAskExch()
+	ordersTable.sortingOrderTable()
 })
 
 Then('A Sell Limit order from Exchange wallet should be cancelled', () => {
