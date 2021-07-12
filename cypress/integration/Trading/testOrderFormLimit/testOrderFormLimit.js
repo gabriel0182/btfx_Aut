@@ -18,7 +18,7 @@ Then('I verify the Order from best bid / ask', () => {
 })
 
 Then('I verify the Order form max buy / sell', () => {
-	orderForm.checkBestValue()
+	orderForm.checkMaxValue()
 })
 Then('Limit order Exchange field should be shown', () => {
 	orderForm.selectExchangeWallet()

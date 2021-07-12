@@ -1,7 +1,6 @@
 class ordersTable {
 	static cancelOrder() {
-		const ordersTable = cy
-			.get('[data-qa-id="orders-table-row"]')
+		cy.get('[data-qa-id="orders-table-row"]')
 			.first()
 			.within(() => {
 				cy.get('button.ui-button.ui-button--grey.ui-button--size-XS').get('i.fa-times').click()

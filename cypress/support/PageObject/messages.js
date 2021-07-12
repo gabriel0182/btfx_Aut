@@ -39,5 +39,31 @@ class messages {
 			)
 		})
 	}
+	static buyMarketConfirm() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should(
+						'contain',
+						`Margin market buy order of ${order[0].btc} BTC has been fully executed`
+					)
+			)
+		})
+	}
+	static cancelBuyMarketOrder() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should(
+						'contain',
+						`Margin market sell order of ${order[0].btc} BTC has been fully executed`
+					)
+			)
+		})
+	}
 }
 export default messages
