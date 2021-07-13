@@ -1,16 +1,18 @@
 ///  <reference types="cypress"/>
 
-import longPosition from '../../../support/PageObject/longPosition.js'
+import positions from '../../../support/PageObject/positions'
+import messages from '../../../support/PageObject/messages'
 
 When('I select the Create a New Long Position option', () => {
-	longPosition.addPosition()
-})
-
-When('I fill out all the required fields', () => {
-	longPosition.requiredInfo()
+	positions.addPosition()
 })
 
 Then('I verify the position was created', () => {
-	longPosition.successMsg()
-	longPosition.cancelPosition()
+	positions.createLong()
+	messages.confirmLongPosition()
+})
+
+Then('I verify the position was cancelled', () => {
+	positions.cancelPosition()
+	messages.confirmCancelPosition()
 })

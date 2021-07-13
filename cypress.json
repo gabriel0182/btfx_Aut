@@ -5,6 +5,7 @@
 		"**/balanceQuickTransfer.feature",
 		"**/createLongPosition.feature",
 		"**/createShortPosition.feature",
+		"**/positionsTable.feature",
 		"**/testOrderFormLimit.feature",
 		"**/testOrderFormMarket.feature",
 		"**/tradingBuyLimitExch.feature",

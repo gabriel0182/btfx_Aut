@@ -1,3 +1,5 @@
+const apiStagingUrl = 'https://api.staging.bitfinex.com'
+
 class messages {
 	static buyLimitConfirm() {
 		cy.fixture('orders').then((order) => {
@@ -76,6 +78,40 @@ class messages {
 						`Margin market sell order of ${order[0].btc} BTC has been fully executed`
 					)
 			)
+		})
+	}
+	static confirmLongPosition() {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
+			'stats'
+		)
+		cy.wait('@stats').its('response.statusCode').should('eq', 200)
+		cy.get('.notification-text__text').should('contain', 'Submitting position increase')
+	}
+	static confirmCancelLongPosition() {
+		cy.fixture('positions').then((position) => {
+			cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
+				'stats'
+			)
+			cy.wait('@stats').its('response.statusCode').should('eq', 200)
+			const confirmationMsg = `Margin market sell order of ${position[0].amount} BTC has been fully executed`
+			cy.get('.notification-text__text').should('contain', confirmationMsg)
+		})
+	}
+	static confirmShortPosition() {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
+			'stats'
+		)
+		cy.wait('@stats').its('response.statusCode').should('eq', 200)
+		cy.get('.notification-text__text').should('contain', 'Submitting position increase')
+	}
+	static confirmCancelShortPosition() {
+		cy.fixture('positions').then((position) => {
+			cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
+				'stats'
+			)
+			cy.wait('@stats').its('response.statusCode').should('eq', 200)
+			const confirmationMsg = `Margin market buy order of ${position[0].amount} BTC has been fully executed`
+			cy.get('.notification-text__text').should('contain', confirmationMsg)
 		})
 	}
 }
