@@ -1,13 +1,9 @@
-Feature: Test Creating a Market sell order from Margin wallet
+Feature: Test Creating a Market sell order from exchange wallet
 
-  @focus
+Background: Login steps
+Given I go to Trading page
+  When I Select a currency
 
-  Scenario: Create a Market sell order from Margin wallet
-
-    Given I go to Trading page
-
-    When I type the order required info
-
-   And I select to Margin Sell
-
-    Then I verify the Market sell order from Margin wallet was created
+ Scenario: Order form/Create Market sell Order
+   
+    Then A sell Market order from Exchange wallet should be created

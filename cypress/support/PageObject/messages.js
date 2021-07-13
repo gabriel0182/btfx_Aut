@@ -65,5 +65,18 @@ class messages {
 			)
 		})
 	}
+	static sellMarketConfirm() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should(
+						'contain',
+						`Margin market sell order of ${order[0].btc} BTC has been fully executed`
+					)
+			)
+		})
+	}
 }
 export default messages
