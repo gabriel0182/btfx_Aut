@@ -1,28 +1,4 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add("login", (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add("drag", { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add("dismiss", { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+import 'cypress-wait-until'
 const urlApiPub = 'https://api-pub.staging.bitfinex.com/v2'
 
 Cypress.Commands.add('loginToBitfinexManually', () => {
@@ -32,12 +8,7 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 
 	cy.setCookie('bfx_locale', 'en')
-	/*cy.fixture("sensitive/credentials.json").then((credentials) => {
-  cy.task("generateOTP", `${credentials.totp_secre}`)
-          .then((token) => {
-            console.log(token)
-          }).pause()
-        })*/
+
 	cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
 		onBeforeLoad(win) {
 			Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
@@ -51,15 +22,12 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 		},
 	})
 	cy.on('uncaught:exception', (err, runnable) => {
-		//expect(err.message).to.include('d is not a function');
-		//expect(err.message).to.include("t._innerWindow(...).widgetReady");
 		expect(err.message).to.include('')
 		return false
 	})
 	cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
 	cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)
-	// .get('#book-bids > .book__rows')
-	// .should('be.visible')
+
 	let session = cy.getCookie('_bfx_session')
 	cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
 		cookie: `${session.name}=${session.value}`,
@@ -131,7 +99,7 @@ Cypress.Commands.add('visitBitfinexHomepage', () => {
 })
 
 Cypress.Commands.add('visitBitfinexAndLogin', () => {
-	cy.loginToBitfinexManually()
+	cy.loginBack()
 	cy.waitForPageToLoad()
 })
 Cypress.Commands.add('resolveUsResident', () => {
@@ -177,17 +145,7 @@ function lookForSpinners() {
 }
 
 Cypress.Commands.add('waitForPageToLoad', () => {
-	// Give the page upto 60 seconds to resolve loading before continuing (wait for all loading spinners to disappear)
-	// cy.get("i.fa-spin", { timeout: 60000 }).should("be.at.least", 1)
 	cy.get('#interface').should('be.visible')
-
-	/*cy.wrap(null).then(() => {
-    return lookForSpinners().then(s => {
-      if (s == -1) {
-        cy.visitBitfinexAndLogin()
-      }
-    })
-  })*/
 })
 
 Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
@@ -199,4 +157,79 @@ Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
 		cy.visit(route, { headers: headers })
 	})
 })
-import 'cypress-wait-until'
+
+Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token) => {
+	cy.request({
+		log: false,
+		method: 'POST',
+		url: 'https://www.staging.bitfinex.com/sessions',
+		failOnstatusCode: false,
+		form: true,
+		body: {
+			authenticity_token,
+			login,
+			password,
+		},
+	})
+		.its('body')
+		.then((body) => {
+			const $html = Cypress.$(body)
+			const csrfOTP = $html.find('#otp-form > input[name=authenticity_token]').val()
+			return cy.wrap(csrfOTP)
+		})
+})
+
+Cypress.Commands.add('getAuthenticitySessionToken', () => {
+	cy.request('https://www.staging.bitfinex.com/login')
+		.its('body')
+		.then((body) => {
+			const $html = Cypress.$(body)
+			const csrfSession = $html.find('#login-form-page > input[name=authenticity_token]').val()
+			return cy.wrap(csrfSession)
+		})
+})
+
+Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
+	cy.request({
+		log: false,
+		method: 'POST',
+		url: 'https://www.staging.bitfinex.com/sessions/otp_submit',
+		failOnstatusCode: false,
+		form: true,
+		body: {
+			authenticity_token,
+			otp,
+		},
+	})
+})
+
+Cypress.Commands.add('loginBack', () => {
+	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
+	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
+	cy.fixture('sensitive/credentials.json').then((credentials) => {
+		cy.task('generateOTP', credentials.otp_secret).then((otp) => {
+			cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
+				cy.loginSessionByCSRF(
+					credentials.login,
+					credentials.password,
+					authenticity_token_session
+				).then((authenticity_token_otp) => {
+					cy.loginOTP(authenticity_token_otp, otp)
+				})
+			})
+
+			cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
+				onBeforeLoad(win) {
+					Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
+					Object.defineProperty(win.navigator, 'languages', ['en-GB'])
+					Object.defineProperty(win.navigator, 'accept_languages', {
+						value: ['en'],
+					})
+				},
+				headers: {
+					'Accept-Language': 'en',
+				},
+			})
+		})
+	})
+})
