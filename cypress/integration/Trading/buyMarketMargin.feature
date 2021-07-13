@@ -1,13 +1,13 @@
-Feature: Test Creating a Market buy order from Margin wallet
+Feature: Test Creating a Market buy order from exchange wallet
 
-  @focus
+Background: Login steps
+Given I go to Trading page
+  When I Select a currency
 
-  Scenario: Create a Market buy order from Margin wallet
+ Scenario: Order form/Create Market buy Order
+   
+    Then A Buy Market order from Exchange wallet should be created
 
-    Given I go to Trading page
-
-    When I type the order required info
-
-   And I select to Margin Buy
-
-    Then I verify the Market buy order from Margin wallet was created
+    Scenario: Orders Table / Cancel Orders
+   
+    Then A Buy Market order from Exchange wallet should be cancelled
