@@ -77,16 +77,12 @@ class orderform {
 	static selectLimitOrder() {
 		cy.waitUntil(() =>
 			cy
-				.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+				.get('[data-qa-id="order-form__order-type-dropdown"]')
 				.click()
-				.get('ul.dropdown-content')
-		)
-		cy.waitUntil(() =>
-			cy.get('ul.dropdown-content').within(() => {
-				cy.get('#orderFormDropdownItem_limit')
-					.get('[data-qa-id="order-form__order-type-dropdown-menu-item-limit"]')
-					.click()
-			})
+				.get('input#orderFormDropdown')
+				.get('#orderFormDropdownItem_limit')
+				.get('[data-qa-id="order-form__order-type-dropdown-menu-item-limit"]')
+				.click()
 		)
 	}
 	static selectExchangeWallet() {
@@ -300,16 +296,12 @@ class orderform {
 	static selectMarketOrder() {
 		cy.waitUntil(() =>
 			cy
-				.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+				.get('[data-qa-id="order-form__order-type-dropdown"]')
 				.click()
-				.get('ul.dropdown-content')
-		)
-		cy.waitUntil(() =>
-			cy.get('ul.dropdown-content').within(() => {
-				cy.get('#orderFormDropdownItem_market')
-					.get('[data-qa-id="order-form__order-type-dropdown-menu-item-market"]')
-					.click()
-			})
+				.get('input#orderFormDropdown')
+				.get('#orderFormDropdownItem_market')
+				.get('[data-qa-id="order-form__order-type-dropdown-menu-item-market"]')
+				.click()
 		)
 	}
 	static verifyMarketRequiredFields() {
@@ -469,6 +461,25 @@ class orderform {
 					.get('div.orderform')
 					.within(() => {
 						cy.get('#buyButton').click()
+					})
+			)
+		})
+	}
+	static sellMarketOrder() {
+		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
+			'orderType'
+		)
+		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
+		cy.fixture('orders').then((btc) => {
+			cy.waitUntil(() =>
+				cy
+					.get('[name="amount"]')
+					.clear()
+					.type(`${btc[0].btc}`)
+					.get('div.bid')
+					.get('div.orderform')
+					.within(() => {
+						cy.get('#sellButton').click()
 					})
 			)
 		})
