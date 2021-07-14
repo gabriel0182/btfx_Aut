@@ -100,7 +100,7 @@ Cypress.Commands.add('visitBitfinexHomepage', () => {
 
 Cypress.Commands.add('visitBitfinexAndLogin', () => {
 	cy.loginFromBackend()
-	cy.resolveUsResident()
+	//cy.resolveUsResident()
 })
 Cypress.Commands.add('resolveUsResident', () => {
 	cy.getCookie('ask_if_us_resident').then((residentChallege) => {
