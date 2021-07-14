@@ -1,15 +1,8 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import trailingStopExch from '../../../support/PageObject/trailingStopExch.js'
 
 const trailingStop = new trailingStopExch()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	trailingStop.trading()
-})
 
 When('I type the order required info', () => {
 	trailingStop.verifyFields()

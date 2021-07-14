@@ -1,14 +1,13 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
+import tickers from '../../../support/PageObject/tickers'
+import orderForm from '../../../support/PageObject/orderForm'
 import buyLimitBook from '../../../support/PageObject/buyLimitBook.js'
 
 const limitBk = new buyLimitBook()
 
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	limitBk.trading()
+And('I select the market order', () => {
+	orderForm.selectMarketOrder()
 })
 
 When('I type the order required info', () => {

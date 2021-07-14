@@ -1,17 +1,10 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import buyStop from '../../../support/PageObject/buyStop.js'
 import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
 
 const stop = new buyStop()
 const buyLimit = new buyLimitExch()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	stop.trading()
-})
 
 When('I type the order required info', () => {
 	stop.verifyFields()

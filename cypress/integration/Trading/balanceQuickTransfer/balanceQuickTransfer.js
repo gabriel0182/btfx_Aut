@@ -3,7 +3,7 @@
 import buyFillKill from '../../../support/PageObject/buyFillKill.js'
 import quickTransfer from '../../../support/PageObject/quickTransfer.js'
 
-And('Trading view is visible', () => {
+Given('Trading view is visible', () => {
 	buyFillKill.trading()
 })
 

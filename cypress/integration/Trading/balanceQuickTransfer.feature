@@ -1,9 +1,7 @@
 Feature: Test balance quick transfer
 
-  @focus
-
+@loginBitfinex
   Scenario: Test balance quick transfer
-
     Given I go to Trading page
     And Trading view is visible
     When I select the currency from the balance

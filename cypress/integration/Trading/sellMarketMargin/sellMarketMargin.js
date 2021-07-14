@@ -1,17 +1,10 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import buyMarket from '../../../support/PageObject/buyMarket.js'
 import sellMarket from '../../../support/PageObject/sellMarket.js'
 
 const buyMk = new buyMarket()
 const sellMk = new sellMarket()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	sellMk.trading()
-})
 
 When('I type the order required info', () => {
 	buyMk.verifyFields()

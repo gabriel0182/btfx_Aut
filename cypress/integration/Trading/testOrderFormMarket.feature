@@ -1,15 +1,9 @@
 Feature: Test Order Form Validations
 
-
-  Given I go to Trading page
-  When I Select a currency
-
+@loginBitfinex
    Scenario: Order form/Marekt order Validations
-
    Given I go to Trading page
-  When I Select a currency
-
-
+   When I Select a currency
    Then I verify the Order from best bid / ask
    Then Market order Margin field should be shown
    Then Buy and  sell Market order required field message should be shown

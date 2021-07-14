@@ -1,11 +1,6 @@
 ///  <reference types="cypress"/>
 
-import tickers from '../../../support/PageObject/tickers'
 import orderForm from '../../../support/PageObject/orderForm'
-
-When('I Select a currency', () => {
-	tickers.selectTicker()
-})
 
 Then('Limit order min-max price should work', () => {
 	orderForm.selectLimitOrder()

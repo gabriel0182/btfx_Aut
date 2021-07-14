@@ -1,17 +1,10 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import buyLimitBook from '../../../support/PageObject/buyLimitBook.js'
 import sellLimitBook from '../../../support/PageObject/sellLimitBook.js'
 
 const limitBk = new buyLimitBook()
 const sellLimitBk = new sellLimitBook()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	sellLimitBk.trading()
-})
 
 When('I type the order required info', () => {
 	limitBk.verifyFields()

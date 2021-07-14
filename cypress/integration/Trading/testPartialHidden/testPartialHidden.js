@@ -1,16 +1,11 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
 import partialHidden from '../../../support/PageObject/partialHidden.js'
 
-const limitExch = new buyLimitExch()
 const ptHidden = new partialHidden()
 
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	limitExch.trading()
+And('I increase precision', () => {
 	ptHidden.increasePrecision()
 })
 

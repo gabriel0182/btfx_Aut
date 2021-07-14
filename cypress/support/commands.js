@@ -99,8 +99,8 @@ Cypress.Commands.add('visitBitfinexHomepage', () => {
 })
 
 Cypress.Commands.add('visitBitfinexAndLogin', () => {
-	cy.loginBack()
-	cy.waitForPageToLoad()
+	cy.loginFromBackend()
+	cy.resolveUsResident()
 })
 Cypress.Commands.add('resolveUsResident', () => {
 	cy.getCookie('ask_if_us_resident').then((residentChallege) => {
@@ -117,10 +117,8 @@ Cypress.Commands.add('resolveUsResident', () => {
 							'bfx-token': response.body.token,
 							'content-type': 'application/json;charset=UTF-8',
 						},
-					}).then((res) => {
-						cy.log(JSON.stringify(res))
+					}).then(() => {
 						cy.setCookie('ask_if_us_resident', 'false')
-						cy.reload()
 					})
 				})
 			})
@@ -158,6 +156,21 @@ Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
 	})
 })
 
+Cypress.Commands.add('byPassCloudFlare', (route) => {
+	cy.fixture('sensitive/credentials.json').then((credentials) => {
+		cy.request({
+			log: false,
+			method: 'GET',
+			url: route,
+			headers: {
+				'CF-Access-Client-Id': credentials.cloudflare_id,
+				'CF-Access-Client-Secret': credentials.cloudflare_secret,
+			},
+			failOnstatusCode: false,
+		})
+	})
+})
+
 Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token) => {
 	cy.request({
 		log: false,
@@ -180,7 +193,12 @@ Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token)
 })
 
 Cypress.Commands.add('getAuthenticitySessionToken', () => {
-	cy.request('https://www.staging.bitfinex.com/login')
+	cy.request({
+		log: false,
+		method: 'GET',
+		url: 'https://www.staging.bitfinex.com/login',
+		failOnstatusCode: false,
+	})
 		.its('body')
 		.then((body) => {
 			const $html = Cypress.$(body)
@@ -203,10 +221,31 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 	})
 })
 
-Cypress.Commands.add('loginBack', () => {
+Cypress.Commands.add('loginFromBackend', () => {
 	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
 	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
+
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
+		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {
+			onBeforeLoad(win) {
+				Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
+				Object.defineProperty(win.navigator, 'languages', ['en-GB'])
+				Object.defineProperty(win.navigator, 'accept_languages', {
+					value: ['en'],
+				})
+			},
+			headers: {
+				'Accept-Language': 'en',
+			},
+		})
+
+		Cypress.log({
+			name: 'login',
+			displayName: 'Bitfinex Login: ',
+			message: [`Authenticating | with ${credentials.login} user`],
+			autoEnd: true,
+		})
+
 		cy.task('generateOTP', credentials.otp_secret).then((otp) => {
 			cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
 				cy.loginSessionByCSRF(
@@ -216,19 +255,6 @@ Cypress.Commands.add('loginBack', () => {
 				).then((authenticity_token_otp) => {
 					cy.loginOTP(authenticity_token_otp, otp)
 				})
-			})
-
-			cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
-				onBeforeLoad(win) {
-					Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
-					Object.defineProperty(win.navigator, 'languages', ['en-GB'])
-					Object.defineProperty(win.navigator, 'accept_languages', {
-						value: ['en'],
-					})
-				},
-				headers: {
-					'Accept-Language': 'en',
-				},
 			})
 		})
 	})

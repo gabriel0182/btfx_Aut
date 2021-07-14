@@ -1,11 +1,7 @@
 ///  <reference types="cypress"/>
 
-import tickers from '../../../support/PageObject/tickers'
 import orderForm from '../../../support/PageObject/orderForm'
 
-When('I Select a currency', () => {
-	tickers.selectTicker()
-})
 Then('I verify the Order from best bid / ask', () => {
 	orderForm.selectMarketOrder()
 	orderForm.checkMaxMarketValue()
