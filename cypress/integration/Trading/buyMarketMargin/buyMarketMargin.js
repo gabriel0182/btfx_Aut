@@ -1,29 +1,19 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
-import buyMarket from '../../../support/PageObject/buyMarket.js'
+import orderForm from '../../../support/PageObject/orderForm'
+import messages from '../../../support/PageObject/messages'
+import positions from '../../../support/PageObject/positions'
 
-const buyMk = new buyMarket()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	buyMk.trading()
+And('I select the market order', () => {
+	orderForm.selectMarketOrder()
+})
+Then('A Buy Market order from Exchange wallet should be created', () => {
+	orderForm.selectMarginWallet()
+	orderForm.buyMarketOrder()
+	messages.buyMarketConfirm()
 })
 
-When('I type the order required info', () => {
-	buyMk.verifyFields()
-	buyMk.requiredFields()
-	buyMk.validateMin()
-	buyMk.validateMax()
-	buyMk.orderInfo()
-})
-
-When('I select to Margin Buy', () => {
-	buyMk.buyButton()
-})
-
-Then('I verify the Market buy order from Margin wallet was created', () => {
-	buyMk.successMsg()
-	buyMk.cancelPosition()
+Then('A Buy Market order from Exchange wallet should be cancelled', () => {
+	positions.cancelPosition()
+	messages.cancelBuyMarketOrder()
 })

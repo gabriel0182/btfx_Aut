@@ -1,32 +1,23 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
-import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
+import orderForm from '../../../support/PageObject/orderForm'
+import messages from '../../../support/PageObject/messages'
+import ordersTable from '../../../support/PageObject/ordersTable'
+import orderBook from '../../../support/PageObject/orderBook'
 
-const limitExch = new buyLimitExch()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	limitExch.trading()
+Then('A Buy Limit order from Exchange wallet should be created', () => {
+	orderForm.selectLimitOrder()
+	orderForm.buyLimitOrder()
+	messages.buyLimitConfirm()
 })
 
-When('I type the order required info', () => {
-	limitExch.verifyFields()
-	limitExch.requiredFields()
-	limitExch.validateMin()
-	limitExch.validatePriceSet()
-	limitExch.validateMax()
-	limitExch.orderInfo()
+Then('A Buy Limit order green marker should be shown', () => {
+	orderBook.validateMarkers()
 })
-
-When('I select to Exchange Buy', () => {
-	limitExch.buyButton()
+Then('Filter should work', () => {
+	ordersTable.orderFilterBidExch()
 })
-
-Then('I verify the limit order was created', () => {
-	limitExch.successMsg()
-	limitExch.orderFilter()
-	limitExch.validateMarkers()
-	limitExch.cancelOrder()
+Then('A Buy Limit order from Exchange wallet should be cancelled', () => {
+	ordersTable.cancelOrder()
+	messages.cancelLimitOrder()
 })

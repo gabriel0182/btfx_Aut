@@ -1,7 +1,7 @@
 class buyFillKill {
 	static trading() {
 		cy.get('.header__nav-buttons-wrapper').within(() => {
-			cy.get('[data-qa-id="header-link-trading"]').should('be.visible').click()
+			cy.get('[data-qa-id="header-link-trading"]').should('be.visible')
 		})
 		cy.get('.book__main').within(() => {
 			cy.get('#book-bids').should('be.visible')

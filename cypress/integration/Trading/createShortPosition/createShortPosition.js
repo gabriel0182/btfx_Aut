@@ -1,19 +1,18 @@
 ///  <reference types="cypress"/>
 
-import shortPosition from '../../../support/PageObject/shortPosition.js'
+import positions from '../../../support/PageObject/positions'
+import messages from '../../../support/PageObject/messages'
 
-const pst = new shortPosition()
-
-When('I select the Create a New Position option', () => {
-	pst.addPosition()
-})
-
-When('I fill out all the required fields', () => {
-	pst.requiredInfo()
+When('I select the Create a New Short Position option', () => {
+	positions.addPosition()
 })
 
 Then('I verify the position was created', () => {
-	pst.successMsg()
-	pst.testSortingPositions()
-	pst.cancelPosition()
+	positions.createShort()
+	messages.confirmShortPosition()
+})
+
+Then('I verify the position was cancelled', () => {
+	positions.cancelPosition()
+	messages.confirmCancelShortPosition()
 })

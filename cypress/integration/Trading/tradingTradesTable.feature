@@ -1,18 +1,19 @@
 Feature: Test Trading trades table
 
- Background: Go to Ad form
-  Given I go to Trading page
-
-    When I Select a currency
-
+@loginBitfinex
   Scenario: Sorting Order History Table
-
+    Given I go to Trading page
+    When I Select a currency
     Then The sorting order History table should work
 
+@loginBitfinex
    Scenario: Trading table Market
-
+    Given I go to Trading page
+    When I Select a currency
     Then The trading table Market should work
 
-     Scenario: Trading table Yours
-
+@loginBitfinex
+    Scenario: Trading table Yours
+    Given I go to Trading page
+    When I Select a currency
     Then The trading table yours should work

@@ -1,17 +1,10 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
 import buyStopTIF from '../../../support/PageObject/buyStopTIF.js'
 import buyStop from '../../../support/PageObject/buyStop.js'
 
 const stopTIF = new buyStopTIF()
 const stopBuy = new buyStop()
-
-Given('I go to Trading page', () => {
-	login.landing()
-	login.longIn()
-	stopTIF.trading()
-})
 
 When('I type the order required info', () => {
 	stopTIF.verifyFields()

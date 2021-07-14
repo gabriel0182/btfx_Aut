@@ -19,7 +19,7 @@ class sellMarket {
 	}
 	validateMin() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				min: testDataRow.min,
 				ticker: testDataRow.ticker,
@@ -48,7 +48,7 @@ class sellMarket {
 	}
 	validateMax() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				max: testDataRow.max,
 			}
@@ -75,7 +75,7 @@ class sellMarket {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 				ticker: testDataRow.ticker,
@@ -97,7 +97,7 @@ class sellMarket {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -126,7 +126,7 @@ class sellMarket {
 	}
 	cancelPosition() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -135,7 +135,7 @@ class sellMarket {
 					.get('[style="height: 25px; width: 100%;"] > .table-vir__row')
 					.get('div')
 					.first()
-					.each($div => {
+					.each(($div) => {
 						cy.get('[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button')
 						cy.get('[style="flex: 0 1 110px;"] > div > :nth-child(1) > .ui-button > .fa').click()
 					})
@@ -147,7 +147,10 @@ class sellMarket {
 					cy
 						.get('.notification-text__text')
 						.should('be.visible')
-						.should('contain', `Margin market buy order of ${data.btc} BTC has been fully executed`)
+						.should(
+							'contain',
+							`Margin market sell order of ${data.btc} BTC has been fully executed`
+						)
 				)
 			})
 		})
