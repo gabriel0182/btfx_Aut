@@ -24,13 +24,4 @@ When('I type the order required info', () => {
 	stop.validateMax()
 	stop.orderInfo()
 })
-
-When('I select to Exchange Buy', () => {
-	stop.buyButton()
-})
-
-Then('I verify the stop order was created', () => {
-	stop.successMsg()
-	buyLimit.orderFilter()
-	stop.cancelOrder()
 })*/
