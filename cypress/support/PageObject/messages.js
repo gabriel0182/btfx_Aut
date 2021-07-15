@@ -81,37 +81,41 @@ class messages {
 		})
 	}
 	static confirmLongPosition() {
-		cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
-			'stats'
-		)
-		cy.wait('@stats').its('response.statusCode').should('eq', 200)
 		cy.get('.notification-text__text').should('contain', 'Submitting position increase')
 	}
 	static confirmCancelLongPosition() {
 		cy.fixture('positions').then((position) => {
-			cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
-				'stats'
-			)
-			cy.wait('@stats').its('response.statusCode').should('eq', 200)
 			const confirmationMsg = `Margin market sell order of ${position[0].amount} BTC has been fully executed`
 			cy.get('.notification-text__text').should('contain', confirmationMsg)
 		})
 	}
 	static confirmShortPosition() {
-		cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
-			'stats'
-		)
-		cy.wait('@stats').its('response.statusCode').should('eq', 200)
 		cy.get('.notification-text__text').should('contain', 'Submitting position increase')
 	}
 	static confirmCancelShortPosition() {
 		cy.fixture('positions').then((position) => {
-			cy.intercept('POST', `${apiStagingUrl}/v2/auth/r/stats/rank:vol:3h:tBTCUSD/hist?limit=1`).as(
-				'stats'
-			)
-			cy.wait('@stats').its('response.statusCode').should('eq', 200)
 			const confirmationMsg = `Margin market buy order of ${position[0].amount} BTC has been fully executed`
 			cy.get('.notification-text__text').should('contain', confirmationMsg)
+		})
+	}
+	static buyStopConfirm() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should('contain', `Created exchange stop buy order of ${order[0].btc} BTC`)
+			)
+		})
+	}
+	static cancelBuyStopOrder() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should('contain', `Exchange stop buy order of ${order[0].btc} BTC has been canceled`)
+			)
 		})
 	}
 }

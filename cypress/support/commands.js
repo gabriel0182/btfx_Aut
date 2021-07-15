@@ -54,6 +54,7 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 				return false
 			})
 			cy.fixture('sensitive/credentials.json').then((credentials) => {
+				cy.setCookie('bfx_locale', 'en')
 				cy.get('.header__login-button')
 					.should('be.visible')
 					.click({ force: true })
@@ -224,8 +225,13 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 Cypress.Commands.add('loginFromBackend', () => {
 	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
 	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
-
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
+		cy.clearCookies()
+		cy.window().then((win) => {
+			win.sessionStorage.clear()
+		})
+		cy.clearLocalStorage()
+		cy.setCookie('bfx_locale', 'en')
 		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {
 			onBeforeLoad(win) {
 				Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
@@ -238,7 +244,6 @@ Cypress.Commands.add('loginFromBackend', () => {
 				'Accept-Language': 'en',
 			},
 		})
-
 		Cypress.log({
 			name: 'login',
 			displayName: 'Bitfinex Login: ',

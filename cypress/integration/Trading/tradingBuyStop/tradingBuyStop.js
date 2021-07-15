@@ -1,11 +1,22 @@
 ///  <reference types="cypress"/>
 
-import buyStop from '../../../support/PageObject/buyStop.js'
-import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
+import orderForm from '../../../support/PageObject/orderForm'
+import messages from '../../../support/PageObject/messages'
+import ordersTable from '../../../support/PageObject/ordersTable'
 
-const stop = new buyStop()
-const buyLimit = new buyLimitExch()
+Then('A Buy Stop order from Exchange wallet should be created', () => {
+	orderForm.selectStopOrder()
+	orderForm.selectExchangeWallet()
+	orderForm.buyStopOrder()
+	messages.buyStopConfirm()
+})
 
+Then('A Buy Stop order from Exchange wallet should be cancelled', () => {
+	ordersTable.cancelOrder()
+	messages.cancelBuyStopOrder()
+})
+
+/*
 When('I type the order required info', () => {
 	stop.verifyFields()
 	stop.requiredFields()
@@ -22,4 +33,4 @@ Then('I verify the stop order was created', () => {
 	stop.successMsg()
 	buyLimit.orderFilter()
 	stop.cancelOrder()
-})
+})*/
