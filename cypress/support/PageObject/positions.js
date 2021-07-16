@@ -18,41 +18,55 @@ class positions {
 		})
 	}
 	static createLong() {
-		cy.intercept(`${apiStagingUrl}/v1/lendbook/USD?filter=LIMIT_ONLY`).as('limitOnly')
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/position/increase`).as('increase')
 
 		cy.fixture('positions').then((position) => {
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
-				cy.contains('Select').type(`${position[0].type}{enter}{enter}`)
-				cy.get('.ui-radioinput').within(() => {
-					cy.contains('Long').click()
-					cy.wait('@limitOnly').its('response.statusCode').should('eq', 200)
-				})
+				cy.contains('Select')
+					.click()
+					.type(`${position[0].type}{enter}`)
+					.get('input#react-select-2-input')
+					.focus()
+			})
+			cy.get('.ui-radioinput').within(() => {
+				cy.contains('Long').click()
+			})
+			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Amount').next().type(position[0].amount)
 				cy.contains('Proceed').click()
-				cy.wait('@increase').its('response.statusCode').should('eq', 200)
 			})
+			cy.wait('@increase').its('response.statusCode').should('eq', 200)
 		})
 	}
 	static createShort() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/position/increase`).as('increase')
 		cy.fixture('positions').then((position) => {
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
-				cy.contains('Select').type(`${position[0].type}{enter}{enter}`)
-				cy.get('.ui-radioinput').within(() => {
-					cy.contains('Short').click()
-				})
+				cy.contains('Select')
+					.click()
+					.type(`${position[0].type}{enter}`)
+					.get('input#react-select-2-input')
+					.focus()
+			})
+			cy.get('.ui-radioinput').within(() => {
+				cy.contains('Short').click()
+			})
+			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Amount').next().type(position[0].amount)
 				cy.contains('Proceed').click()
-				cy.wait('@increase').its('response.statusCode').should('eq', 200)
 			})
+			cy.wait('@increase').its('response.statusCode').should('eq', 200)
 		})
 	}
 	static minMaxPositionAmount() {
 		cy.fixture('positions').then((position) => {
 			cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/position/increase`).as('increase')
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
-				cy.contains('Select').type(`${position[0].type}{enter}{enter}`)
+				cy.contains('Select')
+					.click()
+					.type(`${position[0].type}{enter}`)
+					.get('input#react-select-2-input')
+					.focus()
 			})
 		})
 		cy.get('.ui-radioinput').within(() => {

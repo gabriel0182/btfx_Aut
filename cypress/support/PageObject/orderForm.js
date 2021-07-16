@@ -246,7 +246,13 @@ class orderform {
 						.type(`${btc[0].btc}`)
 						.get('div.bid')
 						.within(() => {
-							cy.get('span').eq(2).should('be.visible').click()
+							cy.get('span').eq(2).should('be.visible')
+						})
+						.then(($btn) => {
+							const txt = $btn.text()
+							var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
+							var amount = pointNum - 100
+							cy.get('[name="price"]').clear({ force: true }).type(amount)
 						})
 						.get('div.orderform')
 						.within(() => {
@@ -283,7 +289,13 @@ class orderform {
 						.type(`${btc[0].btc}`)
 						.get('div.ask')
 						.within(() => {
-							cy.get('span').eq(3).should('be.visible').click()
+							cy.get('span').eq(3).should('be.visible')
+						})
+						.then(($btn) => {
+							const txt = $btn.text()
+							var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
+							var amount = pointNum - 100
+							cy.get('[name="price"]').clear({ force: true }).type(amount)
 						})
 						.get('div.orderform')
 						.within(() => {
@@ -483,6 +495,53 @@ class orderform {
 					})
 			)
 		})
+	}
+	static selectStopOrder() {
+		cy.waitUntil(() =>
+			cy
+				.get('[data-qa-id="order-form__order-type-dropdown"]')
+				.click()
+				.get('input#orderFormDropdown')
+				.get('#orderFormDropdownItem_stop')
+				.get('[data-qa-id="order-form__order-type-dropdown-menu-item-stop"]')
+				.click()
+		)
+	}
+	static buyStopOrder() {
+		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
+			'orderType'
+		)
+		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
+		cy.get('[data-qa-id="order-form"]')
+			.within(() => {
+				cy.get('div#form-choose-exchange').contains('Exchange').click()
+				cy.fixture('orders').then((btc) => {
+					cy.waitUntil(() =>
+						cy
+							.get('[name="amount"]')
+							.clear()
+							.type(`${btc[0].btc}`)
+							.get('div.bid')
+							.within(() => {
+								cy.get('span').eq(2).should('be.visible')
+							})
+							.then(($btn) => {
+								const txt = $btn.text()
+								var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
+								var amount = pointNum - 10
+								cy.get('[name="price"]').clear({ force: true }).type(amount)
+							})
+							.get('div.orderform')
+							.within(() => {
+								cy.get('#buyButton').click()
+							})
+					)
+				})
+			})
+			.get('[data-qa-id="modal-dialog"]')
+			.within(() => {
+				cy.get('[data-qa-id="modal-dialog-action-button"]').contains('Okay').click()
+			})
 	}
 }
 export default orderform

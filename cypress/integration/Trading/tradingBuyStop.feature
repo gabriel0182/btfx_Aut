@@ -1,8 +1,13 @@
-Feature: Test Creating a stop buy order from Exchange wallet
+Feature: Test Creating a Stop buy order from exchange wallet
 
-  @loginBitfinex
-  Scenario:Create a stop buy order
-    Given I go to Trading page
-    When I type the order required info
-    And I select to Exchange Buy
-    Then I verify the stop order was created
+@loginBitfinex
+ Scenario: Order form/Create Stop buy Order
+  Given I go to Trading page
+  When I Select a currency
+  Then A Buy Stop order from Exchange wallet should be created
+  
+@loginBitfinex
+  Scenario: Orders Table /Cancel Orders
+  Given I go to Trading page
+  When I Select a currency
+  Then A Buy Stop order from Exchange wallet should be cancelled

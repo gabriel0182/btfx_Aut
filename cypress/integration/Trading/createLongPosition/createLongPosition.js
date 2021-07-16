@@ -14,5 +14,5 @@ Then('I verify the position was created', () => {
 
 Then('I verify the position was cancelled', () => {
 	positions.cancelPosition()
-	messages.confirmCancelPosition()
+	messages.confirmCancelLongPosition()
 })
