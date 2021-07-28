@@ -17,7 +17,7 @@ class sellLimitBook {
 			)
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get('#book-bids > .book__rows > :nth-child(1) > .book__row')
 					.get('#book-bids > .book__rows > :nth-child(1) > .book__row > :nth-child(4) > span')
 					.click()
@@ -28,7 +28,7 @@ class sellLimitBook {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 				ticker: testDataRow.ticker,
@@ -37,7 +37,7 @@ class sellLimitBook {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
 					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
@@ -61,7 +61,7 @@ class sellLimitBook {
 			)
 				.get('div')
 				.first()
-				.each($div => {
+				.each(($div) => {
 					cy.get('#book-bids > .book__rows > :nth-child(1) > .book__row')
 						.get('#book-bids > .book__rows > :nth-child(1) > .book__row > :nth-child(4) > span')
 						.click()
@@ -71,7 +71,7 @@ class sellLimitBook {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}

@@ -51,7 +51,7 @@ class trailingStopExch {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				btc: testDataRow.btc,
@@ -61,7 +61,7 @@ class trailingStopExch {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
 					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
@@ -73,7 +73,7 @@ class trailingStopExch {
 					cy.get('[href="/t/BTC:USD"]').click()
 				})
 				//Read the current BTC/USD price
-				cy.get(':nth-child(2) > h5 > span').then($btn => {
+				cy.get(':nth-child(2) > h5 > span').then(($btn) => {
 					const txt = $btn.text()
 					const distanceUSD = cy.get('[name="price"]')
 					distanceUSD.type(txt)
@@ -93,7 +93,7 @@ class trailingStopExch {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				price: testDataRow.price,
 				btc: testDataRow.btc,
@@ -137,7 +137,7 @@ class trailingStopExch {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -146,7 +146,7 @@ class trailingStopExch {
 					)
 					.click()
 				const testData = require('../../fixtures/orders.json')
-				testData.forEach(testDataRow => {
+				testData.forEach((testDataRow) => {
 					const data = {
 						btc: testDataRow.btc,
 					}

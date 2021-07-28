@@ -1,8 +1,8 @@
 ///  <reference types="cypress"/>
 
-import sellStop from '../../../support/PageObject/sellStop.js'
-import buyStop from '../../../support/PageObject/buyStop.js'
-import limitSellExch from '../../../support/PageObject/limitSellExch.js'
+import sellStop from '../../../support/PageObject/sellStop'
+import buyStop from '../../../support/PageObject/buyStop'
+import limitSellExch from '../../../support/PageObject/sellStopLimitExch'
 
 const stopSell = new sellStop()
 const stopBuy = new buyStop()

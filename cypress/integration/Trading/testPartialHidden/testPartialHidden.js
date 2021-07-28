@@ -1,7 +1,6 @@
 ///  <reference types="cypress"/>
 
-import buyLimitExch from '../../../support/PageObject/buyLimitExch.js'
-import partialHidden from '../../../support/PageObject/partialHidden.js'
+import partialHidden from '../../../support/PageObject/partialHidden'
 
 const ptHidden = new partialHidden()
 

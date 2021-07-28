@@ -21,7 +21,7 @@ class sellFillKill {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				btc: testDataRow.btc,
@@ -31,7 +31,7 @@ class sellFillKill {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
 					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
@@ -42,7 +42,7 @@ class sellFillKill {
 				const selectTicker = cy.get('div.virtable__cellwrapper--rightalign').within(() => {
 					cy.get('[href="/t/BTC:USD"]').click()
 				})
-				cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)').then($btn => {
+				cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)').then(($btn) => {
 					let txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amount = pointNum * 1005
@@ -68,7 +68,7 @@ class sellFillKill {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}

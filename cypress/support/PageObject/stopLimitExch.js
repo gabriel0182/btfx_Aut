@@ -61,7 +61,7 @@ class stopLimitExch {
 	}
 	validateMin() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				min: testDataRow.min,
@@ -71,12 +71,12 @@ class stopLimitExch {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const selectTicker = cy.get('div.virtable__cellwrapper--rightalign').within(() => {
 					cy.get('[href="/t/BTC:USD"]').click()
 				})
-				cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then($btn => {
+				cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then(($btn) => {
 					const txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amout = pointNum * 1115
@@ -104,7 +104,7 @@ class stopLimitExch {
 	}
 	validateMax() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				max: testDataRow.max,
 			}
@@ -112,7 +112,7 @@ class stopLimitExch {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then($btn => {
+				cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then(($btn) => {
 					const txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amout = pointNum * 1115
@@ -138,7 +138,7 @@ class stopLimitExch {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -147,7 +147,7 @@ class stopLimitExch {
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
 				//Read the current BTC/USD price
-				cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then($btn => {
+				cy.get('.main-ticker__items > :nth-child(6) > :nth-child(2)').then(($btn) => {
 					const txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amout = pointNum * 1115
@@ -175,7 +175,7 @@ class stopLimitExch {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -218,7 +218,7 @@ class stopLimitExch {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -235,7 +235,7 @@ class stopLimitExch {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -244,7 +244,7 @@ class stopLimitExch {
 					)
 					.click()
 				const testData = require('../../fixtures/orders.json')
-				testData.forEach(testDataRow => {
+				testData.forEach((testDataRow) => {
 					const data = {
 						btc: testDataRow.btc,
 					}

@@ -23,7 +23,7 @@ class sellStopLimitExch {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				btc: testDataRow.btc,
@@ -33,7 +33,7 @@ class sellStopLimitExch {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
 					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
@@ -46,7 +46,7 @@ class sellStopLimitExch {
 				})
 				cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = parseInt(txt)
 						var amout = pointNum * 1115
@@ -72,7 +72,7 @@ class sellStopLimitExch {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				price: testDataRow.price,
 				btc: testDataRow.btc,
@@ -102,7 +102,7 @@ class sellStopLimitExch {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -111,7 +111,7 @@ class sellStopLimitExch {
 					)
 					.click()
 				const testData = require('../../fixtures/orders.json')
-				testData.forEach(testDataRow => {
+				testData.forEach((testDataRow) => {
 					const data = {
 						btc: testDataRow.btc,
 					}

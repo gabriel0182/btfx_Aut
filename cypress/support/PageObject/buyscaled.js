@@ -65,7 +65,7 @@ class buyScaled {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				orderCount: testDataRow.orderCount,
@@ -78,7 +78,7 @@ class buyScaled {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
 					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
@@ -92,7 +92,7 @@ class buyScaled {
 				//Read the current BTC/USD price
 				cy.get('.main-ticker__items > :nth-child(5) > :nth-child(2)')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
 						var amount = pointNum + 10
@@ -250,7 +250,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="flex: 0 1 71px; min-width: 71px; max-width: 71px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -270,7 +270,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="flex: 0 1 71px; min-width: 71px; max-width: 71px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -285,7 +285,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="height: 25px; line-height: 25px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -300,7 +300,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="height: 25px; line-height: 25px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -320,7 +320,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="flex: 1 1 100px; min-width: 60px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -340,7 +340,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="flex: 1 1 100px; min-width: 60px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -392,7 +392,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="height: 25px; line-height: 25px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -412,7 +412,7 @@ class buyScaled {
 				cy.get('span.table-vir__cell')
 					.first()
 					.get('[style="height: 25px; line-height: 25px;"]')
-					.should($val => {
+					.should(($val) => {
 						expect($val).not.to.be.null
 					})
 			})
@@ -423,7 +423,7 @@ class buyScaled {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)

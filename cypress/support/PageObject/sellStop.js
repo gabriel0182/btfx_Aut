@@ -21,7 +21,7 @@ class sellStop {
 	}
 	validateMin() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				min: testDataRow.min,
 				ticker: testDataRow.ticker,
@@ -30,14 +30,14 @@ class sellStop {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const selectTicker = cy.get('div.virtable__cellwrapper--rightalign').within(() => {
 					cy.get('[href="/t/BTC:USD"]').click()
 				})
 				cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = parseInt(txt)
 						const priceUSD = cy.get('[name="price"]').clear({ force: true }).type(txt)
@@ -58,7 +58,7 @@ class sellStop {
 	}
 	validateMax() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				max: testDataRow.max,
 			}
@@ -68,7 +68,7 @@ class sellStop {
 				)
 				cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = parseInt(txt)
 						const priceUSD = cy.get('[name="price"]').clear({ force: true }).type(txt)
@@ -88,7 +88,7 @@ class sellStop {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				btc: testDataRow.btc,
@@ -100,7 +100,7 @@ class sellStop {
 				)
 				cy.get('#book-bids > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = parseInt(txt)
 						const priceUSD = cy.get('#priceinput3').clear({ force: true }).type(txt)
@@ -121,7 +121,7 @@ class sellStop {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -138,7 +138,7 @@ class sellStop {
 	}
 	cancelSellOrder() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -148,7 +148,7 @@ class sellStop {
 						.get('[data-qa-id="orders-table"]')
 						.get('div')
 						.first()
-						.each($div => {
+						.each(($div) => {
 							cy.get(
 								'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 							)

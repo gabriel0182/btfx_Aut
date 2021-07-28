@@ -49,7 +49,7 @@ class buyStop {
 	}
 	validateMin() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				min: testDataRow.min,
 				ticker: testDataRow.ticker,
@@ -58,12 +58,12 @@ class buyStop {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-search-input')
+				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const selectTicker = cy.get('div.virtable__cellwrapper--rightalign').within(() => {
 					cy.get('[href="/t/BTC:USD"]').click()
 				})
-				cy.get(':nth-child(2) > h5 > span').then($btn => {
+				cy.get(':nth-child(2) > h5 > span').then(($btn) => {
 					const txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amout = pointNum * 1120
@@ -86,7 +86,7 @@ class buyStop {
 	}
 	validateMax() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				max: testDataRow.max,
 			}
@@ -109,7 +109,7 @@ class buyStop {
 	}
 	orderInfo() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
 				btc: testDataRow.btc,
@@ -119,7 +119,7 @@ class buyStop {
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
 				//Read the current BTC/USD price
-				cy.get(':nth-child(2) > h5 > span').then($btn => {
+				cy.get(':nth-child(2) > h5 > span').then(($btn) => {
 					const txt = $btn.text()
 					var pointNum = parseInt(txt)
 					var amout = pointNum * 1120
@@ -142,7 +142,7 @@ class buyStop {
 	}
 	successMsg() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
 			}
@@ -165,7 +165,7 @@ class buyStop {
 			.get('[data-qa-id="orders-table"]')
 			.get('div')
 			.first()
-			.each($div => {
+			.each(($div) => {
 				cy.get(
 					'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"]'
 				)
@@ -174,7 +174,7 @@ class buyStop {
 					)
 					.click()
 				const testData = require('../../fixtures/orders.json')
-				testData.forEach(testDataRow => {
+				testData.forEach((testDataRow) => {
 					const data = {
 						btc: testDataRow.btc,
 					}
