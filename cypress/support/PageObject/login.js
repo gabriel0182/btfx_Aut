@@ -9,6 +9,7 @@ class login {
 	}
 	static longIn() {
 		cy.visitBitfinexAndLogin()
+		//cy.loginToBitfinexManually()
 	}
 	static verifyLoggedOn() {
 		cy.waitUntil(() =>

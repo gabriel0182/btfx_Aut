@@ -1,7 +1,7 @@
 class quickTransfer {
 	static selectCurrency() {
 		cy.fixture('orders').then((order) => {
-			cy.get('#balances-search-input').type(`${order[0].tranfer}`)
+			cy.get('input.textinputsearch__searchinput').eq(1).type(`${order[0].tranfer}`)
 			cy.get('[data-qa-id="balancesTable"]').within(() => {
 				cy.get('[data-qa-id="balancesTable-row"]')
 					.contains(new RegExp(`^${order[0].tranfer}$`, 'g'))

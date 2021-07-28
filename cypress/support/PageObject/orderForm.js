@@ -44,7 +44,7 @@ class orderform {
 				cy.wait('@amountAvailable').its('response.statusCode').should('eq', 200)
 			})
 
-		cy.get('#balances-search-input').clear().type('USD')
+		cy.get('input.textinputsearch__searchinput').eq(1).clear().type('USD')
 		cy.get('[data-qa-id="balancesTable-row"]')
 			.contains(new RegExp('^USD$', 'g'))
 			.parents('[data-qa-id="balancesTable-row-cell"]')
@@ -62,7 +62,7 @@ class orderform {
 					})
 			})
 
-		cy.get('#balances-search-input').clear().type('BTC')
+		cy.get('input.textinputsearch__searchinput').eq(1).clear().type('BTC')
 		cy.get('[data-qa-id="balancesTable-row"]')
 			.contains('BTC')
 			.parents('[data-qa-id="balancesTable-row-cell"]')
@@ -129,12 +129,8 @@ class orderform {
 			.should('contain', 'Amount BTC must be a number')
 	}
 	static validateMin() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
 		cy.get('[name="amount"]').clear({ force: true }).get('[name="price"]').clear({ force: true })
 		cy.get('div.orderform')
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.fixture('orders')
 			.then((min) => {
 				cy.waitUntil(() =>
@@ -167,12 +163,8 @@ class orderform {
 		)
 	}
 	static validateMax() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
 		cy.get('[name="amount"]').clear({ force: true }).get('[name="price"]').clear({ force: true })
 		cy.get('div.orderform')
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.fixture('orders')
 			.then((max) => {
 				cy.waitUntil(() =>
@@ -232,10 +224,6 @@ class orderform {
 		cy.waitUntil(() => cy.get('.notification-text__text').should('contain', `Price: invalid`))
 	}
 	static buyLimitOrder() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.get('[data-qa-id="order-form"]').within(() => {
 			cy.get('div#form-choose-exchange').contains('Exchange').click()
 			cy.fixture('orders').then((btc) => {
@@ -275,10 +263,6 @@ class orderform {
 			.should('contain', 'Amount BTC must be a number')
 	}
 	static sellLimitOrder() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.get('[data-qa-id="order-form"]').within(() => {
 			cy.get('div#form-choose-exchange').contains('Exchange').click()
 			cy.fixture('orders').then((btc) => {
@@ -343,11 +327,7 @@ class orderform {
 		)
 	}
 	static validateMinMarket() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
 		cy.get('div.orderform')
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.fixture('orders')
 			.then((min) => {
 				cy.waitUntil(() =>
@@ -429,7 +409,7 @@ class orderform {
 				cy.get('i').last().click()
 			})
 
-		cy.get('#balances-search-input').clear().type('BTC')
+		cy.get('input.textinputsearch__searchinput').eq(1).clear().type('BTC')
 		cy.get('[data-qa-id="balancesTable-row"]')
 			.contains(new RegExp('^BTC$', 'g'))
 			.parents('[data-qa-id="balancesTable-row-cell"]')
@@ -446,7 +426,7 @@ class orderform {
 					})
 			})
 
-		cy.get('#balances-search-input').clear().type('BTC')
+		cy.get('input.textinputsearch__searchinput').eq(1).clear().type('BTC')
 		cy.get('[data-qa-id="balancesTable-row"]')
 			.contains('BTC')
 			.parents('[data-qa-id="balancesTable-row-cell"]')
@@ -459,10 +439,6 @@ class orderform {
 			})
 	}
 	static buyMarketOrder() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.fixture('orders').then((btc) => {
 			cy.waitUntil(() =>
 				cy
@@ -478,10 +454,6 @@ class orderform {
 		})
 	}
 	static sellMarketOrder() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.fixture('orders').then((btc) => {
 			cy.waitUntil(() =>
 				cy
@@ -508,10 +480,6 @@ class orderform {
 		)
 	}
 	static buyStopOrder() {
-		cy.intercept('GET', 'https://api-pub.staging.bitfinex.com/v2/tickers?symbols=ALL').as(
-			'orderType'
-		)
-		cy.wait('@orderType').its('response.statusCode').should('eq', 200)
 		cy.get('[data-qa-id="order-form"]')
 			.within(() => {
 				cy.get('div#form-choose-exchange').contains('Exchange').click()

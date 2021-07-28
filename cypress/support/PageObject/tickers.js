@@ -2,7 +2,7 @@ class tickers {
 	static selectTicker() {
 		cy.fixture('orders').then((trading) => {
 			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('#ticker-search-input').type(`${trading[0].ticker}{enter}`)
+			cy.get('input#ticker-textinput-id').type(`${trading[0].ticker}{enter}`)
 			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 
 			cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {

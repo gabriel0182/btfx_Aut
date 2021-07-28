@@ -1,6 +1,7 @@
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 class positions {
 	static cancelPosition() {
+		cy.waitUntil(() => cy.get('[data-qa-id="positions-table-row"]').should('be.visible'))
 		cy.get('[data-qa-id="positions-table-row"]')
 			.first()
 			.within(() => {
@@ -19,12 +20,11 @@ class positions {
 	}
 	static createLong() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/position/increase`).as('increase')
-
 		cy.fixture('positions').then((position) => {
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Select')
 					.click()
-					.type(`${position[0].type}{enter}`)
+					.type(`${position[0].type}{enter}{enter}{enter}`)
 					.get('input#react-select-2-input')
 					.focus()
 			})
@@ -44,7 +44,7 @@ class positions {
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Select')
 					.click()
-					.type(`${position[0].type}{enter}`)
+					.type(`${position[0].type}{enter}{enter}`)
 					.get('input#react-select-2-input')
 					.focus()
 			})

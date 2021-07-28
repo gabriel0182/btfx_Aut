@@ -66,13 +66,14 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 					.click({ force: true })
 					.get('#submit-login')
 					.click({ force: true })
-					// .get('#u2f-modal-wrap')
-					// .get(':nth-child(6) > p > a')
-					// .click()
-					// const twoAF = cy.waitUntil(()=>
-					//   cy.get("input#otp")
-					//   .should('be.visible')
-					// )
+				// .get('#u2f-modal-wrap')
+				// .get(':nth-child(6) > p > a')
+				// .click()
+				// const twoAF = cy.waitUntil(()=>
+				//   cy.get("input#otp")
+				//   .should('be.visible')
+				// )
+				cy.skipCaptcha()
 					.task('generateOTP', `${credentials.otp_secret}`)
 					.then((token) => {
 						cy.wait('@sessions').its('response.statusCode').should('eq', 200)
@@ -168,6 +169,7 @@ Cypress.Commands.add('byPassCloudFlare', (route) => {
 				'CF-Access-Client-Secret': credentials.cloudflare_secret,
 			},
 			failOnstatusCode: false,
+			'Retry-After': 120,
 		})
 	})
 })
@@ -178,6 +180,7 @@ Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token)
 		method: 'POST',
 		url: 'https://www.staging.bitfinex.com/sessions',
 		failOnstatusCode: false,
+		'Retry-After': 120,
 		form: true,
 		body: {
 			authenticity_token,
@@ -196,6 +199,7 @@ Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token)
 Cypress.Commands.add('getAuthenticitySessionToken', () => {
 	cy.request({
 		log: false,
+		'Retry-After': 120,
 		method: 'GET',
 		url: 'https://www.staging.bitfinex.com/login',
 		failOnstatusCode: false,
@@ -211,6 +215,7 @@ Cypress.Commands.add('getAuthenticitySessionToken', () => {
 Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 	cy.request({
 		log: false,
+		'Retry-After': 120,
 		method: 'POST',
 		url: 'https://www.staging.bitfinex.com/sessions/otp_submit',
 		failOnstatusCode: false,

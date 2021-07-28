@@ -1,6 +1,7 @@
 ///  <reference types="cypress"/>
 
 import orderBook from '../../../support/PageObject/orderBook.js'
+import login from '../../../support/PageObject/login'
 
 Then('I verify the alerts in order book table', () => {
 	orderBook.addAlert()
