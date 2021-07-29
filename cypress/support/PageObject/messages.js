@@ -108,6 +108,16 @@ class messages {
 			)
 		})
 	}
+	static sellStopConfirm() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should('contain', `Created exchange stop sell order of ${order[0].btc} BTC`)
+			)
+		})
+	}
 	static cancelBuyStopOrder() {
 		cy.fixture('orders').then((order) => {
 			cy.waitUntil(() =>
@@ -115,6 +125,16 @@ class messages {
 					.get('.notification-text__text')
 					.should('be.visible')
 					.should('contain', `Exchange stop buy order of ${order[0].btc} BTC has been canceled`)
+			)
+		})
+	}
+	static cancelSellStopOrder() {
+		cy.fixture('orders').then((order) => {
+			cy.waitUntil(() =>
+				cy
+					.get('.notification-text__text')
+					.should('be.visible')
+					.should('contain', `Exchange stop sell order of ${order[0].btc} BTC has been canceled`)
 			)
 		})
 	}

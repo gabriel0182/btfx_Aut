@@ -12,17 +12,7 @@ Then('A Buy Stop order from Exchange wallet should be created', () => {
 })
 
 Then('A Buy Stop order from Exchange wallet should be cancelled', () => {
-	ordersTable.orderFilterBidExch()
+	ordersTable.orderFilterAskExch()
 	ordersTable.cancelOrder()
 	messages.cancelBuyStopOrder()
 })
-
-/*
-When('I type the order required info', () => {
-	stop.verifyFields()
-	stop.requiredFields()
-	stop.validateMin()
-	stop.validateMax()
-	stop.orderInfo()
-})
-})*/

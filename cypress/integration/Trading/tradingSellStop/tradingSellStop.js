@@ -1,27 +1,30 @@
 ///  <reference types="cypress"/>
 
-import sellStop from '../../../support/PageObject/sellStop'
-import buyStop from '../../../support/PageObject/buyStop'
-import limitSellExch from '../../../support/PageObject/sellStopLimitExch'
+import orderForm from '../../../support/PageObject/orderForm'
+import messages from '../../../support/PageObject/messages'
+import ordersTable from '../../../support/PageObject/ordersTable'
 
-const stopSell = new sellStop()
-const stopBuy = new buyStop()
-const limitSell = new limitSellExch()
+Then('A Sell Stop order from Exchange wallet should be created', () => {
+	orderForm.selectStopOrder()
+	orderForm.selectExchangeWallet()
+	orderForm.sellStopOrder()
+	messages.sellStopConfirm()
+})
 
+Then('Filter should work', () => {
+	ordersTable.orderFilterAskExch()
+})
+Then('A Sell Stop order from Exchange wallet should be cancelled', () => {
+	ordersTable.cancelOrder()
+	messages.cancelSellStopOrder()
+})
+
+/*
 When('I type the order required info', () => {
-	stopBuy.verifyFields()
-	stopSell.requiredFields()
-	stopSell.validateMin()
-	stopSell.validateMax()
-	stopSell.orderInfo()
+	stop.verifyFields()
+	stop.requiredFields()
+	stop.validateMin()
+	stop.validateMax()
+	stop.orderInfo()
 })
-
-When('I select to Exchange sell', () => {
-	stopSell.sellButton()
-})
-
-Then('I verify the stop order was created', () => {
-	stopSell.successMsg()
-	limitSell.orderFilter()
-	stopSell.cancelSellOrder()
-})
+})*/
