@@ -47,12 +47,12 @@ class orderBook {
 		)
 	}
 	static addAlert() {
-		//cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
-		//cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('deleteAlert')
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('deleteAlert')
 
 		cy.get('#book-bids').within(() => {
 			cy.get('.book__row').first().find('.book__alert').click()
-			//cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
+			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
 		})
 
 		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
@@ -61,7 +61,7 @@ class orderBook {
 
 		cy.get('#book-bids').within(() => {
 			cy.get('.book__row').first().find('.book__alert').click()
-			//cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
+			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
 		})
 
 		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
@@ -70,7 +70,7 @@ class orderBook {
 
 		cy.get('#book-asks').within(() => {
 			cy.get('.book__row').first().find('.book__alert').click()
-			//cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
+			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
 		})
 
 		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
@@ -79,7 +79,7 @@ class orderBook {
 
 		cy.get('#book-asks').within(() => {
 			cy.get('.book__row').first().find('.book__alert').click()
-			//cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
+			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
 		})
 
 		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')

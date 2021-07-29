@@ -12,13 +12,10 @@ class buyStop {
 	}
 	verifyFields() {
 		const orderType = cy.waitUntil(() =>
-			cy
-				.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-				.click()
-				.get('ul.dropdown-content')
+			cy.get('[data-qa-id="order-form__order-type-dropdown"]').click()
 		)
 		const selectOrder = cy.waitUntil(() =>
-			cy.get('ul.dropdown-content').within(() => {
+			cy.get('[data-qa-id="order-form__order-type-dropdown-menu"]').within(() => {
 				cy.get('#orderFormDropdownItem_stop')
 					.get('[data-qa-id="order-form__order-type-dropdown-menu-item-stop"]')
 					.click()

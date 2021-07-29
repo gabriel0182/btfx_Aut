@@ -15,7 +15,7 @@ class partialHidden {
 	}
 	placeLimit() {
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				hiddenAmt: testDataRow.hiddenAmt,
 			}
@@ -26,7 +26,7 @@ class partialHidden {
 				cy.get('#book-asks > .book__rows > :nth-child(1)')
 					.get('#book-asks > .book__rows > :nth-child(1) > :nth-child(4) > span')
 					.first()
-					.then($btn => {
+					.then(($btn) => {
 						const txt = $btn.text()
 						var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
 						var amount = pointNum - 100
@@ -46,20 +46,17 @@ class partialHidden {
 	}
 	placeMarket() {
 		const orderType = cy.waitUntil(() =>
-			cy
-				.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-				.click()
-				.get('ul.dropdown-content')
+			cy.get('[data-qa-id="order-form__order-type-dropdown"]').click()
 		)
 		const selectOrder = cy.waitUntil(() =>
-			cy.get('ul.dropdown-content').within(() => {
+			cy.get('[data-qa-id="order-form__order-type-dropdown-menu"]').within(() => {
 				cy.get('#orderFormDropdownItem_market')
 					.get('[data-qa-id="order-form__order-type-dropdown-menu-item-market"]')
 					.click()
 			})
 		)
 		const testData = require('../../fixtures/orders.json')
-		testData.forEach(testDataRow => {
+		testData.forEach((testDataRow) => {
 			const data = {
 				sellPartiall: testDataRow.sellPartiall,
 			}

@@ -21,13 +21,10 @@ class trailingStopExch {
 	}
 	verifyFields() {
 		const orderType = cy.waitUntil(() =>
-			cy
-				.get(':nth-child(1) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
-				.click()
-				.get('ul.dropdown-content')
+			cy.get('[data-qa-id="order-form__order-type-dropdown"]').click()
 		)
 		const selectOrder = cy.waitUntil(() =>
-			cy.get('ul.dropdown-content').within(() => {
+			cy.get('[data-qa-id="order-form__order-type-dropdown-menu"]').within(() => {
 				cy.get('#orderFormDropdownItem_trailingstop')
 					.get('[data-qa-id="order-form__order-type-dropdown-menu-item-trailingstop"]')
 					.click()
@@ -64,7 +61,7 @@ class trailingStopExch {
 				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
-					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+					.get('[data-qa-id="ticker-list-pair-filter"]')
 					.click()
 					.get('[id="Item_USD"]')
 					.get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')

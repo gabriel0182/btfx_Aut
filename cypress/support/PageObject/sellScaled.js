@@ -34,7 +34,7 @@ class sellScaled {
 				const searchTicker = cy.get('#ticker-textinput-id')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const currency = cy
-					.get(':nth-child(2) > .ui-dropdown__wrapper > .o-type-select > .ui-dropdown__buttonwrap')
+					.get('[data-qa-id="ticker-list-pair-filter"]')
 					.click()
 					.get('[id="Item_USD"]')
 					.get('[data-qa-id="ticker-list-pair-filter-menu-item-USD"]')
