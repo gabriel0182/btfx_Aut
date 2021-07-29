@@ -1,14 +1,12 @@
 ///  <reference types="cypress"/>
 
-import login from '../../../support/PageObject/login.js'
-import fundingForm from '../../../support/PageObject/fundingForm.js'
-
-const form = new fundingForm()
+import login from '../../../support/PageObject/login'
+import fundingForm from '../../../support/PageObject/fundingForm'
 
 Given('I go to funding page', () => {
 	login.landing()
 	login.longIn()
-	form.goFundingPage()
+	fundingForm.goFundingPage()
 })
 
 When('I select a Ticker', () => {
