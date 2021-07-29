@@ -1,6 +1,16 @@
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 
 class orderBook {
+	static loadOrderBook() {
+		cy.waitUntil(() =>
+			cy
+				.get('div.book__main')
+				.get('#book-bids')
+				.within(() => {
+					cy.get('.book__row').first().should('be.visible')
+				})
+		)
+	}
 	static bookZoomAdd() {
 		for (let n = 0; n < 10; n++) {
 			cy.get('#book-agg-controls').within(() => {

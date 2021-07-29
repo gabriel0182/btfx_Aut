@@ -128,7 +128,6 @@ class ordersTable {
 					.should(($val) => {
 						expect($val).not.to.be.null
 					})
-					.should('contain', 'Limit')
 			})
 		cy.get('[data-qa-id="orders-table"]')
 			.within(() => {
@@ -147,7 +146,6 @@ class ordersTable {
 					.should(($val) => {
 						expect($val).not.to.be.null
 					})
-					.should('contain', 'Limit')
 			})
 		cy.get('[data-qa-id="orders-table"]')
 			.within(() => {
