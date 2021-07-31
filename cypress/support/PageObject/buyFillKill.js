@@ -31,7 +31,7 @@ class buyFillKill {
 	static orderInfo() {
 		cy.fixture('orders').then((order) => {
 			cy.get('#orderform-panel').should('be.visible').should('exist')
-			cy.get('#ticker-textinput-id').type(`${order[0].ticker}{enter}`)
+			cy.get('[data-qa-id="ticker-list-search-input"]').type(`${order[0].ticker}{enter}`)
 			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 			cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
 				cy.get('[id="Item_USD"]').click()

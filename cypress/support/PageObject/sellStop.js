@@ -30,7 +30,7 @@ class sellStop {
 				const orderForm = cy.waitUntil(() =>
 					cy.get('#orderform-panel').should('be.visible').should('exist')
 				)
-				const searchTicker = cy.get('#ticker-textinput-id')
+				const searchTicker = cy.get('[data-qa-id="ticker-list-search-input"]')
 				searchTicker.type(`${data.ticker}{enter}`)
 				const selectTicker = cy.get('div.virtable__cellwrapper--rightalign').within(() => {
 					cy.get('[href="/t/BTC:USD"]').click()
