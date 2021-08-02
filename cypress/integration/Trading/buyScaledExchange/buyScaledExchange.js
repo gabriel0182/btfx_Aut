@@ -11,11 +11,11 @@ When('I type the order required info', () => {
 	buyScld.orderInfo()
 })
 
-When('I select to Exchange Submit', () => {
+When('I submit the Buy order', () => {
 	buyScld.submitButton()
 })
 
-Then('I verify the Scaled buy order from Exchange wallet was created', () => {
+Then('The Exchange Scaled Buy orders are created', () => {
 	buyScld.successMsg()
 	buyScld.orderFilter()
 	buyScld.sortingOrdersTable()

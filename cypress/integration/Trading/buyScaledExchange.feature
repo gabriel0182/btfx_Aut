@@ -4,5 +4,5 @@ Feature: Test Creating a Scaled buy order from Exchange wallet
   Scenario: Create a Scaled buy order from Exchange wallet
     Given I go to Trading page
     When I type the order required info
-    And I select to Exchange Submit
-    Then I verify the Scaled buy order from Exchange wallet was created
+    And I submit the Buy order
+    Then The Exchange Scaled Buy orders are created
