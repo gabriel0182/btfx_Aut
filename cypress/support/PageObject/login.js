@@ -7,7 +7,7 @@ class login {
 		cy.clearLocalStorage()
 		cy.setCookie('bfx_locale', 'en')
 	}
-	static visitBitfinexHomePage() {
+	static logIn() {
 		cy.visitBitfinexAndLogin()
 	}
 	static verifyLoggedOn() {

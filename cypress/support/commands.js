@@ -95,7 +95,7 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 	})
 })
 
-Cypress.Commands.add('visitBitfinexHomepage', () => {
+Cypress.Commands.add('logIn', () => {
 	cy.clearCookie('_bfx_session')
 	cy.visitWithCloudFlareBypass('/')
 })

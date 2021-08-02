@@ -5,7 +5,7 @@ import fundingForm from '../../../support/PageObject/fundingForm'
 
 Given('I go to funding page', () => {
 	login.landing()
-	login.visitBitfinexHomePage()
+	login.logIn()
 	fundingForm.goFundingPage()
 })
 

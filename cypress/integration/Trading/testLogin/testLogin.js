@@ -7,7 +7,7 @@ Given('I visit the homepage', () => {
 })
 
 When('I type my user, pass and login', () => {
-	login.visitBitfinexHomePage()
+	login.logIn()
 })
 
 Then('I verify my user is logged on', () => {
