@@ -4,12 +4,12 @@ Feature: Test Creating a Market buy order from exchange wallet
  Scenario: Order form/Create Market buy Order
   Given I go to Trading page
   When I Select a currency
-  And I select the market order
-  Then A Buy Market order from Exchange wallet should be created
+  And I place a Margin Market Order
+  Then A long margin position is opened
 
 @loginBitfinex
-  Scenario: Orders Table / Cancel Orders
+  Scenario: Positions Table / Close Position
   Given I go to Trading page
   When I Select a currency
-  And I select the market order
+  And I place a Margin Market Order
   Then A Buy Market order from Exchange wallet should be cancelled

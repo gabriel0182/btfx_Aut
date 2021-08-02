@@ -4,10 +4,10 @@ import orderForm from '../../../support/PageObject/orderForm'
 import messages from '../../../support/PageObject/messages'
 import positions from '../../../support/PageObject/positions'
 
-And('I select the market order', () => {
+And('I place a Margin Market Order', () => {
 	orderForm.selectMarketOrder()
 })
-Then('A Buy Market order from Exchange wallet should be created', () => {
+Then('A long margin position is opened', () => {
 	orderForm.selectMarginWallet()
 	orderForm.buyMarketOrder()
 	messages.buyMarketConfirm()
