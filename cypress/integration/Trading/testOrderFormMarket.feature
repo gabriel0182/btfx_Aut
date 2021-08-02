@@ -1,7 +1,7 @@
 Feature: Test Order Form Validations
 
 @loginBitfinex
-   Scenario: Order form/Marekt order Validations
+   Scenario: Order form/Market order Validations
    Given I go to Trading page
    When I Select a currency
    Then I verify the Order from best bid / ask
