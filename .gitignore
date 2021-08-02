@@ -2,3 +2,5 @@ node_modules
 **/cypress/videos
 **/cypress/screenshots
 **cypress/fixtures/sensitive/
+.DS_Store
+.vscode
