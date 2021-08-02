@@ -1,7 +1,7 @@
 Feature: Test Creating a new Short position
 
   Background: Go to trading page
-  Given I go to Trading page
+  Given I visit to Trading page
 
 @loginBitfinex
   Scenario: Create a new Short position

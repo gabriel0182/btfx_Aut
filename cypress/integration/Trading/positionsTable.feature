@@ -1,7 +1,7 @@
 Feature: Test position table validations
 
   Background: Go to trading page
-  Given I go to Trading page
+  Given I visit to Trading page
 
 @loginBitfinex
   Scenario: Max/Min position values

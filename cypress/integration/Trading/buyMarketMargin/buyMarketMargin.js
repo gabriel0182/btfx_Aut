@@ -4,16 +4,22 @@ import orderForm from '../../../support/PageObject/orderForm'
 import messages from '../../../support/PageObject/messages'
 import positions from '../../../support/PageObject/positions'
 
-And('I place a Margin Market Order', () => {
+And('I select a Market Order type', () => {
 	orderForm.selectMarketOrder()
 })
-Then('A long margin position is opened', () => {
+When('A long margin position is opened', () => {
 	orderForm.selectMarginWallet()
 	orderForm.buyMarketOrder()
+})
+
+Then('I receive a notification that the position has opened', () => {
 	messages.buyMarketConfirm()
 })
 
-Then('A Buy Market order from Exchange wallet should be cancelled', () => {
+When('I click on a positions close button', () => {
 	positions.cancelPosition()
+})
+
+Then('I receive a notification that the position has closed', () => {
 	messages.cancelBuyMarketOrder()
 })

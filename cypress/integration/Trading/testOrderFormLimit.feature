@@ -2,8 +2,8 @@ Feature: Test Order Form Validations
 
 @loginBitfinex
    Scenario: Order form/Limit order Validations
-   Given I go to Trading page
-   When I Select a currency
+   Given I visit to Trading page
+   When I select a currency
    Then Limit order min-max price should work
    Then I verify the Order from best bid / ask
    Then I verify the Order form max buy / sell
