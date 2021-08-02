@@ -6,7 +6,7 @@ import provided from '../../../support/PageObject/provided.js'
 
 Given('I go to the funding page', () => {
 	login.landing()
-	login.longIn()
+	login.visitBitfinexHomePage()
 	fundingForm.goFundingPage()
 })
 
