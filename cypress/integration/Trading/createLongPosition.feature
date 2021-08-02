@@ -1,6 +1,6 @@
 Feature: Test Creating a new Long position
 
-  Background: Background name
+  Background: Visit trading page
   Given I go to Trading page
 
 @loginBitfinex
