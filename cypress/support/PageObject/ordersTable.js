@@ -1,5 +1,6 @@
 class ordersTable {
 	static cancelOrder() {
+		cy.waitUntil(() => cy.get('[data-qa-id="orders-table-row"]').should('be.visible'))
 		cy.get('[data-qa-id="orders-table-row"]')
 			.first()
 			.within(() => {

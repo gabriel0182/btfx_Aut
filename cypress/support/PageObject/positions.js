@@ -29,7 +29,7 @@ class positions {
 			})
 			cy.get('div.ui-modaldialog__title').click()
 			cy.get('.ui-radioinput').within(() => {
-				cy.contains('Long').click()
+				cy.get('.ui-radiobutton').contains('Long').click({ force: true })
 			})
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Amount').next().type(position[0].amount)
@@ -50,7 +50,7 @@ class positions {
 			})
 			cy.get('div.ui-modaldialog__title').click()
 			cy.get('.ui-radioinput').within(() => {
-				cy.contains('Short').click()
+				cy.get('.ui-radiobutton').contains('Short').click({ force: true })
 			})
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Amount').next().type(position[0].amount)
