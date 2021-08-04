@@ -1,5 +1,7 @@
 node_modules
 **/cypress/videos
 **/cypress/screenshots
-**/cypress/fixtures/sensitive/credentials.json
 .vscode/settings.json
+**/cypress/report
+**/mochawesome-report
+**cypress/fixtures/sensitive/credentials.json
