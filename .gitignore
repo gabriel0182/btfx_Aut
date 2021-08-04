@@ -2,5 +2,5 @@ node_modules
 **/cypress/videos
 **/cypress/screenshots
 **/cypress/fixtures/sensitive/credentials.json
-.DS_Store
-**/.vscode/settings.json
+**/Cypress/**/.DS_Store
+.vscode/settings.json

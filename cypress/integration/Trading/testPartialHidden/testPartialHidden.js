@@ -4,10 +4,6 @@ import partialHidden from '../../../support/PageObject/partialHidden'
 
 const ptHidden = new partialHidden()
 
-And('I increase precision', () => {
-	ptHidden.increasePrecision()
-})
-
 When('I place a hidden limit order at the spread price', () => {
 	ptHidden.placeLimit()
 })
