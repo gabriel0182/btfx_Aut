@@ -1,61 +1,64 @@
 {
-  "testFiles": [
-    "tradingPage.feature",
-    "tradingTradesTable.feature",
-    "balanceQuickTransfer.feature",
-    "createLongPosition.feature",
-    "createShortPosition.feature",
-    "tradingBuyLimitExch.feature",
-    "sellTradingLimitExch.feature",
-    "buyMarketMargin.feature",
-    "sellMarketMargin.feature",
-    "tradingBuyStop.feature",
-    "tradingSellStop.feature",
-    "buyStopMarginTIF.feature",
-    "tradingBuyStopLimitExch.feature",
-    "tradingSellStopLimitExch.feature",
-    "buyTrailingStopExch.feature",
-    "sellTrailingStopExch.feature",
-    "buyFillKillExch.feature",
-    "sellFillKillExch.feature",
-    "buyImmediateOrCancelExch.feature",
-    "sellImmediateOrCancelExch.feature",
-    "buyLimitBookExch.feature",
-    "sellLimitBookExc.feature",
-    "buyScaledExchange.feature",
-    "sellScaledExchange.feature",
-    "testPartialHidden.feature",
-    "testFundingForm.feature"
-  ],
-  "viewportWidth": 1280,
-  "viewportHeight": 720,
-  "screenshotOnRunFailure": true,
-  "defaultCommandTimeout": 30000,
-  "numTestsKeptInMemory": 0,
-  "responseTimeout": 10000,
-  "requestTimeout": 10000,
-  "taskTimeout": 10000,
-  "execTimeout": 100000,
-  "retries": 1,
-  "pageLoadTimeout": 50000,
-  "chromeWebSecurity": false,
-  "watchForFileChanges": false,
-  "reporter": "mochawesome",
-  "reporterOptions": {
-    "reportDir": "cypress/report/mochawesome-report",
-    "inline": true,
-    "overwrite": false,
-    "html": false,
-    "json": true,
-    "timestamp": "mmddyyyy_HHMMss"
-  },
-  "json.schemas": [
-    {
-      "fileMatch": [
-        "/cypress.json"
-      ],
-      "url": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json"
-    }
-  ],
-  "supportFile": "cypress/support/commands.js"
+	"testFiles": [
+		"**/tradingPage.feature",
+		"**/tradingTradesTable.feature",
+		"**/balanceQuickTransfer.feature",
+		"**/createLongPosition.feature",
+		"**/createShortPosition.feature",
+		"**/positionsTable.feature",
+		"**/testOrderFormLimit.feature",
+		"**/testOrderFormMarket.feature",
+		"**/tradingBuyLimitExch.feature",
+		"**/sellTradingLimitExch.feature",
+		"**/buyMarketMargin.feature",
+		"**/sellMarketMargin.feature",
+		"**/tradingBuyStop.feature",
+		"**/tradingSellStop.feature",
+		"**/buyStopMarginTIF.feature",
+		"**/tradingBuyStopLimitExch.feature",
+		"**/tradingSellStopLimitExch.feature",
+		"**/buyTrailingStopExch.feature",
+		"**/sellTrailingStopExch.feature",
+		"**/buyFillKillExch.feature",
+		"**/sellFillKillExch.feature",
+		"**/buyImmediateOrCancelExch.feature",
+		"**/sellImmediateOrCancelExch.feature",
+		"**/buyLimitBookExch.feature",
+		"**/sellLimitBookExc.feature",
+		"**/buyScaledExchange.feature",
+		"**/sellScaledExchange.feature",
+		"**/testPartialHidden.feature",
+		"**/testFundingForm.feature",
+		"**/providedFunding.feature"
+	],
+	"viewportWidth": 1480,
+	"viewportHeight": 980,
+	"screenshotOnRunFailure": true,
+	"video": false,
+	"videoUploadOnPasses": false,
+	"defaultCommandTimeout": 50000,
+	"numTestsKeptInMemory": 50,
+	"responseTimeout": 10000,
+	"requestTimeout": 30000,
+	"taskTimeout": 20000,
+	"execTimeout": 200000,
+	"retries": {
+		"runMode": 1,
+		"openMode": 0
+	},
+	"pageLoadTimeout": 50000,
+	"chromeWebSecurity": false,
+	"watchForFileChanges": false,
+	"reporterOptions": {
+		"mochaFile": "cypress/reports/junit/test-results.[hash].xml",
+		"testsuitesTitle": false
+	},
+	"json.schemas": [
+		{
+			"fileMatch": ["/cypress.json"],
+			"url": "https://raw.githubusercontent.com/cypress-io/cypress/develop/cli/schema/cypress.schema.json"
+		}
+	],
+
+	"supportFile": "cypress/support/commands.js"
 }

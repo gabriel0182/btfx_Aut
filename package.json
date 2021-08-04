@@ -1,29 +1,26 @@
 {
-  "name": "testrp",
-  "version": "1.0.0",
-  "main": "index.js",
-  "devDependencies": {
-    "cypress": "^7.3.0",
-    "cypress-cucumber-preprocessor": "^2.5.5",
-    "cypress-otp": "^1.0.3",
-    "cypress-wait-until": "^1.7.1",
-    "cypress-xpath": "^1.4.0",
-    "mochawesome": "^4.1.0"
-  },
-  "author": "",
-  "license": "ISC",
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "description": "",
-  "dependencies": {
-    "ls": "^0.2.1",
-    "mochawesome-merge": "^4.2.0",
-    "mochawesome-report-generator": "^5.2.0",
-    "rimraf": "^3.0.2",
-    "yargs": "^17.0.1"
-  }
+	"name": "testrp",
+	"version": "1.0.0",
+	"main": "index.js",
+	"devDependencies": {
+		"cypress": "^8.1.0",
+		"cypress-cucumber-preprocessor": "^2.5.5",
+		"cypress-otp": "^1.0.3",
+		"cypress-wait-until": "^1.7.1",
+		"cypress-xpath": "^1.4.0"
+	},
+	"author": "",
+	"license": "ISC",
+	"cypress-cucumber-preprocessor": {
+		"nonGlobalStepDefinitions": true
+	},
+	"scripts": {
+		"cy:open": "cypress open",
+		"cy:run": "cypress run",
+		"test:all": "cypress run --spec \"**/*.feature\""
+	},
+	"description": "",
+	"dependencies": {
+		"prettier": "^2.3.1"
+	}
 }

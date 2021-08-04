@@ -3,4 +3,3 @@
     "types": ["cypress", "cypress-wait-until"]
     }
   }
-}
