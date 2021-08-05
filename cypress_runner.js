@@ -21,7 +21,7 @@ const argv = yargs.options({
     'spec': {
         alias: 's',
         describe: 'run test with specific spec file',
-        default: 'cypress/integration/*.feature'
+        default: 'cypress/integration/**/*.feature'
     },
     'title': {
         alias: 't',
