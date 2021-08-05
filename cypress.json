@@ -52,11 +52,11 @@
 	"reporter": "mochawesome",
 	"reporterOptions": {
 		"reportDir": "cypress/report/mochawesome-report",
-    	"inline": true,
-    	"overwrite": false,
-    	"html": false,
-    	"json": true,
-    	"timestamp": "mmddyyyy_HHMMss"
+		"inline": true,
+		"overwrite": false,
+		"html": false,
+		"json": true,
+		"timestamp": "mmddyyyy_HHMMss"
 	},
 	"json.schemas": [
 		{
