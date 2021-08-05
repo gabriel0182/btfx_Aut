@@ -21,6 +21,11 @@
 	},
 	"description": "",
 	"dependencies": {
-		"prettier": "^2.3.2"
+		"ls": "^0.2.1",
+		"marge": "^1.0.1",
+		"merge": "^2.1.1",
+		"prettier": "^2.3.2",
+		"rimraf": "^3.0.2",
+		"yargs": "^17.1.0"
 	}
 }
