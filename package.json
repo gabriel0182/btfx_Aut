@@ -24,6 +24,9 @@
 		"ls": "^0.2.1",
 		"marge": "^1.0.1",
 		"merge": "^2.1.1",
+		"mochawesome": "^6.2.2",
+		"mochawesome-merge": "^4.2.0",
+		"mochawesome-report-generator": "^5.2.0",
 		"prettier": "^2.3.2",
 		"rimraf": "^3.0.2",
 		"yargs": "^17.1.0"
