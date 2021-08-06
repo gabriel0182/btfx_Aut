@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"main": "index.js",
 	"devDependencies": {
-		"cypress": "^8.1.0",
+		"cypress": "^8.2.0",
 		"cypress-cucumber-preprocessor": "^2.5.5",
 		"cypress-otp": "^1.0.3",
 		"cypress-wait-until": "^1.7.1",
@@ -21,6 +21,14 @@
 	},
 	"description": "",
 	"dependencies": {
-		"prettier": "^2.3.1"
+		"ls": "^0.2.1",
+		"marge": "^1.0.1",
+		"merge": "^2.1.1",
+		"mochawesome": "^6.2.2",
+		"mochawesome-merge": "^4.2.0",
+		"mochawesome-report-generator": "^5.2.0",
+		"prettier": "^2.3.2",
+		"rimraf": "^3.0.2",
+		"yargs": "^17.1.0"
 	}
 }
