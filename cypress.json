@@ -2,6 +2,7 @@
 	"testFiles": [
 		"**/tradingPage.feature",
 		"**/tradingTradesTable.feature",
+		"**/velidateTickers.feature",
 		"**/balanceQuickTransfer.feature",
 		"**/createLongPosition.feature",
 		"**/createShortPosition.feature",
