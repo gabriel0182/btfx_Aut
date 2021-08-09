@@ -1,4 +1,4 @@
-Feature: Velidate Tickers selector works
+Feature: Validate Tickers selector works
 
 
     Background: Login steps
