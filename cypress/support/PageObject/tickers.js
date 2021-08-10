@@ -73,21 +73,19 @@ class tickers {
 				cy.get('.tickerlist__symbolcell').should('contain', 'ETH')
 			})
 		cy.get('.tickerlist__container').within(() => {
-			cy.get('.tickerlist__lastprice').eq(1).as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/ETH:USD')
+			cy.get('.custom-scrollbar').last().get('[href="/t/ETH:USD"]').eq(1).as('currencyLastPrice')
 			cy.get('@currencyLastPrice').click()
 		})
 		cy.url().should('contain', 't/ETH:USD?type=exchange')
 	}
 	static volumeAmount() {
-		cy
-			.get('.show-soft')
+		cy.get('.show-soft')
 			.eq(6)
 			.next()
 			.then(($val) => {
 				const txt = $val.text()
 				var max = Number(txt.replace(/[^0-9\.-]+/g, ''))
-			cy.log(max)
+				cy.log(max)
 				cy.get('.show-soft')
 					.eq(5)
 					.next()
@@ -96,7 +94,7 @@ class tickers {
 						var min = Number(txt.replace(/[^0-9\.-]+/g, ''))
 						expect(min).to.lessThan(max)
 					})
-				})
+			})
 	}
 }
 export default tickers

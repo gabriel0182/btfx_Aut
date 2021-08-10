@@ -20,6 +20,16 @@ class login {
 				.should('be.visible')
 		)
 	}
+	static logout(){
+		cy.get('[data-qa-id="header-button-account"]')
+		.click()
+		cy.get('[data-qa-id="header-dropdown-account"]')
+		.within(()=>{
+			cy.get('.header__dropdown-list-item')
+			.contains('Logout')
+			.click()
+		})
+	}
 }
 
 export default login
