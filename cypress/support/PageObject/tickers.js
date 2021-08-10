@@ -2,7 +2,7 @@ class tickers {
 	static selectTicker() {
 		cy.fixture('orders').then((trading) => {
 			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('input#ticker-textinput-id').type(`${trading[0].ticker}{enter}`)
+			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker}{enter}`)
 			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 
 			cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
@@ -36,7 +36,7 @@ class tickers {
 	static searchTicker() {
 		cy.fixture('orders').then((trading) => {
 			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('input#ticker-textinput-id').type(`${trading[0].ticker}{enter}`)
+			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker}{enter}`)
 			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 		})
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
@@ -47,16 +47,16 @@ class tickers {
 			.within(() => {
 				cy.get('.tickerlist__lastticker').should('contain', 'BTC')
 			})
-			cy.get('.custom-scrollbar')
+		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
 				cy.get('.tickerlist__symbolcell').should('contain', 'BTC')
 			})
 	}
-	static changeTicker(){
+	static changeTicker() {
 		cy.fixture('orders').then((trading) => {
 			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('input#ticker-textinput-id').type(`${trading[0].ticker2}{enter}`)
+			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker2}{enter}`)
 			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 		})
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
@@ -67,17 +67,36 @@ class tickers {
 			.within(() => {
 				cy.get('.tickerlist__lastticker').should('contain', 'USD')
 			})
-			cy.get('.custom-scrollbar')
+		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
 				cy.get('.tickerlist__symbolcell').should('contain', 'ETH')
 			})
-			cy.get('.tickerlist__container').within(() => {
-				cy.get('.tickerlist__lastprice').eq(1).as('currencyLastPrice')
-				cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/ETH:USD')
-				cy.get('@currencyLastPrice').click()
-			})
-			cy.url().should('contain','t/ETH:USD?type=exchange')
+		cy.get('.tickerlist__container').within(() => {
+			cy.get('.tickerlist__lastprice').eq(1).as('currencyLastPrice')
+			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/ETH:USD')
+			cy.get('@currencyLastPrice').click()
+		})
+		cy.url().should('contain', 't/ETH:USD?type=exchange')
+	}
+	static volumeAmount() {
+		cy
+			.get('.show-soft')
+			.eq(6)
+			.next()
+			.then(($val) => {
+				const txt = $val.text()
+				var max = Number(txt.replace(/[^0-9\.-]+/g, ''))
+			cy.log(max)
+				cy.get('.show-soft')
+					.eq(5)
+					.next()
+					.then(($val2) => {
+						const txt = $val2.text()
+						var min = Number(txt.replace(/[^0-9\.-]+/g, ''))
+						expect(min).to.lessThan(max)
+					})
+				})
 	}
 }
 export default tickers

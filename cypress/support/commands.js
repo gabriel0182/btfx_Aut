@@ -194,6 +194,10 @@ Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token)
 			const csrfOTP = $html.find('#otp-form > input[name=authenticity_token]').val()
 			return cy.wrap(csrfOTP)
 		})
+		cy.on('uncaught:exception', (err, runnable) => {
+			expect(err.message).to.include('')
+			return false
+		})
 })
 
 Cypress.Commands.add('getAuthenticitySessionToken', () => {
@@ -209,6 +213,10 @@ Cypress.Commands.add('getAuthenticitySessionToken', () => {
 			const $html = Cypress.$(body)
 			const csrfSession = $html.find('#login-form-page > input[name=authenticity_token]').val()
 			return cy.wrap(csrfSession)
+		})
+		cy.on('uncaught:exception', (err, runnable) => {
+			expect(err.message).to.include('')
+			return false
 		})
 })
 
@@ -255,7 +263,10 @@ Cypress.Commands.add('loginFromBackend', () => {
 			message: [`Authenticating | with ${credentials.login} user`],
 			autoEnd: true,
 		})
-
+		cy.on('uncaught:exception', (err, runnable) => {
+			expect(err.message).to.include('')
+			return false
+		})
 		cy.task('generateOTP', credentials.otp_secret).then((otp) => {
 			cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
 				cy.loginSessionByCSRF(
