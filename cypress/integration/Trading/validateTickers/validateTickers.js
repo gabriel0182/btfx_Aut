@@ -2,6 +2,16 @@
 
 import tickers from '../../../support/PageObject/tickers'
 
+Then('The favourite icon, on the BTCUSD ticker row, is blue', () => {
+	tickers.setFavouriteTicker()
+})
+Then('The Ticker table displays favourite tickers only', () => {
+	tickers.setOnlyFavorites()
+})
+Then('The favourite icon, on the BTCUSD ticker row, is not blue', () => {
+	tickers.uncheckTiker()
+})
+
 Then('The tickers list only contains USDt pairs', () => {
 	tickers.tickerPairFilter()
 	tickers.volumeAmount()

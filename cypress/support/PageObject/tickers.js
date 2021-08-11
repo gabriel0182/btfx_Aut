@@ -96,5 +96,43 @@ class tickers {
 					})
 			})
 	}
+	static setFavouriteTicker() {
+		cy.fixture('orders').then((trading) => {
+			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
+			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker}{enter}`)
+			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
+		})
+		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
+			cy.get('[id="Item_USD"]').click()
+		})
+		cy.get('.custom-scrollbar')
+			.eq(2)
+			.within(() => {
+				cy.get('.tickerlist__lastticker').should('contain', 'USD')
+			})
+				cy.get('.tickerlist__star').first().within(() => {
+					cy.get('.fa-star-o').click()
+				})
+		cy.get('.tickerlist__star').first().within(() => {
+			cy.get('.bfx-blue').should('be.visible')
+		})
+	}
+	static uncheckTiker(){
+		cy.get('#tickerlist-fav-filter')
+		.click()
+		cy.get('.tickerlist__star').first().within(() => {
+			cy.get('.bfx-blue').should('be.visible')
+			.click()
+			cy.get('.fa-star-o').should('be.visible')
+		})
+	}
+	static setOnlyFavorites(){
+		cy.get('#tickerlist-fav-filter')
+		.click()
+		cy.get('.tickerlist__container').within(() => {
+			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
+			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
+		})
+	}
 }
 export default tickers
