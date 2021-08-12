@@ -134,5 +134,32 @@ class tickers {
 			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
 		})
 	}
+	static setMarginOnly(){
+		cy.get('#tickerlist-margin-filter')
+		.click()
+		cy.get('.ui-tooltip--cursor-help').eq(5).within(()=>{
+			cy.get('.bfx-blue').should('be.visible')
+		})
+		cy.get('.tickerlist__container').within(() => {
+			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
+			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
+		})
+		cy.get('.table-vir__row').eq(1).within(() => {
+			cy.get('.bfx-blue').as('currencyLastPrice')
+			cy.get('@currencyLastPrice').should('be.visible').and('contain', '10')
+		})
+		cy.get('.table-vir__row').eq(4).within(() => {
+			cy.get('.bfx-blue').as('currencyLastPrice')
+			cy.get('@currencyLastPrice').should('be.visible').and('contain', '3')
+		})
+	}
+	static offMarginOnly(){
+		cy.get('#tickerlist-margin-filter')
+		.click()
+		cy.get('.table-vir__row').eq(4).within(() => {
+			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
+			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/MLN:USD')
+		})
+	}
 }
 export default tickers
