@@ -33,7 +33,6 @@ class orderBook {
 			})
 		)
 	}
-
 	static bookZoomReduce() {
 		for (let n = 0; n < 10; n++) {
 			cy.get('#book-agg-controls').within(() => {
@@ -154,6 +153,18 @@ class orderBook {
 					.should('contain', `${btc[0].btc}`)
 			)
 		})
+	}
+	static validatePriceHighestBid() {
+		cy.get('#book-bids')
+			.find('.book__row')
+			.first()
+			.find('span')
+			.last()
+			.then(($val) => {
+				const value = $val.text()
+				let maxBid = Number(value.replace(/[^0-9\.-]+/g, ''))
+				cy.get('[name="price"]').should('contain.value', `${maxBid}`)
+			})
 	}
 }
 export default orderBook
