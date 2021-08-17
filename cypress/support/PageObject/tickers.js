@@ -13,7 +13,6 @@ class tickers {
 				cy.get('.tickerlist__lastprice').as('currencyLastPrice')
 				cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
 				cy.get('@currencyLastPrice').click()
-				cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)
 			})
 		})
 		cy.get('.main-ticker__container').should('be.visible').should('contain', 'BTC/USD')
@@ -92,7 +91,8 @@ class tickers {
 					.then(($val2) => {
 						const txt = $val2.text()
 						var min = Number(txt.replace(/[^0-9\.-]+/g, ''))
-						expect(min).to.lessThan(max)
+						cy.wrap(min).should('be.lte', max)
+						//expect(min).to.be.lessThanOrEqual(max)
 					})
 			})
 	}
@@ -135,28 +135,37 @@ class tickers {
 		})
 	}
 	static setMarginOnly(){
+		cy.on('uncaught:exception', (err, runnable) => {
+			expect(err.message).to.include('')
+			return false
+		})
+		cy.get('#ticker-textinput-id').clear()
+		cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
+		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
+			cy.get('[id="Item_ANY"]').click()
+		})
 		cy.get('#tickerlist-margin-filter')
 		.click()
 		cy.get('.ui-tooltip--cursor-help').eq(5).within(()=>{
 			cy.get('.bfx-blue').should('be.visible')
 		})
-		cy.get('.tickerlist__container').within(() => {
+		cy.get('.table-vir__row').within(() => {
 			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
+			cy.get('@currencyLastPrice').should('have.attr', 'href').and('contain', '/t/BTC:JPY')
 		})
-		cy.get('.table-vir__row').eq(1).within(() => {
+		cy.get('.table-vir__row').within(() => {
 			cy.get('.bfx-blue').as('currencyLastPrice')
 			cy.get('@currencyLastPrice').should('be.visible').and('contain', '10')
 		})
-		cy.get('.table-vir__row').eq(4).within(() => {
+		cy.get('.table-vir__row').within(() => {
 			cy.get('.bfx-blue').as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('be.visible').and('contain', '3')
+			cy.get('@currencyLastPrice').should('be.visible').and('contain', '3.3')
 		})
 	}
 	static offMarginOnly(){
 		cy.get('#tickerlist-margin-filter')
 		.click()
-		cy.get('.table-vir__row').eq(4).within(() => {
+		cy.get('.table-vir__row').eq(2).within(() => {
 			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
 			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/MLN:USD')
 		})

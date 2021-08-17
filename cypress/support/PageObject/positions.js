@@ -24,8 +24,6 @@ class positions {
 				cy.contains('Select')
 					.click()
 					.type(`${position[0].type}{enter}{enter}`)
-					.get('input#react-select-2-input')
-					.focus()
 			})
 			cy.get('div.ui-modaldialog__title').click()
 			cy.get('.ui-radioinput').within(() => {
@@ -45,8 +43,6 @@ class positions {
 				cy.contains('Select')
 					.click()
 					.type(`${position[0].type}{enter}{enter}`)
-					.get('input#react-select-2-input')
-					.focus()
 			})
 			cy.get('div.ui-modaldialog__title').click()
 			cy.get('.ui-radioinput').within(() => {

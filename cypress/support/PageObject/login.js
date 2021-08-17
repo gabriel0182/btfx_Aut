@@ -8,8 +8,8 @@ class login {
 		cy.setCookie('bfx_locale', 'en')
 	}
 	static logIn() {
-		//cy.visitBitfinexAndLogin()
-		cy.loginToBitfinexManually()
+		cy.visitBitfinexAndLogin()
+		//cy.loginToBitfinexManually()
 	}
 	static verifyLoggedOn() {
 		cy.waitUntil(() =>

@@ -25,8 +25,8 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 		expect(err.message).to.include('')
 		return false
 	})
-	cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
-	cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)
+	/*cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
+	cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)*/
 
 	let session = cy.getCookie('_bfx_session')
 	cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
@@ -148,6 +148,7 @@ Cypress.Commands.add('waitForPageToLoad', () => {
 })
 
 Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
+	cy.waitUntil(()=>
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		const headers = {
 			'CF-Access-Client-Id': credentials.cloudflare_id,
@@ -155,10 +156,12 @@ Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
 		}
 		cy.visit(route, { headers: headers })
 	})
+	)
 })
 
 Cypress.Commands.add('byPassCloudFlare', (route) => {
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
+		cy.waitUntil(()=>
 		cy.request({
 			log: false,
 			method: 'GET',
@@ -170,6 +173,7 @@ Cypress.Commands.add('byPassCloudFlare', (route) => {
 			failOnstatusCode: false,
 			'Retry-After': 120,
 		})
+		)
 	})
 })
 
@@ -235,8 +239,8 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 })
 
 Cypress.Commands.add('loginFromBackend', () => {
-	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
-	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
+	/*cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
+	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')*/
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		cy.clearCookies()
 		cy.window().then((win) => {
@@ -245,16 +249,6 @@ Cypress.Commands.add('loginFromBackend', () => {
 		cy.clearLocalStorage()
 		cy.setCookie('bfx_locale', 'en')
 		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {
-			onBeforeLoad(win) {
-				Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
-				Object.defineProperty(win.navigator, 'languages', ['en-GB'])
-				Object.defineProperty(win.navigator, 'accept_languages', {
-					value: ['en'],
-				})
-			},
-			headers: {
-				'Accept-Language': 'en',
-			},
 		})
 		Cypress.log({
 			name: 'login',
