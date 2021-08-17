@@ -3,7 +3,7 @@
 import orderForm from '../../../support/PageObject/orderForm'
 
 Then('I verify the Order from best bid / ask', () => {
-	orderForm.selectMarketOrder()
+	orderForm.selectOrderType('Market')
 	orderForm.checkMaxMarketValue()
 })
 

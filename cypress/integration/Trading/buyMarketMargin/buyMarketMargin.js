@@ -5,7 +5,7 @@ import messages from '../../../support/PageObject/messages'
 import positions from '../../../support/PageObject/positions'
 
 And('I select a Market Order type', () => {
-	orderForm.selectMarketOrder()
+	orderForm.selectOrderType('Market')
 })
 When('A long margin position is opened', () => {
 	orderForm.selectMarginWallet()
