@@ -2,7 +2,7 @@ Feature: Test Creating a new Short position
 
 @loginBitfinex
   Scenario: Create a new Short position
-  Given I visit to Trading page
+  Given I am viewing the trading page
   When I select the Create a New Short Position option
   Then I verify the position was created
 

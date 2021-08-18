@@ -2,7 +2,7 @@ Feature: Test Trading trades table
 
    @loginBitfinex
   Scenario: Sorting Order History Table
-    Given I visit to Trading page
+    Given I am viewing the trading page
     When I select a currency
     Then The sorting order History table should work
 

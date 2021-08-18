@@ -8,7 +8,6 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 
 	cy.setCookie('bfx_locale', 'en')
-
 	cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
 		onBeforeLoad(win) {
 			Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
@@ -235,12 +234,14 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 			authenticity_token,
 			otp,
 		},
+	}).then((response) => {
+		expect(response.status, 'Successful Login').to.equal(200)
 	})
 })
 
 Cypress.Commands.add('loginFromBackend', () => {
-	/*cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
-	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')*/
+	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
+	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		cy.clearCookies()
 		cy.window().then((win) => {
@@ -248,6 +249,7 @@ Cypress.Commands.add('loginFromBackend', () => {
 		})
 		cy.clearLocalStorage()
 		cy.setCookie('bfx_locale', 'en')
+		cy.clearCookie('_bfx_session')
 		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {
 		})
 		Cypress.log({

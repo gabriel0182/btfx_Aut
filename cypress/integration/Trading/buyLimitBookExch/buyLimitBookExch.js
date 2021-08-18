@@ -7,7 +7,7 @@ import buyLimitBook from '../../../support/PageObject/buyLimitBook.js'
 const limitBk = new buyLimitBook()
 
 And('I select the market order', () => {
-	orderForm.selectMarketOrder()
+	orderForm.selectOrderType('Market')
 })
 
 When('I type the order required info', () => {

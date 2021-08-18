@@ -2,38 +2,6 @@
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 
 class orderform {
-	static checkBestValue() {
-		cy.get('.ui-buysellinputindicator')
-			.first()
-			.within(() => {
-				cy.get('i').first().click()
-			})
-
-		cy.get('span.ui-fieldlabel__innertag')
-			.contains('Bid')
-			.next('span')
-			.then(($val) => {
-				const txt = $val.text()
-				let pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
-				cy.get('[name="price"]').should('contain.value', `${pointNum}`)
-			})
-
-		cy.get('.ui-buysellinputindicator')
-			.first()
-			.within(() => {
-				cy.get('i').last().click()
-			})
-
-		cy.get('span.ui-fieldlabel__innertag')
-			.contains('Ask')
-			.next('span')
-			.then(($val) => {
-				const txt = $val.text()
-				let pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
-				cy.get('[name="price"]').should('contain.value', `${pointNum}`)
-			})
-	}
-
 	static checkMaxValue() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/calc/order/avail`).as('amountAvailable')
 		cy.get('[name="price"]').clear({ force: true }).type('1')
@@ -73,17 +41,6 @@ class orderform {
 				var pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
 				cy.get('[name="amount"]').should('contain.value', pointNum)
 			})
-	}
-	static selectLimitOrder() {
-		cy.waitUntil(() =>
-			cy
-				.get('[data-qa-id="order-form__order-type-dropdown"]')
-				.click()
-				.get('input#orderFormDropdown')
-				.get('#orderFormDropdownItem_limit')
-				.get('[data-qa-id="order-form__order-type-dropdown-menu-item-limit"]')
-				.click()
-		)
 	}
 	static selectExchangeWallet() {
 		cy.get('[data-qa-id="order-form"]').within(() => {
@@ -288,17 +245,6 @@ class orderform {
 				)
 			})
 		})
-	}
-	static selectMarketOrder() {
-		cy.waitUntil(() =>
-			cy
-				.get('[data-qa-id="order-form__order-type-dropdown"]')
-				.click()
-				.get('input#orderFormDropdown')
-				.get('#orderFormDropdownItem_market')
-				.get('[data-qa-id="order-form__order-type-dropdown-menu-item-market"]')
-				.click()
-		)
 	}
 	static verifyMarketRequiredFields() {
 		cy.get('[name="amount"]').clear({ force: true }).get('[name="price"]').clear({ force: true })
@@ -506,6 +452,62 @@ class orderform {
 				cy.get('#sellButton').click()
 			})
 		})
+	}
+	static setPriceToHighestBid() {
+		// cy.get('.ui-buysellinputindicator')
+		// 	.first()
+		// 	.find('span')
+		// 	.eq(0)
+		// 	.invoke('removeAttr', 'class')
+		// 	.click({ force: true })
+		cy.get('.ui-buysellinputindicator')
+			.first()
+			.within(() => {
+				cy.get('i').first().click()
+			})
+	}
+	static setPriceToLowestAsk() {
+		cy.get('.ui-buysellinputindicator')
+			.first()
+			.within(() => {
+				cy.get('i').last().click()
+			})
+	}
+	static checkHighestBid() {
+		cy.get('span.ui-fieldlabel__innertag')
+			.contains('Bid')
+			.next('span')
+			.then(($val) => {
+				const txt = $val.text()
+				let pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
+				cy.get('[name="price"]').should('contain.value', `${pointNum}`)
+			})
+	}
+	static checkLowestAsk() {
+		cy.get('span.ui-fieldlabel__innertag')
+			.contains('Ask')
+			.next('span')
+			.then(($val) => {
+				const txt = $val.text()
+				let pointNum = Number(txt.replace(/[^0-9\.-]+/g, ''))
+				cy.get('[name="price"]').should('contain.value', `${pointNum}`)
+			})
+	}
+	static getOrderTypeSelector(orderType) {
+		const orderTypes = {
+			Limit: 'limit',
+			Market: 'market',
+			Stop: 'stop',
+			'Stop limit': 'stoplimit',
+			'Fill or kill': 'fillorkill',
+			'Immediate or Cancel': 'immediateorcancel',
+		}
+		return orderTypes[orderType]
+	}
+	static selectOrderType(order) {
+		const orderTypeSelector = this.getOrderTypeSelector(order)
+		cy.get('[data-qa-id="order-form__order-type-dropdown"]').click()
+		cy.get(`[data-qa-id="order-form__order-type-dropdown-menu-item-${orderTypeSelector}"]`).click()
 	}
 }
 export default orderform

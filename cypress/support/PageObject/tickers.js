@@ -20,12 +20,14 @@ class tickers {
 			cy.get('span.show50').should('be.visible').and('contain', 'BTC/USD')
 		})
 	}
-	static tickerPairFilter() {
+
+	static selectPairFilter() {
 		cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
 			cy.get('[id="Item_UST"]').click()
 		})
-
+	}
+	static tickerPairFilter() {
 		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
@@ -41,6 +43,8 @@ class tickers {
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
 			cy.get('[id="Item_ANY"]').click()
 		})
+	}
+	static btcTickerList() {
 		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
@@ -61,6 +65,8 @@ class tickers {
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
 			cy.get('[id="Item_USD"]').click()
 		})
+	}
+	static validateURL() {
 		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
@@ -96,7 +102,7 @@ class tickers {
 					})
 			})
 	}
-	static setFavouriteTicker() {
+	static addFavoriteBTCUSD() {
 		cy.fixture('orders').then((trading) => {
 			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
 			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker}{enter}`)
@@ -110,31 +116,51 @@ class tickers {
 			.within(() => {
 				cy.get('.tickerlist__lastticker').should('contain', 'USD')
 			})
-				cy.get('.tickerlist__star').first().within(() => {
-					cy.get('.fa-star-o').click()
-				})
-		cy.get('.tickerlist__star').first().within(() => {
-			cy.get('.bfx-blue').should('be.visible')
-		})
+		cy.get('.tickerlist__star')
+			.first()
+			.within(() => {
+				cy.get('.fa-star-o').click()
+			})
 	}
-	static uncheckTiker(){
-		cy.get('#tickerlist-fav-filter')
-		.click()
-		cy.get('.tickerlist__star').first().within(() => {
-			cy.get('.bfx-blue').should('be.visible')
-			.click()
-			cy.get('.fa-star-o').should('be.visible')
-		})
+	static favoriteBlueBTCUSD() {
+		cy.get('.tickerlist__star')
+			.first()
+			.within(() => {
+				cy.get('.bfx-blue').should('be.visible')
+			})
 	}
-	static setOnlyFavorites(){
-		cy.get('#tickerlist-fav-filter')
-		.click()
+	static removeFavoriteBTCUSD() {
+		cy.get('.tickerlist__star')
+			.first()
+			.within(() => {
+				cy.get('.bfx-blue').should('be.visible').click()
+			})
+	}
+	static notBlueBTCUSD() {
+		cy.get('.tickerlist__star')
+			.first()
+			.within(() => {
+				cy.get('.fa-star-o').should('be.visible')
+			})
+	}
+	static setOnlyFavorites() {
+		cy.get('#tickerlist-fav-filter').click()
+	}
+	static viewOnlyFavorites() {
 		cy.get('.tickerlist__container').within(() => {
 			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
 			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
 		})
 	}
-	static setMarginOnly(){
+	static removeFavorites() {
+		cy.get('#tickerlist-fav-filter').click()
+		cy.get('.tickerlist__star')
+			.first()
+			.within(() => {
+				cy.get('.bfx-blue').should('be.visible').click()
+			})
+	}
+	static enableMarginOnly() {
 		cy.on('uncaught:exception', (err, runnable) => {
 			expect(err.message).to.include('')
 			return false
@@ -144,30 +170,33 @@ class tickers {
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
 			cy.get('[id="Item_ANY"]').click()
 		})
-		cy.get('#tickerlist-margin-filter')
-		.click()
-		cy.get('.ui-tooltip--cursor-help').eq(5).within(()=>{
-			cy.get('.bfx-blue').should('be.visible')
-		})
-		cy.get('.table-vir__row').within(() => {
-			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('have.attr', 'href').and('contain', '/t/BTC:JPY')
-		})
-		cy.get('.table-vir__row').within(() => {
-			cy.get('.bfx-blue').as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('be.visible').and('contain', '10')
-		})
-		cy.get('.table-vir__row').within(() => {
-			cy.get('.bfx-blue').as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('be.visible').and('contain', '3.3')
+		cy.get('#tickerlist-margin-filter').click()
+		cy.get('.ui-tooltip--cursor-help')
+			.eq(5)
+			.within(() => {
+				cy.get('.bfx-blue').should('be.visible')
+			})
+	}
+	static displayMarginEnabled() {
+		cy.get('.tickerlist__container').within(() => {
+			cy.get('.table-vir__row').each((tr) => {
+				cy.wrap(tr).find('.bfx-blue').should('be.visible')
+			})
 		})
 	}
-	static offMarginOnly(){
-		cy.get('#tickerlist-margin-filter')
-		.click()
-		cy.get('.table-vir__row').eq(2).within(() => {
-			cy.get('.tickerlist__lastprice').as('currencyLastPrice')
-			cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/MLN:USD')
+	static disableMarginOnly() {
+		cy.get('#tickerlist-margin-filter').click()
+	}
+	static displayAll() {
+		cy.get('.tickerlist__container').within(() => {
+			cy.get('.table-vir__row').each((tr) => {
+				cy.wrap(tr).get('.tickerlist__icons-cell').should('be.visible')
+			})
+		})
+		cy.get('.tickerlist__container').within(() => {
+			cy.get('.table-vir__row').each((tr) => {
+				cy.wrap(tr).get('.bfx-blue').should('be.visible')
+			})
 		})
 	}
 }

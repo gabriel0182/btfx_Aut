@@ -6,7 +6,7 @@ import ordersTable from '../../../support/PageObject/ordersTable'
 import orderBook from '../../../support/PageObject/orderBook'
 
 Then('A Buy Limit order from Exchange wallet should be created', () => {
-	orderForm.selectLimitOrder()
+	orderForm.selectOrderType('Limit')
 	orderForm.buyLimitOrder()
 	messages.buyLimitConfirm()
 })

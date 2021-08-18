@@ -4,7 +4,7 @@ Feature: Test the Login
 
   Scenario: user can login into the site
 
-    Given I visit the homepage
+    Given I am viewing the trading page
 
     When I type my user, pass and login
 

@@ -15,6 +15,7 @@
 		"**/sellMarketMargin.feature",
 		"**/tradingBuyStop.feature",
 		"**/tradingSellStop.feature",
+		"**/highestBidOrders.feature",
 		"**/buyStopMarginTIF.feature",
 		"**/tradingBuyStopLimitExch.feature",
 		"**/tradingSellStopLimitExch.feature",
@@ -47,7 +48,7 @@
 		"runMode": 1,
 		"openMode": 0
 	},
-	"pageLoadTimeout": 50000,
+	"pageLoadTimeout": 80000,
 	"chromeWebSecurity": false,
 	"watchForFileChanges": false,
 	"reporter": "mochawesome",

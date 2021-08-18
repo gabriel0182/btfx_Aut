@@ -2,7 +2,7 @@ Feature: Test Creating a new Long position
 
   @loginBitfinex
   Scenario: Create a new Long position
-    Given I visit to Trading page
+    Given I am viewing the trading page
     When I select the Create a New Long Position option
     Then I verify the position was created
 
