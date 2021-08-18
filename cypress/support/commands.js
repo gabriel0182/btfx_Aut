@@ -100,11 +100,11 @@ Cypress.Commands.add('logIn', () => {
 
 Cypress.Commands.add('visitBitfinexAndLogin', () => {
 	cy.loginFromBackend()
-	//cy.resolveUsResident()
+	cy.resolveUsResident()
 })
 Cypress.Commands.add('resolveUsResident', () => {
 	cy.getCookie('ask_if_us_resident').then((residentChallege) => {
-		if (residentChallege.value) {
+		if (residentChallege?.value) {
 			cy.getCookie('_bfx_session').then((session) => {
 				cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
 					cookie: `${session.name}=${session.value}`,
