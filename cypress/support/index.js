@@ -10,12 +10,12 @@ const addContext = require('mochawesome/addContext')
 Cypress.on('test:after:run', (test, runnable) => {
 	debugger
 	let specName = Cypress.spec.name
-	let relativeVideoPath = `../../videos/${specName}.mp4`
+	let relativeVideoPath = `videos/${specName}.mp4`
 
 	addContext({ test }, relativeVideoPath)
 
 	if (test.state === 'failed') {
-		let relativeScreenshotPath = `../../screenshots`
+		let relativeScreenshotPath = `screenshots`
 
 		for (let i = 0; i <= Cypress.config('retries').runMode; i++) {
 			const screenshotFileName = `${runnable.parent.title} -- ${test.title} (failed)${
