@@ -10,4 +10,5 @@ defineStep('I visit to Trading page', () => {
 
 defineStep('I select a currency', () => {
 	tickers.selectTicker()
+	orderBook.isVisible()
 })
