@@ -53,29 +53,29 @@ class orderBook {
 			})
 		)
 	}
-	static addAlert(typeAlert) {
+	static addAlert(bidAsk) {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
 
-		cy.get(`#book-${typeAlert}s`).within(() => {
+		cy.get(`#book-${bidAsk}s`).within(() => {
 			cy.get('.book__row').last().find('.book__alert').click()
 			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
 		})
 	}
-	static removeAlert(typeAlert) {
+	static removeAlert(bidAsk) {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('removeAlert')
 
-		cy.get(`#book-${typeAlert}s`).within(() => {
+		cy.get(`#book-${bidAsk}s`).within(() => {
 			cy.get('.book__row').last().find('.book__alert').click()
 			cy.wait('@removeAlert').its('response.statusCode').should('eq', 200)
 		})
 	}
-	static bellIconIsDisplayed(typeAlert) {
-		cy.get(`#book-${typeAlert}s`).within(() => {
+	static bellIconIsDisplayed(bidAsk) {
+		cy.get(`#book-${bidAsk}s`).within(() => {
 			cy.get('.book__row').last().find('.book__alert').should('be.visible')
 		})
 	}
-	static bellIconIsHidden(typeAlert) {
-		cy.get(`#book-${typeAlert}s`).within(() => {
+	static bellIconIsHidden(bidAsk) {
+		cy.get(`#book-${bidAsk}s`).within(() => {
 			cy.get('.book__row').last().find('.book__alert').should('be.hidden')
 		})
 	}
