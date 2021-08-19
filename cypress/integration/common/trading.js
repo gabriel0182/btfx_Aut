@@ -5,9 +5,9 @@ import orderBook from '../../support/PageObject/orderBook.js'
 defineStep('I visit to Trading page', () => {
 	cy.visit('https://bfx-ui-trading.staging.bitfinex.com/trading')
 	cy.wait('@listFeature')
+	orderBook.isVisible()
 })
 
 defineStep('I select a currency', () => {
 	tickers.selectTicker()
-	orderBook.loadOrderBook()
 })

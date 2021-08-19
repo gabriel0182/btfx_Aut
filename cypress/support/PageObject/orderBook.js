@@ -1,14 +1,12 @@
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 
 class orderBook {
-	static loadOrderBook() {
+	static isVisible() {
 		cy.waitUntil(() =>
-			cy
-				.get('div.book__main')
-				.get('#book-bids')
-				.within(() => {
-					cy.get('.book__row').first().should('be.visible')
-				})
+			cy.get('.book__main').within(() => {
+				cy.get('#book-bids').find('.book__rows').should('be.visible')
+				cy.get('#book-asks').find('.book__rows').should('be.visible')
+			})
 		)
 	}
 	static bookZoomAdd() {
@@ -54,50 +52,6 @@ class orderBook {
 					})
 			})
 		)
-	}
-	static TestaddAlert() {
-		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
-		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('deleteAlert')
-
-		for (var i = 1; i < 3; i++) {
-			cy.get('#book-bids').within(() => {
-				cy.get('.book__row').first().get('div.book__alert').first().click()
-			})
-		}
-
-		cy.get('#book-bids').within(() => {
-			cy.get('.book__row').first().get('.book__alert').first().click()
-			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
-		})
-
-		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
-
-		cy.get('div.notification__skip').eq(0).click()
-
-		cy.get('#book-bids').within(() => {
-			cy.get('.book__row').first().find('.book__alert').click()
-			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
-		})
-
-		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
-
-		cy.get('div.notification__skip').eq(0).click()
-
-		cy.get('#book-asks').within(() => {
-			cy.get('.book__row').first().find('.book__alert').click()
-			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
-		})
-
-		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
-
-		cy.get('div.notification__skip').eq(0).click()
-
-		cy.get('#book-asks').within(() => {
-			cy.get('.book__row').first().find('.book__alert').click()
-			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
-		})
-
-		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
 	}
 	static addAlert(typeAlert) {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')

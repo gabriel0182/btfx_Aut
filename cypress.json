@@ -31,7 +31,7 @@
 		"**/testPartialHidden.feature",
 		"**/testFundingForm.feature",
 		"**/providedFunding.feature",
-		"**/addOrderBookAlert.feature"
+		"**/orderBookAlert.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
