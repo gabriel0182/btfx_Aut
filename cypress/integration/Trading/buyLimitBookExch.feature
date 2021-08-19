@@ -1,8 +1,8 @@
 Feature: Test Creating a Limit (Order Book) buy order from Exchange wallet
 
-@loginBitfinex
+  @loginBitfinex
   Scenario: Create a Limit (Order Book) buy order from Exchange wallet
-    Given I visit to Trading page
+    Given I am viewing the trading page
     And I select a currency
     And I select the market order
     When I type the order required info
