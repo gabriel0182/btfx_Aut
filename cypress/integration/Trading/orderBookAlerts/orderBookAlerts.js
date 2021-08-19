@@ -11,9 +11,10 @@ When('I click on the bell icon within an Order Book {string} entry to del an ale
 	orderBook.removeAlert(bidAsk)
 })
 
-Then('I get an alert containing: {string}', (notificationMessage) => {
+Then('I get a {string} alert containing: {string}', (bidAsk, notificationMessage) => {
 	notification.isVisible()
 	notification.containsMessage(notificationMessage)
+	orderBook.validatePriceAlert(bidAsk)
 	notification.closeNotification()
 })
 

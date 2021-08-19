@@ -1,3 +1,5 @@
+import notification from './notification'
+
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 
 class orderBook {
@@ -144,6 +146,18 @@ class orderBook {
 				const value = $val.text()
 				let maxBid = Number(value.replace(/[^0-9\.-]+/g, ''))
 				cy.get('[name="price"]').should('contain.value', `${maxBid}`)
+			})
+	}
+	static validatePriceAlert(bidAsk) {
+		cy.get(`#book-${bidAsk}s`)
+			.find('.book__row')
+			.last()
+			.find('span')
+			.last()
+			.then(($val) => {
+				const value = $val.text()
+				let priceAlert = Number(value.replace(/[^0-9\.-]+/g, ''))
+				notification.containsMessage(priceAlert)
 			})
 	}
 }
