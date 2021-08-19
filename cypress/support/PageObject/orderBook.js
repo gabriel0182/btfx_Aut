@@ -1,14 +1,14 @@
+import notification from './notification'
+
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 
 class orderBook {
-	static loadOrderBook() {
+	static isVisible() {
 		cy.waitUntil(() =>
-			cy
-				.get('div.book__main')
-				.get('#book-bids')
-				.within(() => {
-					cy.get('.book__row').first().should('be.visible')
-				})
+			cy.get('.book__main').within(() => {
+				cy.get('#book-bids').find('.book__rows').should('be.visible')
+				cy.get('#book-asks').find('.book__rows').should('be.visible')
+			})
 		)
 	}
 	static bookZoomAdd() {
@@ -55,49 +55,31 @@ class orderBook {
 			})
 		)
 	}
-	static addAlert() {
+	static addAlert(bidAsk) {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
-		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('deleteAlert')
 
-		for (var i = 1; i < 3; i++) {
-			cy.get('#book-bids').within(() => {
-				cy.get('.book__row').first().get('div.book__alert').first().click()
-			})
-		}
-
-		cy.get('#book-bids').within(() => {
-			cy.get('.book__row').first().get('.book__alert').first().click()
+		cy.get(`#book-${bidAsk}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').click()
 			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
 		})
+	}
+	static removeAlert(bidAsk) {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('removeAlert')
 
-		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
-
-		cy.get('div.notification__skip').eq(0).click()
-
-		cy.get('#book-bids').within(() => {
-			cy.get('.book__row').first().find('.book__alert').click()
-			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
+		cy.get(`#book-${bidAsk}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').click()
+			cy.wait('@removeAlert').its('response.statusCode').should('eq', 200)
 		})
-
-		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
-
-		cy.get('div.notification__skip').eq(0).click()
-
-		cy.get('#book-asks').within(() => {
-			cy.get('.book__row').first().find('.book__alert').click()
-			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
+	}
+	static bellIconIsDisplayed(bidAsk) {
+		cy.get(`#book-${bidAsk}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').should('be.visible')
 		})
-
-		cy.get('.notification-text__text').should('contain', 'Added new price alert BTC/USD')
-
-		cy.get('div.notification__skip').eq(0).click()
-
-		cy.get('#book-asks').within(() => {
-			cy.get('.book__row').first().find('.book__alert').click()
-			cy.wait('@deleteAlert').its('response.statusCode').should('eq', 200)
+	}
+	static bellIconIsHidden(bidAsk) {
+		cy.get(`#book-${bidAsk}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').should('be.hidden')
 		})
-
-		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
 	}
 	static increaseDecreasePrecision() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/settings/set`).as('setSetting')
@@ -164,6 +146,18 @@ class orderBook {
 				const value = $val.text()
 				let maxBid = Number(value.replace(/[^0-9\.-]+/g, ''))
 				cy.get('[name="price"]').should('contain.value', `${maxBid}`)
+			})
+	}
+	static validatePriceAlert(bidAsk) {
+		cy.get(`#book-${bidAsk}s`)
+			.find('.book__row')
+			.last()
+			.find('span')
+			.last()
+			.then(($val) => {
+				const value = $val.text()
+				let priceAlert = Number(value.replace(/[^0-9\.-]+/g, ''))
+				notification.containsMessage(priceAlert)
 			})
 	}
 }
