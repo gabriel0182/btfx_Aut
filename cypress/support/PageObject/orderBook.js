@@ -55,7 +55,7 @@ class orderBook {
 			})
 		)
 	}
-	static addAlert() {
+	static TestaddAlert() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('deleteAlert')
 
@@ -98,6 +98,32 @@ class orderBook {
 		})
 
 		cy.get('.notification-text__text').should('contain', 'Removed price alert BTC/USD')
+	}
+	static addAlert(typeAlert) {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/set`).as('setAlert')
+
+		cy.get(`#book-${typeAlert}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').click()
+			cy.wait('@setAlert').its('response.statusCode').should('eq', 200)
+		})
+	}
+	static removeAlert(typeAlert) {
+		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/alert/**/del`).as('removeAlert')
+
+		cy.get(`#book-${typeAlert}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').click()
+			cy.wait('@removeAlert').its('response.statusCode').should('eq', 200)
+		})
+	}
+	static bellIconIsDisplayed(typeAlert) {
+		cy.get(`#book-${typeAlert}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').should('be.visible')
+		})
+	}
+	static bellIconIsHidden(typeAlert) {
+		cy.get(`#book-${typeAlert}s`).within(() => {
+			cy.get('.book__row').last().find('.book__alert').should('be.hidden')
+		})
 	}
 	static increaseDecreasePrecision() {
 		cy.intercept('POST', `${apiStagingUrl}/v2/auth/w/settings/set`).as('setSetting')

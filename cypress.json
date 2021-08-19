@@ -30,7 +30,8 @@
 		"**/sellScaledExchange.feature",
 		"**/testPartialHidden.feature",
 		"**/testFundingForm.feature",
-		"**/providedFunding.feature"
+		"**/providedFunding.feature",
+		"**/addOrderBookAlert.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
