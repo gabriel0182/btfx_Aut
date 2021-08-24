@@ -2,7 +2,7 @@ Feature: Alerts from order book
 
 @loginBitfinex
 Scenario: Add a Bid alert on the order book
-Given I visit to Trading page
+Given I am viewing the trading page
 When I click on the bell icon within an Order Book "bid" entry to add an alert
 Then I get a "bid" alert containing: "Added new price alert BTC/USD at"
 And A bell icon is displayed within the Order Book "bid" entry
