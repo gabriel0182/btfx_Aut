@@ -239,18 +239,7 @@ Cypress.Commands.add('loginFromBackend', () => {
 		cy.clearLocalStorage()
 		cy.setCookie('bfx_locale', 'en')
 		cy.clearCookie('_bfx_session')
-		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {
-			onBeforeLoad(win) {
-				Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
-				Object.defineProperty(win.navigator, 'languages', ['en-GB'])
-				Object.defineProperty(win.navigator, 'accept_languages', {
-					value: ['en'],
-				})
-			},
-			headers: {
-				'Accept-Language': 'en',
-			},
-		})
+
 		Cypress.log({
 			name: 'login',
 			displayName: 'Bitfinex Login: ',
@@ -269,5 +258,19 @@ Cypress.Commands.add('loginFromBackend', () => {
 				})
 			})
 		})
+		cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
+			onBeforeLoad(win) {
+				Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
+				Object.defineProperty(win.navigator, 'languages', ['en-GB'])
+				Object.defineProperty(win.navigator, 'accept_languages', {
+					value: ['en'],
+				})
+			},
+			headers: {
+				'Accept-Language': 'en',
+			},
+		})
+		cy.url().should('include', '/t?type=exchange')
+		cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
 	})
 })
