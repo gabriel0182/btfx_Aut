@@ -31,7 +31,8 @@
 		"**/testPartialHidden.feature",
 		"**/testFundingForm.feature",
 		"**/providedFunding.feature",
-		"**/orderBookAlerts.feature"
+		"**/orderBookAlerts.feature",
+		"**/balanceSearchByName.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
