@@ -2,31 +2,12 @@ import 'cypress-wait-until'
 const urlApiPub = 'https://api-pub.staging.bitfinex.com/v2'
 
 Cypress.Commands.add('loginToBitfinexManually', () => {
-	cy.intercept('POST', 'https://www.staging.bitfinex.com/sessions').as('sessions')
-	cy.intercept('POST', 'https://www.staging.bitfinex.com/sessions/otp_submit').as('otpSubmit')
-	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
-	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
-
 	cy.setCookie('bfx_locale', 'en')
-	cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
-		onBeforeLoad(win) {
-			Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
-			Object.defineProperty(win.navigator, 'languages', ['en-GB'])
-			Object.defineProperty(win.navigator, 'accept_languages', {
-				value: ['en'],
-			})
-		},
-		headers: {
-			'Accept-Language': 'en',
-		},
-	})
+	cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {})
 	cy.on('uncaught:exception', (err, runnable) => {
 		expect(err.message).to.include('')
 		return false
 	})
-	/*cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
-	cy.wait('@allSymbols').its('response.statusCode').should('eq', 200)*/
-
 	let session = cy.getCookie('_bfx_session')
 	cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
 		cookie: `${session.name}=${session.value}`,
@@ -36,20 +17,8 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 			return this
 		} else {
 			cy.setCookie('bfx_locale', 'en')
-			cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
-				onBeforeLoad(win) {
-					Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
-					Object.defineProperty(win.navigator, 'languages', ['en-GB'])
-					Object.defineProperty(win.navigator, 'accept_languages', {
-						value: ['en'],
-					})
-				},
-				headers: {
-					'Accept-Language': 'en',
-				},
-			})
+			cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {})
 			cy.on('uncaught:exception', (err, runnable) => {
-				//expect(err.message).to.include('Uncaught (in promise) TypeError: d is not a function');
 				return false
 			})
 			cy.fixture('sensitive/credentials.json').then((credentials) => {
@@ -65,24 +34,12 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 					.click({ force: true })
 					.get('#submit-login')
 					.click({ force: true })
-				// .get('#u2f-modal-wrap')
-				// .get(':nth-child(6) > p > a')
-				// .click()
-				// const twoAF = cy.waitUntil(()=>
-				//   cy.get("input#otp")
-				//   .should('be.visible')
-				// )
 					.task('generateOTP', `${credentials.otp_secret}`)
 					.then((token) => {
-						cy.wait('@sessions').its('response.statusCode').should('eq', 200)
 						cy.get('#twofa-modal').should('be.visible')
 						cy.get('#otp-form').within(() => {
 							cy.get('[data-otp=autosubmit]').type(token).log(token)
-							cy.wait('@otpSubmit').its('response.statusCode').should('eq', 200)
 						})
-						// cy.get('#twofa-modal > .modal-content > :nth-child(1) > .pad-for-content > :nth-child(1) > .row > [style="max-width:385px;"] > #otp-form > .input-field > #otp')
-						// .type(token)
-						// .log(token)
 					})
 				/*.task("generateOTP", `${credentials.totp_secre}`)
           .then((token) => {
@@ -147,7 +104,6 @@ Cypress.Commands.add('waitForPageToLoad', () => {
 })
 
 Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
-	cy.waitUntil(()=>
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		const headers = {
 			'CF-Access-Client-Id': credentials.cloudflare_id,
@@ -155,12 +111,10 @@ Cypress.Commands.add('visitWithCloudFlareBypass', (route) => {
 		}
 		cy.visit(route, { headers: headers })
 	})
-	)
 })
 
 Cypress.Commands.add('byPassCloudFlare', (route) => {
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
-		cy.waitUntil(()=>
 		cy.request({
 			log: false,
 			method: 'GET',
@@ -172,7 +126,6 @@ Cypress.Commands.add('byPassCloudFlare', (route) => {
 			failOnstatusCode: false,
 			'Retry-After': 120,
 		})
-		)
 	})
 })
 
@@ -196,10 +149,10 @@ Cypress.Commands.add('loginSessionByCSRF', (login, password, authenticity_token)
 			const csrfOTP = $html.find('#otp-form > input[name=authenticity_token]').val()
 			return cy.wrap(csrfOTP)
 		})
-		cy.on('uncaught:exception', (err, runnable) => {
-			expect(err.message).to.include('')
-			return false
-		})
+	cy.on('uncaught:exception', (err, runnable) => {
+		expect(err.message).to.include('')
+		return false
+	})
 })
 
 Cypress.Commands.add('getAuthenticitySessionToken', () => {
@@ -216,10 +169,10 @@ Cypress.Commands.add('getAuthenticitySessionToken', () => {
 			const csrfSession = $html.find('#login-form-page > input[name=authenticity_token]').val()
 			return cy.wrap(csrfSession)
 		})
-		cy.on('uncaught:exception', (err, runnable) => {
-			expect(err.message).to.include('')
-			return false
-		})
+	cy.on('uncaught:exception', (err, runnable) => {
+		expect(err.message).to.include('')
+		return false
+	})
 })
 
 Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
@@ -234,24 +187,16 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 			authenticity_token,
 			otp,
 		},
-	}).then((response) => {
-		expect(response.status, 'Successful Login').to.equal(200)
 	})
+	/*.then((response) => {
+		expect(response.status, 'Successful Login').to.equal(200)
+	})*/
 })
 
 Cypress.Commands.add('loginFromBackend', () => {
-	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
-	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
-		cy.clearCookies()
-		cy.window().then((win) => {
-			win.sessionStorage.clear()
-		})
-		cy.clearLocalStorage()
 		cy.setCookie('bfx_locale', 'en')
-		cy.clearCookie('_bfx_session')
-		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {
-		})
+		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {})
 		Cypress.log({
 			name: 'login',
 			displayName: 'Bitfinex Login: ',
@@ -261,6 +206,24 @@ Cypress.Commands.add('loginFromBackend', () => {
 		cy.on('uncaught:exception', (err, runnable) => {
 			expect(err.message).to.include('')
 			return false
+		})
+		let session = cy.getCookie('_bfx_session')
+		cy.request('GET', 'https://www.staging.bitfinex.com/_ws_token', {
+			cookie: `${session.name}=${session.value}`,
+		}).then((response) => {
+			let token = response.body.token
+			if (token.length > 0) {
+				return this
+			} else {
+				cy.setCookie('bfx_locale', 'en')
+				cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {})
+				Cypress.log({
+					name: 'login',
+					displayName: 'Bitfinex Login: ',
+					message: [`Authenticating | with ${credentials.login} user`],
+					autoEnd: true,
+				})
+			}
 		})
 		cy.task('generateOTP', credentials.otp_secret).then((otp) => {
 			cy.getAuthenticitySessionToken().then((authenticity_token_session) => {

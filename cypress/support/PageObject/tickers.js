@@ -185,6 +185,10 @@ class tickers {
 		})
 	}
 	static disableMarginOnly() {
+		cy.on('uncaught:exception', (err, runnable) => {
+			expect(err.message).to.include('')
+			return false
+		})
 		cy.get('#tickerlist-margin-filter').click()
 	}
 	static displayAll() {

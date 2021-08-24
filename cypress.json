@@ -1,19 +1,9 @@
 {
 	"testFiles": [
-		"**/tradingTradesTable.feature",
 		"**/validateTickers.feature",
 		"**/balanceQuickTransfer.feature",
 		"**/createLongPosition.feature",
 		"**/createShortPosition.feature",
-		"**/positionsTable.feature",
-		"**/testOrderFormLimit.feature",
-		"**/testOrderFormMarket.feature",
-		"**/tradingBuyLimitExch.feature",
-		"**/sellTradingLimitExch.feature",
-		"**/buyMarketMargin.feature",
-		"**/sellMarketMargin.feature",
-		"**/tradingBuyStop.feature",
-		"**/tradingSellStop.feature",
 		"**/highestBidOrders.feature"
 	],
 	"viewportWidth": 1480,
