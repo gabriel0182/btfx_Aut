@@ -1,7 +1,7 @@
 Feature: Test Creating a new Long position
 
   Background: Visit trading page
-  Given I visit to Trading page
+  Given I am viewing the trading page
 
 @loginBitfinex
   Scenario: Create a new Long position

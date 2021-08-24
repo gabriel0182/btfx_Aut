@@ -1,7 +1,7 @@
 Feature: Test Creating a stop sell order from Exchange wallet
 
 Background: Login steps
-Given I visit to Trading page
+Given I am viewing the trading page
 When I select a currency
 
 @loginBitfinex

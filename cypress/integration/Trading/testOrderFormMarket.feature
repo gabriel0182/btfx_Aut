@@ -2,7 +2,7 @@ Feature: Test Order Form Validations
 
 @loginBitfinex
    Scenario: Order form/Market order Validations
-   Given I visit to Trading page
+   Given I am viewing the trading page
    When I select a currency
    Then I verify the Order from best bid / ask
    Then Market order Margin field should be shown

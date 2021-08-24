@@ -2,7 +2,7 @@ Feature: Highest Bid
 
 @loginBitfinex
 Scenario: Limit highest bid
-Given I visit to Trading page
+Given I am viewing the trading page
 And I select "Limit" order
 When I click the Set Price To Highest Bid button on the Order Form
 Then The price field is populated with the best Bid price
