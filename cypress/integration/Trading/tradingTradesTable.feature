@@ -6,9 +6,14 @@ Feature: Test Trading trades table
     When I select a currency
     Then The sorting order History table should work
 
-
-  Scenario: Trading table Market
+@loginBitfinex
+   Scenario: Trading table Market
+    Given I am viewing the trading page
+    When I select a currency
     Then The trading table Market should work
 
-  Scenario: Trading table Yours
+@loginBitfinex
+    Scenario: Trading table Yours
+    Given I am viewing the trading page
+    When I select a currency
     Then The trading table yours should work

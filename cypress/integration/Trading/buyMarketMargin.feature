@@ -9,5 +9,6 @@ Feature: Test Creating a Market buy order from exchange wallet
   Then I receive a notification that the position has opened
 
   Scenario: Positions Table / Close Position
+  Given I am viewing the trading page
   When I click on a positions close button
   Then I receive a notification that the position has closed

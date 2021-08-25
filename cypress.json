@@ -1,6 +1,7 @@
 {
 	"testFiles": [
 		"**/validateTickers.feature",
+		"**/balanceSearchByName.feature",
 		"**/balanceQuickTransfer.feature",
 		"**/createLongPosition.feature",
 		"**/createShortPosition.feature",

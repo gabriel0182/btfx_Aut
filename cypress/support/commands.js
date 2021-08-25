@@ -196,7 +196,6 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 Cypress.Commands.add('loginFromBackend', () => {
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		cy.setCookie('bfx_locale', 'en')
-		cy.byPassCloudFlare('https://bfx-ui-trading.staging.bitfinex.com/t', {})
 		Cypress.log({
 			name: 'login',
 			displayName: 'Bitfinex Login: ',
@@ -236,5 +235,10 @@ Cypress.Commands.add('loginFromBackend', () => {
 				})
 			})
 		})
+		cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
+
+		})
+		cy.url().should('include', '/t?type=exchange')
+		//cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
 	})
 })

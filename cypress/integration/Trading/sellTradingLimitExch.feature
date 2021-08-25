@@ -1,6 +1,11 @@
 Feature: Test Creating a limit sell order from the Exchange wallet
 
-  @loginBitfinex
+
+Background: Login steps
+Given I am viewing the trading page
+When I select a currency
+
+@loginBitfinex
   Scenario: Order form/Create Limit sell Order
     Given I am viewing the trading page
     When I select a currency

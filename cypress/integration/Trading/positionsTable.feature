@@ -1,6 +1,9 @@
 Feature: Test position table validations
 
-  @loginBitfinex
+  Background: Go to trading page
+  Given I am viewing the trading page
+
+@loginBitfinex
   Scenario: Max/Min position values
     Given I am viewing the trading page
     When I select the Create a New Position option
