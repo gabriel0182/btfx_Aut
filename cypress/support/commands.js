@@ -225,6 +225,8 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 		},
 	}).then((response) => {
 		expect(response.status, 'Successful Login').to.equal(200)
+		// Preserve the fresh auth token
+		Cypress.Cookies.preserveOnce('__bfx_token')
 	})
 })
 
@@ -232,7 +234,6 @@ Cypress.Commands.add('loginFromBackend', () => {
 	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
 	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
-		cy.clearCookies()
 		cy.window().then((win) => {
 			win.sessionStorage.clear()
 		})
@@ -247,17 +248,28 @@ Cypress.Commands.add('loginFromBackend', () => {
 			autoEnd: true,
 		})
 
-		cy.task('generateOTP', credentials.otp_secret).then((otp) => {
-			cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
-				cy.loginSessionByCSRF(
-					credentials.login,
-					credentials.password,
-					authenticity_token_session
-				).then((authenticity_token_otp) => {
-					cy.loginOTP(authenticity_token_otp, otp)
+		// If an auth token cookie doesn't exist, fetch one
+		// Else, use the current one (and preserve it)
+		cy.getCookie('__bfx_token').then((t) => {
+			if (!t) {
+				cy.task('generateOTP', credentials.otp_secret).then((otp) => {
+					cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
+						cy.loginSessionByCSRF(
+							credentials.login,
+							credentials.password,
+							authenticity_token_session
+						).then((authenticity_token_otp) => {
+							cy.loginOTP(authenticity_token_otp, otp)
+						})
+					})
 				})
-			})
+			} else {
+				cy.log('Recycling token.. ' + t.value)
+				expect(t.value).to.match(/^pub/)
+				Cypress.Cookies.preserveOnce('__bfx_token')
+			}
 		})
+
 		cy.visitWithCloudFlareBypass('https://bfx-ui-trading.staging.bitfinex.com/t', {
 			onBeforeLoad(win) {
 				Object.defineProperty(win.navigator, 'language', { value: 'en-GB' })
