@@ -8,7 +8,6 @@ Cypress.on('window:before:load', (window) => {
 // This will be used to enhance reporting
 const addContext = require('mochawesome/addContext')
 Cypress.on('test:after:run', (test, runnable) => {
-	debugger
 	let specName = Cypress.spec.name
 	let relativeVideoPath = `videos/${specName}.mp4`
 
