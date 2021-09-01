@@ -101,7 +101,6 @@ Cypress.Commands.add('logIn', () => {
 
 Cypress.Commands.add('visitBitfinexAndLogin', () => {
 	cy.loginFromBackend()
-	cy.resolveUsResident()
 })
 Cypress.Commands.add('resolveUsResident', () => {
 	cy.getCookie('ask_if_us_resident').then((residentChallege) => {
@@ -227,6 +226,7 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 		expect(response.status, 'Successful Login').to.equal(200)
 		// Preserve the fresh auth token
 		Cypress.Cookies.preserveOnce('__bfx_token')
+		cy.setCookie('ask_if_us_resident', 'false')
 	})
 })
 
