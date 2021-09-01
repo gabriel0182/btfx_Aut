@@ -1,7 +1,7 @@
 ///  <reference types="cypress"/>
 
-import trades from '../../../support/PageObject/trades.js'
-import orderHistory from '../../../support/PageObject/orderHistory.js'
+import trades from '../../../../support/PageObject/trades.js'
+import orderHistory from '../../../../support/PageObject/orderHistory.js'
 
 When('The sorting order History table should work', () => {
 	orderHistory.sortingOrderHistory()

@@ -1,11 +1,13 @@
 {
 	"testFiles": [
-		"**/validateTickers.feature",
 		"**/balanceSearchByName.feature",
-		"**/balanceQuickTransfer.feature",
-		"**/createLongPosition.feature",
-		"**/createShortPosition.feature",
-		"**/highestBidOrders.feature"
+		"**/highestBidOrders.feature",
+		"**/orderBookAlerts.feature",
+		"**/marginOnlyTickers.feature",
+		"**/favouriteTickers.feature",
+		"**/searchTickers.feature",
+		"**/pairFilterTickers.feature",
+		"**/changeTickers.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,

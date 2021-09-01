@@ -1,7 +1,7 @@
 ///  <reference types="cypress"/>
 
-import buyFillKill from '../../../support/PageObject/buyFillKill.js'
-import quickTransfer from '../../../support/PageObject/quickTransfer.js'
+import buyFillKill from '../../../support/pageObject/buyFillKill.js'
+import quickTransfer from '../../../../support/PageObject/quickTransfer.js'
 
 Given('Trading view is visible', () => {
 	buyFillKill.trading()

@@ -1,5 +1,10 @@
 import './commands'
 
+// Preserve the US resident check cookie for the whole run
+Cypress.Cookies.defaults({
+	preserve: ["ask_if_us_resident"]
+})
+
 Cypress.on('window:before:load', (window) => {
 	Object.defineProperty(window.navigator, 'language', { value: 'en-GB' })
 })
@@ -8,7 +13,6 @@ Cypress.on('window:before:load', (window) => {
 // This will be used to enhance reporting
 const addContext = require('mochawesome/addContext')
 Cypress.on('test:after:run', (test, runnable) => {
-	debugger
 	let specName = Cypress.spec.name
 	let relativeVideoPath = `videos/${specName}.mp4`
 

@@ -98,7 +98,6 @@ class tickers {
 						const txt = $val2.text()
 						var min = Number(txt.replace(/[^0-9\.-]+/g, ''))
 						cy.wrap(min).should('be.lte', max)
-						//expect(min).to.be.lessThanOrEqual(max)
 					})
 			})
 	}

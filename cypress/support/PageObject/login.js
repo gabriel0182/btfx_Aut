@@ -8,8 +8,7 @@ class login {
 		cy.setCookie('bfx_locale', 'en')
 	}
 	static logIn() {
-		//cy.visitBitfinexAndLogin()
-		cy.loginToBitfinexManually()
+		cy.visitBitfinexAndLogin()
 	}
 	static verifyLoggedOn() {
 		cy.waitUntil(() =>
@@ -20,16 +19,6 @@ class login {
 				.get(':nth-child(1) > :nth-child(1) > .page-footer__title')
 				.should('be.visible')
 		)
-	}
-	static logout(){
-		cy.get('[data-qa-id="header-button-account"]')
-		.click()
-		cy.get('[data-qa-id="header-dropdown-account"]')
-		.within(()=>{
-			cy.get('.header__dropdown-list-item')
-			.contains('Logout')
-			.click()
-		})
 	}
 }
 
