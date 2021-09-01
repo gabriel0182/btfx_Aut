@@ -1,6 +1,6 @@
 Feature: Test balance quick transfer
 
-@loginBitfinex
+  @loginBitfinex
   Scenario: Test balance quick transfer
     Given I am viewing the trading page
     And Trading view is visible

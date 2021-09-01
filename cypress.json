@@ -2,7 +2,13 @@
 	"testFiles": [
 		"**/balanceSearchByName.feature",
 		"**/highestBidOrders.feature",
-		"**/orderBookAlerts.feature"
+		"**/orderBookAlerts.feature",
+		"**/marginOnlyTickers.feature",
+		"**/favouriteTickers.feature",
+		"**/searchTickers.feature",
+		"**/pairFilterTickers.feature",
+		"**/changeTickers.feature",
+		"**/largeTickers.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,

@@ -19,6 +19,7 @@
 		"amountVariance": 1,
 		"priceVariance": 1,
 		"ticker": "BTC",
+		"ticker2": "ETH",
 		"tranfer": "USD",
 		"tranferAmt": "1.0",
 		"hiddenAmt": "0.1",

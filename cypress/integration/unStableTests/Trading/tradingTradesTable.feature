@@ -1,6 +1,6 @@
 Feature: Test Trading trades table
 
-@loginBitfinex
+  @loginBitfinex
   Scenario: Sorting Order History Table
     Given I am viewing the trading page
     When I select a currency

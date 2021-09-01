@@ -5,9 +5,9 @@ Feature: Test position table validations
 
 @loginBitfinex
   Scenario: Max/Min position values
-  When I select the Create a New Position option
-  Then I verify the position Min-Max amount
+    Given I am viewing the trading page
+    When I select the Create a New Position option
+    Then I verify the position Min-Max amount
 
-@loginBitfinex
   Scenario: Verify Position table sorting
-  Then I verify the sorting shoud work
+    Then I verify the sorting shoud work
