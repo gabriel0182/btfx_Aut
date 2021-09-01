@@ -14,7 +14,7 @@ class partialHidden {
 		return this
 	}
 	placeLimit() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				hiddenAmt: testDataRow.hiddenAmt,
@@ -55,7 +55,7 @@ class partialHidden {
 					.click()
 			})
 		)
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				sellPartiall: testDataRow.sellPartiall,

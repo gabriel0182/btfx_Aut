@@ -1,7 +1,7 @@
 ///  <reference types="cypress"/>
 
 import positions from '../../../support/PageObject/positions'
-import messages from '../../../support/PageObject/messages'
+import messages from '../../../../support/PageObject/messages'
 
 When('I select the Create a New Long Position option', () => {
 	positions.addPosition()

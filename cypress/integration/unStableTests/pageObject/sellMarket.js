@@ -18,7 +18,7 @@ class sellMarket {
 		return this
 	}
 	validateMin() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				min: testDataRow.min,
@@ -47,7 +47,7 @@ class sellMarket {
 		return this
 	}
 	validateMax() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				max: testDataRow.max,
@@ -74,7 +74,7 @@ class sellMarket {
 		return this
 	}
 	orderInfo() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
@@ -96,7 +96,7 @@ class sellMarket {
 		return this
 	}
 	successMsg() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
@@ -125,7 +125,7 @@ class sellMarket {
 		return this
 	}
 	cancelPosition() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,

@@ -57,7 +57,7 @@ class stopLimitExch {
 		return this
 	}
 	validateMin() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				wallet1: testDataRow.wallet1,
@@ -100,7 +100,7 @@ class stopLimitExch {
 		return this
 	}
 	validateMax() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				max: testDataRow.max,
@@ -134,7 +134,7 @@ class stopLimitExch {
 		return this
 	}
 	orderInfo() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
@@ -171,7 +171,7 @@ class stopLimitExch {
 		return this
 	}
 	successMsg() {
-		const testData = require('../../fixtures/orders.json')
+		const testData = require('../../../fixtures/orders.json')
 		testData.forEach((testDataRow) => {
 			const data = {
 				btc: testDataRow.btc,
@@ -240,7 +240,7 @@ class stopLimitExch {
 						'[style="position: absolute; left: 0px; top: 25px; height: 25px; width: 100%; padding-right: 0px;"] > [style="flex: 0 1 105px; min-width: 105px; max-width: 105px;"] > :nth-child(3) > .ui-button > .fa'
 					)
 					.click()
-				const testData = require('../../fixtures/orders.json')
+				const testData = require('../../../fixtures/orders.json')
 				testData.forEach((testDataRow) => {
 					const data = {
 						btc: testDataRow.btc,
