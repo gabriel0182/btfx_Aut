@@ -8,7 +8,8 @@
 		"**/searchTickers.feature",
 		"**/pairFilterTickers.feature",
 		"**/changeTickers.feature",
-		"**/largeTickers.feature"
+		"**/largeTickers.feature",
+		"**/summaryTradableBalance.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,

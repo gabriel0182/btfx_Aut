@@ -2,11 +2,11 @@
 
 import tickers from '../../../support/PageObject/tickers'
 
-When('I select USDt from the pair filter', () => {
-	tickers.selectPairFilter()
+When('I select {string} from the pair filter', (quoteCurrency) => {
+	tickers.selectPairFilter(quoteCurrency)
 })
 
-Then('The tickers list only contains USDt pairs', () => {
-	tickers.tickerPairFilter()
+Then('The tickers list only contains {string} pairs', (currency) => {
+	tickers.lastTickerListContains(currency)
 	tickers.volumeAmount()
 })

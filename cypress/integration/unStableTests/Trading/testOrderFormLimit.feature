@@ -3,7 +3,7 @@ Feature: Order form/Limit order Validations
    @loginBitfinex
    Scenario: Limit order min/max price perform properly
       Given I am viewing the trading page
-      When I select a currency
+      When I select the ticker "BTC:USD"
       Then Limit order min-max price should work
 
    Scenario: Highest bid

@@ -6,7 +6,6 @@ defineStep('I am viewing the trading page', () => {
 	orderBook.isVisible()
 })
 
-defineStep('I select a currency', () => {
-	tickers.selectTicker()
-	orderBook.isVisible()
+defineStep('I select the ticker {string}', (currencyPair) => {
+	tickers.selectCurrencyPair(currencyPair)
 })
