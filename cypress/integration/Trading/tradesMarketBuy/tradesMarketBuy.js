@@ -20,17 +20,17 @@ Then('It has a green background colour', () => {
 })
 
 Then('It contains the trade amount', () => {
-	trades.getTradeAmount()
+	trades.containsTradeAmount()
 })
 
 Then('It contains the trade price', () => {
-	trades.getTradePrice()
+	trades.containsTradePrice()
 })
 
 Then('it contains the trade time', () => {
-	trades.getTradeTime()
+	trades.containsTradeTime()
 })
 
 Then('It contains a green up icon', () => {
-	trades.greenUpIcon()
+	trades.buyTradeGreenUpIcon()
 })

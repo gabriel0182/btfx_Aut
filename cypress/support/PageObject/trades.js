@@ -13,7 +13,7 @@ class trades {
 			.should('have.css', 'background-color', 'rgba(1, 167, 129, 0.1)')
 	}
 
-	static getTradeAmount() {
+	static containsTradeAmount() {
 		cy.fixture('orders').then((btc) => {
 			cy.get('.trades-table__row')
 				.first()
@@ -26,7 +26,7 @@ class trades {
 		})
 	}
 
-	static getTradePrice() {
+	static containsTradePrice() {
 		const bookPrice = cy
 			.get('.book__row--reversed')
 			.children('div')
@@ -40,14 +40,14 @@ class trades {
 					})
 			})
 	}
-	static greenUpIcon() {
+	static buyTradeGreenUpIcon() {
 		cy.get('.trades-table__row')
 			.first()
 			.within(() => {
 				cy.get('.buying-icon').should('have.css', 'color', 'rgb(1, 167, 129)')
 			})
 	}
-	static getTradeTime() {
+	static containsTradeTime() {
 		cy.get('.trades-table__row')
 			.children('div')
 			.eq(1)
