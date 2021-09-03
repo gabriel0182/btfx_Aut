@@ -10,4 +10,4 @@ Then My Tradable Balance should be "<leverage>" x times my USD margin balance
 Examples:
 | currency   | leverage |
 | BTC:USD    |   10.0   |
-| ETH:USD    |   3.333    |
+| ETH:USD    |   3.333  |
