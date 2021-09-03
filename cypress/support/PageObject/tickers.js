@@ -1,87 +1,60 @@
+import orderBook from '../PageObject/orderBook'
 class tickers {
-	static selectTicker() {
-		cy.fixture('orders').then((trading) => {
-			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker}{enter}`)
-			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
+	static selectCurrencyPair(currencyPair) {
+		let currencyPairArray = currencyPair.split(':')
+		const baseCurrency = currencyPairArray[0]
+		const quoteCurrency = currencyPairArray[1]
 
-			cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
-				cy.get('[id="Item_USD"]').click()
-			})
-
-			cy.get('.tickerlist__container').within(() => {
-				cy.get('.tickerlist__lastprice').as('currencyLastPrice')
-				cy.get('@currencyLastPrice').should('have.attr', 'href').and('include', '/t/BTC:USD')
-				cy.get('@currencyLastPrice').click()
-			})
-		})
-		cy.get('.main-ticker__container').should('be.visible').should('contain', 'BTC/USD')
-		cy.get('[data-qa-id="chart-widget"]').within(() => {
-			cy.get('span.show50').should('be.visible').and('contain', 'BTC/USD')
-		})
+		this.searchTicker(baseCurrency)
+		this.selectPairFilter(quoteCurrency)
+		this.clickOnTicker(baseCurrency)
+		this.validateURL(currencyPair)
+		orderBook.isVisible()
 	}
 
-	static selectPairFilter() {
+	static selectPairFilter(currency) {
 		cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
 		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
-			cy.get('[id="Item_UST"]').click()
+			if (currency === 'USDt') {
+				cy.get('[data-qa-id="ticker-list-pair-filter-menu-item-UST"]').click()
+			} else if (currency === 'EURt') {
+				cy.get('[data-qa-id="ticker-list-pair-filter-menu-item-EUT"]').click()
+			} else {
+				cy.get(`[data-qa-id="ticker-list-pair-filter-menu-item-${currency}"]`).click()
+			}
 		})
 	}
-	static tickerPairFilter() {
+	static lastTickerListContains(currency) {
 		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
-				cy.get('.tickerlist__lastticker').should('contain', 'USDt')
+				cy.get('.tickerlist__lastticker').should('contain', currency)
 			})
 	}
-	static searchTicker() {
-		cy.fixture('orders').then((trading) => {
-			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker}{enter}`)
-			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
-		})
-		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
-			cy.get('[id="Item_ANY"]').click()
-		})
-	}
-	static btcTickerList() {
+	static symbolTickerListContains(currency) {
 		cy.get('.custom-scrollbar')
 			.eq(2)
 			.within(() => {
-				cy.get('.tickerlist__lastticker').should('contain', 'BTC')
-			})
-		cy.get('.custom-scrollbar')
-			.eq(2)
-			.within(() => {
-				cy.get('.tickerlist__symbolcell').should('contain', 'BTC')
+				cy.get('.tickerlist__symbolcell').should('contain', currency)
 			})
 	}
-	static changeTicker() {
-		cy.fixture('orders').then((trading) => {
-			cy.waitUntil(() => cy.get('#orderform-panel').should('be.visible').should('exist'))
-			cy.get('input#ticker-textinput-id').clear().type(`${trading[0].ticker2}{enter}`)
-			cy.get('[data-qa-id="ticker-list-pair-filter"]').click()
-		})
-		cy.get('[data-qa-id="ticker-list-pair-filter-menu"]').within(() => {
-			cy.get('[id="Item_USD"]').click()
-		})
+	static searchTicker(currency) {
+		cy.get('[data-qa-id="ticker-list-search-input"]').clear().type(`${currency}`)
 	}
-	static validateURL() {
-		cy.get('.custom-scrollbar')
-			.eq(2)
-			.within(() => {
-				cy.get('.tickerlist__lastticker').should('contain', 'USD')
-			})
-		cy.get('.custom-scrollbar')
-			.eq(2)
-			.within(() => {
-				cy.get('.tickerlist__symbolcell').should('contain', 'ETH')
-			})
+	static tickerListContains(currency) {
+		this.lastTickerListContains(currency)
+		this.symbolTickerListContains(currency)
+	}
+	static clickOnTicker(currency) {
 		cy.get('.tickerlist__container').within(() => {
-			cy.get('.custom-scrollbar').last().get('[href="/t/ETH:USD"]').eq(1).as('currencyLastPrice')
-			cy.get('@currencyLastPrice').click()
+			cy.get('.table-vir__row')
+				.contains(new RegExp(`^${currency}$`, 'g'))
+				.click()
 		})
-		cy.url().should('contain', 't/ETH:USD?type=exchange')
+	}
+
+	static validateURL(currencyPair) {
+		cy.url().should('include', `/t/${currencyPair}?type=exchange`)
 	}
 	static volumeAmount() {
 		cy.get('.show-soft')

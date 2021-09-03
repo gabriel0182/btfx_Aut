@@ -16,5 +16,18 @@ class balance {
 			.contains(currencySymbol)
 			.should('be.visible')
 	}
+
+	static marginBalanceAvailable() {
+		cy.get('[data-qa-id="balancesTable-row-cell"]')
+			.eq(2)
+			.find('.avail')
+			.as('availableMarginBalance')
+
+		cy.get('@availableMarginBalance').then(($val) => {
+			const txt = $val.text()
+			let availableMarginBalance = Number(txt.replace(/[^0-9\.-]+/g, ''))
+			expect(availableMarginBalance).greaterThan(0)
+		})
+	}
 }
 export default balance

@@ -2,10 +2,10 @@
 
 import tickers from '../../../support/PageObject/tickers'
 
-When('I search for tickers containing BTC', () => {
-	tickers.searchTicker()
+When('I search for tickers containing {string}', (currency) => {
+	tickers.searchTicker(currency)
 })
 
-Then('The ticker list contains pairs containing BTC', () => {	
-	tickers.btcTickerList()
+Then('The ticker list contains pairs containing {string}', (currency) => {
+	tickers.tickerListContains(currency)
 })
