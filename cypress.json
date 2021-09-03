@@ -9,11 +9,7 @@
 		"**/pairFilterTickers.feature",
 		"**/changeTickers.feature",
 		"**/largeTickers.feature",
-<<<<<<< HEAD
 		"**/tradesMarketBuy.feature"
-=======
-		"**/summaryTradableBalance.feature"
->>>>>>> main
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
