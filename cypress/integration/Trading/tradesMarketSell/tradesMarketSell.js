@@ -7,8 +7,8 @@ When('I select {string} order', (orderType) => {
 	orderForm.selectOrderType(orderType)
 })
 
-And('I place an Exchange Market Buy order', () => {
-	orderForm.buyMarketOrder()
+And('I place an Exchange Market Sell order', () => {
+	orderForm.sellMarketOrder()
 })
 
 Then('A row is added to the Trades table', () => {
@@ -16,7 +16,7 @@ Then('A row is added to the Trades table', () => {
 })
 
 Then('It has a {string} background colour', (color) => {
-	trades.validateRowBackgroundColor(color) 
+	trades.validateRowBackgroundColor(color)
 })
 
 Then('It contains the trade amount', () => {
@@ -24,14 +24,13 @@ Then('It contains the trade amount', () => {
 })
 
 Then('It contains the trade price', () => {
-	trades.containsTradeBuyPrice()
+	trades.containsTradeSellPrice()
 })
 
 Then('it contains the trade time', () => {
 	trades.containsTradeTime()
 })
 
-Then('It contains a {string} {string} icon', (iconColor,icon) => {
+Then('it contains a {string} {string} icon', (iconColor,icon) => {
 	trades.validateTradeUpDownIcon(iconColor,icon)
 })
-

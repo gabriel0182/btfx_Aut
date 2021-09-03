@@ -1,16 +1,47 @@
-
 class trades {
 	static addedMarketRow() {
-		cy.waitUntil(()=>
-			cy.get('.notification__icon-wrapper').should('be.visible')
-			.get('.notification__content').should('be.visible')
+		cy.waitUntil(() =>
+			cy
+				.get('.notification__icon-wrapper')
+				.should('be.visible')
+				.get('.notification__content')
+				.should('be.visible')
 		)
 		cy.get('.trades-table__row').first().should('be.visible')
 	}
-	static rowGreenBackgroundColour() {
+	static getColorSelector(color) {
+		const colors = {
+			Green: 'rgba(1, 167, 129, 0.1)',
+			Red: 'rgba(228, 75, 68, 0.1)',
+		}
+		return colors[color]
+	}
+	static getIconSelector(icon) {
+		const icons = {
+			Up: '.buying-icon',
+			Down: '.selling-icon',
+		}
+		return icons[icon]
+	}
+	static getIconColorSelector(iconColor) {
+		const iconColors = {
+			Green: 'rgb(1, 167, 129)',
+			Red: 'rgb(228, 75, 68)',
+		}
+		return iconColors[iconColor]
+	}
+	static validateRowBackgroundColor(color) {
+		const colorSelector = this.getColorSelector(color)
+		cy.get('.trades-table__row').first().should('have.css', 'background-color', `${colorSelector}`)
+	}
+	static validateTradeUpDownIcon(iconColors,icon) {
+		const colorSelector = this.getIconColorSelector(iconColors)
+		const iconSelector = this.getIconSelector(icon)
 		cy.get('.trades-table__row')
 			.first()
-			.should('have.css', 'background-color', 'rgba(1, 167, 129, 0.1)')
+			.within(() => {
+				cy.get(iconSelector).should('have.css', 'color',  `${colorSelector}`)
+			})
 	}
 
 	static containsTradeAmount() {
@@ -26,9 +57,23 @@ class trades {
 		})
 	}
 
-	static containsTradePrice() {
-		const bookPrice = cy
+	static containsTradeBuyPrice() {
+		cy
 			.get('.book__row--reversed')
+			.children('div')
+			.eq(5)
+			.then(($val) => {
+				const txt = $val.text()
+				cy.get('.trades-table__row')
+					.first()
+					.within(() => {
+						cy.get('span').eq(1).invoke('text').should('contain', txt)
+					})
+			})
+	}
+	static containsTradeSellPrice() {
+		cy
+			.get('.book__row')
 			.children('div')
 			.eq(5)
 			.then(($val) => {

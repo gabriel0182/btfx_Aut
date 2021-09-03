@@ -10,7 +10,8 @@
 		"**/changeTickers.feature",
 		"**/largeTickers.feature",
 		"**/summaryTradableBalance.feature",
-		"**/tradesMarketBuy.feature"
+		"**/tradesMarketBuy.feature",
+		"**/tradesMarketSell.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
