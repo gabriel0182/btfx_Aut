@@ -72,7 +72,7 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 				//   cy.get("input#otp")
 				//   .should('be.visible')
 				// )
-				cy.skipCaptcha()
+				//cy.skipCaptcha()
 					.task('generateOTP', `${credentials.otp_secret}`)
 					.then((token) => {
 						cy.wait('@sessions').its('response.statusCode').should('eq', 200)
