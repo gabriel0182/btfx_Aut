@@ -18,7 +18,9 @@ class balance {
 	}
 
 	static marginBalanceAvailable() {
-		cy.get('[data-qa-id="balancesTable-row-cell"]')
+		cy.get('.USD')
+			.parents('[data-qa-id="balancesTable-row"]')
+			.find('[data-qa-id="balancesTable-row-cell"]')
 			.eq(2)
 			.find('.avail')
 			.as('availableMarginBalance')
