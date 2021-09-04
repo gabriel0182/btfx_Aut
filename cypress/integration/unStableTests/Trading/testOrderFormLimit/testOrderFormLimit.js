@@ -22,11 +22,11 @@ Then('I verify the Order form max buy / sell', () => {
 	orderForm.checkMaxValue()
 })
 Then('Limit order Exchange field should be shown', () => {
-	orderForm.selectExchangeWallet()
+	orderForm.selectExchangeTab()
 	orderForm.verifyLimitExchangeFields()
 })
 Then('Limit order Margin field should be shown', () => {
-	orderForm.selectMarginWallet()
+	orderForm.selectMarginTab()
 	orderForm.verifyLimitMarginFields()
 })
 Then('Buy Limit order required field message should be shown', () => {

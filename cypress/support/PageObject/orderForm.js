@@ -42,12 +42,12 @@ class orderform {
 				cy.get('[name="amount"]').should('contain.value', pointNum)
 			})
 	}
-	static selectExchangeWallet() {
+	static selectExchangeTab() {
 		cy.get('[data-qa-id="order-form"]').within(() => {
 			cy.get('div#form-choose-exchange').contains('Exchange').click()
 		})
 	}
-	static selectMarginWallet() {
+	static selectMarginTab() {
 		cy.get('[data-qa-id="order-form"]').within(() => {
 			cy.get('div#form-choose-margin').contains('Margin').click()
 		})
@@ -454,12 +454,6 @@ class orderform {
 		})
 	}
 	static setPriceToHighestBid() {
-		// cy.get('.ui-buysellinputindicator')
-		// 	.first()
-		// 	.find('span')
-		// 	.eq(0)
-		// 	.invoke('removeAttr', 'class')
-		// 	.click({ force: true })
 		cy.get('.ui-buysellinputindicator')
 			.first()
 			.within(() => {
@@ -508,6 +502,16 @@ class orderform {
 		const orderTypeSelector = this.getOrderTypeSelector(order)
 		cy.get('[data-qa-id="order-form__order-type-dropdown"]').click()
 		cy.get(`[data-qa-id="order-form__order-type-dropdown-menu-item-${orderTypeSelector}"]`).click()
+	}
+	static priceInputIsDisabled() {
+		cy.get('.orderform').within(() => {
+			cy.get('[name="price"]').should('be.disabled').and('have.attr', 'disabled')
+		})
+	}
+	static priceInputContains(text) {
+		cy.get('.orderform').within(() => {
+			cy.get('[name="price"]').should('have.attr', 'value', text)
+		})
 	}
 }
 export default orderform

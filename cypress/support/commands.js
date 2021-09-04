@@ -65,14 +65,14 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 					.click({ force: true })
 					.get('#submit-login')
 					.click({ force: true })
-				// .get('#u2f-modal-wrap')
-				// .get(':nth-child(6) > p > a')
-				// .click()
-				// const twoAF = cy.waitUntil(()=>
-				//   cy.get("input#otp")
-				//   .should('be.visible')
-				// )
-				//cy.skipCaptcha()
+					// .get('#u2f-modal-wrap')
+					// .get(':nth-child(6) > p > a')
+					// .click()
+					// const twoAF = cy.waitUntil(()=>
+					//   cy.get("input#otp")
+					//   .should('be.visible')
+					// )
+					//cy.skipCaptcha()
 					.task('generateOTP', `${credentials.otp_secret}`)
 					.then((token) => {
 						cy.wait('@sessions').its('response.statusCode').should('eq', 200)
@@ -231,8 +231,6 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 })
 
 Cypress.Commands.add('loginFromBackend', () => {
-	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
-	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		cy.window().then((win) => {
 			win.sessionStorage.clear()
@@ -283,6 +281,5 @@ Cypress.Commands.add('loginFromBackend', () => {
 			},
 		})
 		cy.url().should('include', '/t?type=exchange')
-		cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
 	})
 })

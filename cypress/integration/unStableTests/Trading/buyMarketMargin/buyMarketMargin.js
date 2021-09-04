@@ -8,7 +8,7 @@ And('I select a Market Order type', () => {
 	orderForm.selectOrderType('Market')
 })
 When('A long margin position is opened', () => {
-	orderForm.selectMarginWallet()
+	orderForm.selectMarginTab()
 	orderForm.buyMarketOrder()
 })
 
