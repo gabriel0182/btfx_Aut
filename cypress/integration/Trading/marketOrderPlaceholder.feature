@@ -1,4 +1,4 @@
-Feature: Feature name
+Feature: Order Form, market order placeholder text
 
 @loginBitfinex
 Scenario: Order form price input placeholder | Market order type
