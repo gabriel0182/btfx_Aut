@@ -6,7 +6,7 @@ import messages from '../../../support/PageObject/messages'
 import ordersTable from '../../../support/PageObject/ordersTable'
 
 Then('A Sell Limit order from Exchange wallet should be created', () => {
-	orderForm.selectExchangeWallet()
+	orderForm.selectExchangeTab()
 	orderForm.sellLimitOrder()
 	messages.sellLimitConfirm()
 })
