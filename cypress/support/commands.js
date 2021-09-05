@@ -254,11 +254,11 @@ Cypress.Commands.add('loginFromBackend', () => {
 			autoEnd: true,
 		})
 
-		// Token maagement:
+		// Token management:
 		// 1) Check the cookies for a __bfx_token, if present, use it, else..
 		// 2) Check the cache (token.txt @ root) for a token, if present (and not expired), use it, else..
 		// 3) Perform a login via API to generate a fresh token, and store a copy in the cache
-		// - Rationale: login should only be nessasary at the start of the run, and sequential runs
+		// - Rationale: login should only be nessasary at the start of the run - sequential runs
 		// can re-use the same token (providing it hasn't expired), this prevents issues with over-using OTP submission
 		cy.getCookie('__bfx_token').then((t) => {
 			if (!t) {
