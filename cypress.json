@@ -11,6 +11,7 @@
 		"**/largeTickers.feature",
 		"**/summaryTradableBalance.feature",
 		"**/tradesMarketBuy.feature",
+		"**/tradesMarketSell.feature",
 		"**/marketOrderPlaceholder.feature"
 	],
 	"viewportWidth": 1480,
