@@ -65,14 +65,14 @@ Cypress.Commands.add('loginToBitfinexManually', () => {
 					.click({ force: true })
 					.get('#submit-login')
 					.click({ force: true })
-				// .get('#u2f-modal-wrap')
-				// .get(':nth-child(6) > p > a')
-				// .click()
-				// const twoAF = cy.waitUntil(()=>
-				//   cy.get("input#otp")
-				//   .should('be.visible')
-				// )
-				//cy.skipCaptcha()
+					// .get('#u2f-modal-wrap')
+					// .get(':nth-child(6) > p > a')
+					// .click()
+					// const twoAF = cy.waitUntil(()=>
+					//   cy.get("input#otp")
+					//   .should('be.visible')
+					// )
+					//cy.skipCaptcha()
 					.task('generateOTP', `${credentials.otp_secret}`)
 					.then((token) => {
 						cy.wait('@sessions').its('response.statusCode').should('eq', 200)
@@ -227,12 +227,18 @@ Cypress.Commands.add('loginOTP', (authenticity_token, otp) => {
 		// Preserve the fresh auth token
 		Cypress.Cookies.preserveOnce('__bfx_token')
 		cy.setCookie('ask_if_us_resident', 'false')
+		// If login was successful we should have a __bfx_token cookie
+		// Save the token to file to we can re-use it again
+		cy.getCookie('__bfx_token').then((token) => {
+			if (token?.value) {
+				cy.log('Storing token in cache.. ' + token.value)
+				cy.task('writeTokenToFile', token.value)
+			}
+		})
 	})
 })
 
 Cypress.Commands.add('loginFromBackend', () => {
-	cy.intercept('GET', `${urlApiPub}/tickers?symbols=ALL`).as('allSymbols')
-	cy.intercept('GET', `${urlApiPub}/conf/pub:list:features`).as('listFeature')
 	cy.fixture('sensitive/credentials.json').then((credentials) => {
 		cy.window().then((win) => {
 			win.sessionStorage.clear()
@@ -248,23 +254,34 @@ Cypress.Commands.add('loginFromBackend', () => {
 			autoEnd: true,
 		})
 
-		// If an auth token cookie doesn't exist, fetch one
-		// Else, use the current one (and preserve it)
+		// Token management:
+		// 1) Check the cookies for a __bfx_token, if present, use it, else..
+		// 2) Check the cache (token.txt @ root) for a token, if present (and not expired), use it, else..
+		// 3) Perform a login via API to generate a fresh token, and store a copy in the cache
+		// - Rationale: login should only be nessasary at the start of the run - sequential runs
+		// can re-use the same token (providing it hasn't expired), this prevents issues with over-using OTP submission
 		cy.getCookie('__bfx_token').then((t) => {
 			if (!t) {
-				cy.task('generateOTP', credentials.otp_secret).then((otp) => {
-					cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
-						cy.loginSessionByCSRF(
-							credentials.login,
-							credentials.password,
-							authenticity_token_session
-						).then((authenticity_token_otp) => {
-							cy.loginOTP(authenticity_token_otp, otp)
+				cy.task('readTokenFromFileAndCheckValidity').then((token) => {
+					if (token) {
+						cy.log('Token fetched from cache.. ' + token)
+						cy.setCookie('__bfx_token', token)
+					} else {
+						cy.task('generateOTP', credentials.otp_secret).then((otp) => {
+							cy.getAuthenticitySessionToken().then((authenticity_token_session) => {
+								cy.loginSessionByCSRF(
+									credentials.login,
+									credentials.password,
+									authenticity_token_session
+								).then((authenticity_token_otp) => {
+									cy.loginOTP(authenticity_token_otp, otp)
+								})
+							})
 						})
-					})
+					}
 				})
 			} else {
-				cy.log('Recycling token.. ' + t.value)
+				cy.log('Re-using exisitng token.. ' + t.value)
 				expect(t.value).to.match(/^pub/)
 				Cypress.Cookies.preserveOnce('__bfx_token')
 			}
@@ -283,6 +300,5 @@ Cypress.Commands.add('loginFromBackend', () => {
 			},
 		})
 		cy.url().should('include', '/t?type=exchange')
-		cy.wait('@listFeature').its('response.statusCode').should('eq', 200)
 	})
 })

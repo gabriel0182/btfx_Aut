@@ -8,7 +8,7 @@ Then('I verify the Order from best bid / ask', () => {
 })
 
 Then('Market order Margin field should be shown', () => {
-	orderForm.selectMarginWallet()
+	orderForm.selectMarginTab()
 	orderForm.verifyMarketMarginFields()
 })
 Then('Buy and  sell Market order required field message should be shown', () => {

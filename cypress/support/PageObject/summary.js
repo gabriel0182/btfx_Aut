@@ -1,6 +1,8 @@
 class summary {
 	static validateTradableBalance(leverage) {
-		cy.get('[data-qa-id="balancesTable-row-cell"]')
+		cy.get('.USD')
+			.parents('[data-qa-id="balancesTable-row"]')
+			.find('[data-qa-id="balancesTable-row-cell"]')
 			.eq(2)
 			.find('.avail')
 			.then(($val) => {

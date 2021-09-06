@@ -6,7 +6,7 @@ import ordersTable from '../../../support/PageObject/ordersTable'
 
 Then('A Sell Stop order from Exchange wallet should be created', () => {
 	orderForm.selectStopOrder()
-	orderForm.selectExchangeWallet()
+	orderForm.selectExchangeTab()
 	orderForm.sellStopOrder()
 	messages.sellStopConfirm()
 })

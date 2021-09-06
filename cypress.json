@@ -6,12 +6,13 @@
 		"**/marginOnlyTickers.feature",
 		"**/favouriteTickers.feature",
 		"**/searchTickers.feature",
-		"**/pairFilterTickers.feature",	
+		"**/pairFilterTickers.feature",
 		"**/changeTickers.feature",
 		"**/largeTickers.feature",
 		"**/summaryTradableBalance.feature",
 		"**/tradesMarketBuy.feature",
-		"**/tradesMarketSell.feature"
+		"**/tradesMarketSell.feature",
+		"**/marketOrderPlaceholder.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
