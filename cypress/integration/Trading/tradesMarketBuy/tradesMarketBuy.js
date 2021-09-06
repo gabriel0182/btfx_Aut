@@ -1,5 +1,3 @@
-///  <reference types="cypress"/>
-
 import orderForm from '../../../support/PageObject/orderForm'
 import trades from '../../../support/PageObject/trades'
 

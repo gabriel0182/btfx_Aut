@@ -1,4 +1,3 @@
-///  <reference types="cypress"/>
 const apiStagingUrl = 'https://api.staging.bitfinex.com'
 
 class orderform {
