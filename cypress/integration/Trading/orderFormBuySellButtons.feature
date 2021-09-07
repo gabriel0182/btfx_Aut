@@ -12,3 +12,4 @@ Feature: Order Form, Buy and Sell buttons
         When The selected order form tab is Margin
         Then The Order Form Buy button contains the text "Margin Buy"
         And The Order Form Sell button contains the text "Margin Sell"
+        
