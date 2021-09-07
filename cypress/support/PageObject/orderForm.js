@@ -519,6 +519,7 @@ class orderform {
 			HIDDEN: 'hiden',
 			'POST-ONLY': 'postonly',
 			TIF: 'tif',
+			'REDUCE-ONLY': 'reduceOnly',
 		}
 		return orderFormOptions[orderFormOption]
 	}
@@ -542,6 +543,14 @@ class orderform {
 	}
 	static sellButtonContains(textButton) {
 		cy.get('#sellButton').contains(textButton)
+	}
+	static orderFormOptionIsVisible(option) {
+		const orderFormOption = this.getOrderFormOptionSelector(option)
+		cy.get(`[data-qa-id="${orderFormOption}-checkbox-label"]`).should('be.visible')
+	}
+	static orderFormOptionIsNotVisible(option) {
+		const orderFormOption = this.getOrderFormOptionSelector(option)
+		cy.get(`[data-qa-id="${orderFormOption}-checkbox-label"]`).should('not.exist')
 	}
 }
 export default orderform
