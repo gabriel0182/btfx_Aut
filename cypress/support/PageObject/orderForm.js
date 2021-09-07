@@ -537,5 +537,11 @@ class orderform {
 			cy.get('ul>li').contains(errorMessage)
 		})
 	}
+	static buyButtonContains(textButton) {
+		cy.get('#buyButton').contains(textButton)
+	}
+	static sellButtonContains(textButton) {
+		cy.get('#sellButton').contains(textButton)
+	}
 }
 export default orderform
