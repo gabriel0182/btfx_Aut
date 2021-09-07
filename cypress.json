@@ -12,7 +12,8 @@
 		"**/summaryTradableBalance.feature",
 		"**/tradesMarketBuy.feature",
 		"**/tradesMarketSell.feature",
-		"**/marketOrderPlaceholder.feature"
+		"**/marketOrderPlaceholder.feature",
+		"**/orderFormBuySellButtons.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
