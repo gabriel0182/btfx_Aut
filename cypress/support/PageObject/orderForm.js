@@ -512,5 +512,11 @@ class orderform {
 			cy.get('[name="price"]').should('have.attr', 'value', text)
 		})
 	}
+	static buyButtonContains(textButton) {
+		cy.get('#buyButton').contains(textButton)
+	}
+	static sellButtonContains(textButton) {
+		cy.get('#sellButton').contains(textButton)
+	}
 }
 export default orderform
