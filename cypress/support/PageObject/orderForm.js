@@ -494,6 +494,7 @@ class orderform {
 			'Stop limit': 'stoplimit',
 			'Fill or kill': 'fillorkill',
 			'Immediate or Cancel': 'immediateorcancel',
+			Scaled: 'scaled',
 		}
 		return orderTypes[orderType]
 	}
@@ -510,6 +511,30 @@ class orderform {
 	static priceInputContains(text) {
 		cy.get('.orderform').within(() => {
 			cy.get('[name="price"]').should('have.attr', 'value', text)
+		})
+	}
+	static getOrderFormOptionSelector(orderFormOption) {
+		const orderFormOptions = {
+			OCO: 'oco',
+			HIDDEN: 'hiden',
+			'POST-ONLY': 'postonly',
+			TIF: 'tif',
+		}
+		return orderFormOptions[orderFormOption]
+	}
+	static checkOrderFormOption(option) {
+		const orderFormOption = this.getOrderFormOptionSelector(option)
+		cy.get(`[data-qa-id="${orderFormOption}-checkbox-label"]`).click()
+	}
+	static clickOnExchangeBuyButton() {
+		cy.get('#buyButton').click()
+	}
+	static clickOnSubmitButton() {
+		cy.get('#submitButton').click()
+	}
+	static orderErrorDisplayed(errorMessage) {
+		cy.get('.order-errors').within(() => {
+			cy.get('ul>li').contains(errorMessage)
 		})
 	}
 	static buyButtonContains(textButton) {

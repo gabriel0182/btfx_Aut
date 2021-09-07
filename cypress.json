@@ -13,6 +13,7 @@
 		"**/tradesMarketBuy.feature",
 		"**/tradesMarketSell.feature",
 		"**/marketOrderPlaceholder.feature",
+		"**/orderFormValidationErrors.feature",
 		"**/orderFormBuySellButtons.feature"
 	],
 	"viewportWidth": 1480,
