@@ -1,5 +1,5 @@
 class trades {
-	static addedMarketRow() {
+	static addedTradesRow() {
 		cy.waitUntil(() =>
 			cy
 				.get('.notification__icon-wrapper')
@@ -34,13 +34,13 @@ class trades {
 		const colorSelector = this.getColorSelector(color)
 		cy.get('.trades-table__row').first().should('have.css', 'background-color', `${colorSelector}`)
 	}
-	static validateTradeUpDownIcon(iconColors,icon) {
+	static validateTradeUpDownIcon(iconColors, icon) {
 		const colorSelector = this.getIconColorSelector(iconColors)
 		const iconSelector = this.getIconSelector(icon)
 		cy.get('.trades-table__row')
 			.first()
 			.within(() => {
-				cy.get(iconSelector).should('have.css', 'color',  `${colorSelector}`)
+				cy.get(iconSelector).should('have.css', 'color', `${colorSelector}`)
 			})
 	}
 
@@ -58,8 +58,7 @@ class trades {
 	}
 
 	static containsTradeBuyPrice() {
-		cy
-			.get('.book__row--reversed')
+		cy.get('.book__row--reversed')
 			.children('div')
 			.eq(5)
 			.then(($val) => {
@@ -72,8 +71,7 @@ class trades {
 			})
 	}
 	static containsTradeSellPrice() {
-		cy
-			.get('.book__row')
+		cy.get('.book__row')
 			.children('div')
 			.eq(5)
 			.then(($val) => {
@@ -104,6 +102,9 @@ class trades {
 						cy.get('span').eq(0).invoke('text').should('contain', txt)
 					})
 			})
+	}
+	static switchToYoursTab() {
+		cy.get('#trades-toggle').contains('Yours').click()
 	}
 }
 export default trades

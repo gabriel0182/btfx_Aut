@@ -1,4 +1,4 @@
-Feature: Trades Market Buy
+Feature: Trades Market Sell
 
     @loginBitfinex
     Scenario: Trades Market Sell
