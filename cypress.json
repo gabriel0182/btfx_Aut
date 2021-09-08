@@ -12,6 +12,7 @@
 		"**/summaryTradableBalance.feature",
 		"**/tradesMarketBuy.feature",
 		"**/tradesMarketSell.feature",
+		"**/tradesYoursBuy.feature",
 		"**/marketOrderPlaceholder.feature",
 		"**/orderFormValidationErrors.feature",
 		"**/orderFormBuySellButtons.feature",

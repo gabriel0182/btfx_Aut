@@ -10,7 +10,7 @@ And('I place an Exchange Market Buy order', () => {
 })
 
 Then('A row is added to the Trades table', () => {
-	trades.addedMarketRow()
+	trades.addedTradesRow()
 })
 
 Then('It has a {string} background colour', (color) => {
