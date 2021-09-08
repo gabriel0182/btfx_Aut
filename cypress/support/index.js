@@ -2,7 +2,7 @@ import './commands'
 
 // Preserve the US resident check cookie for the whole run
 Cypress.Cookies.defaults({
-	preserve: ["ask_if_us_resident"]
+	preserve: ['ask_if_us_resident'],
 })
 
 Cypress.on('window:before:load', (window) => {
@@ -37,4 +37,9 @@ Cypress.on('test:after:run', (test, runnable) => {
 			addContext({ test }, `${relativeScreenshotPath}/${specName}/${screenshotFileNameBeforeAll}`)
 		}
 	}
+})
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+	//returning false here prevents Cypress from failing the test
+	return false
 })

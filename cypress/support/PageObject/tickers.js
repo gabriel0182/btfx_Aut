@@ -9,7 +9,6 @@ class tickers {
 		this.selectPairFilter(quoteCurrency)
 		this.clickOnTicker(baseCurrency)
 		this.validateURL(currencyPair)
-		orderBook.isVisible()
 	}
 
 	static selectPairFilter(currency) {
@@ -48,13 +47,13 @@ class tickers {
 	static clickOnTicker(currency) {
 		cy.get('.tickerlist__container').within(() => {
 			cy.get('.table-vir__row')
-				.contains(new RegExp(`^${currency}$`, 'g'))
+				.contains(new RegExp(`^${currency}$`, 'g'), { matchCase: false })
 				.click()
 		})
 	}
 
 	static validateURL(currencyPair) {
-		cy.url().should('include', `/t/${currencyPair}?type=exchange`)
+		cy.url().should('include', `/t/${currencyPair}`)
 	}
 	static volumeAmount() {
 		cy.get('.show-soft')

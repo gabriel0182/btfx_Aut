@@ -13,6 +13,8 @@ class summary {
 			})
 			.as('tradableBalance')
 
+		cy.waitUntil(() => cy.get('.col-num').first().should('not.contain', 'N/A'))
+
 		cy.get('@tradableBalance').then((tradableBalance) => {
 			cy.get('.col-num')
 				.first()
