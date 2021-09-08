@@ -13,6 +13,7 @@
 		"**/tradesMarketBuy.feature",
 		"**/tradesMarketSell.feature",
 		"**/tradesYoursBuy.feature",
+		"**/TradesYoursSell.feature",
 		"**/marketOrderPlaceholder.feature",
 		"**/orderFormValidationErrors.feature",
 		"**/orderFormBuySellButtons.feature",
