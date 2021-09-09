@@ -18,7 +18,8 @@
 		"**/orderFormValidationErrors.feature",
 		"**/orderFormBuySellButtons.feature",
 		"**/orderFormReduceOnlyOption.feature",
-		"**/orderFormHeaderTabs.feature"
+		"**/orderFormHeaderTabs.feature",
+		"**/amountFromOpenPosition.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,

@@ -23,7 +23,7 @@ class positions {
 			cy.get('[data-qa-id="modal-dialog-content"]').within(() => {
 				cy.contains('Select')
 					.click()
-					.type(`${position[0].type}{enter}{enter}`)
+					.type(`${position[0].type}{enter}`)
 			})
 			cy.get('div.ui-modaldialog__title').click()
 			cy.get('.ui-radioinput').within(() => {
@@ -366,6 +366,15 @@ class positions {
 					})
 					.should('contain', 'Daily')
 			})
+	}
+	static clickOnPositionamount(){
+		cy.get('.positions__amount')
+			.first()
+		.within(()=>{
+			cy.get('span')
+			.eq(0)
+			.click()
+		})
 	}
 }
 export default positions

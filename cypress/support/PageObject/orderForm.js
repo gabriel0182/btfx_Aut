@@ -567,5 +567,14 @@ class orderform {
 			cy.get('div#form-choose-margin').should('not.exist')
 		})
 	}
+	static compareOrderAmountFromPosition() {
+		cy.get('.positions__amount')
+			.first()
+			.then(($val) => {
+				const txt = $val.text()
+				cy.get('[name="amount"]')
+				.should('contain.value',txt)
+			})
+	}
 }
 export default orderform
