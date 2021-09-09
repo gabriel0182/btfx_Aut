@@ -552,5 +552,20 @@ class orderform {
 		const orderFormOption = this.getOrderFormOptionSelector(option)
 		cy.get(`[data-qa-id="${orderFormOption}-checkbox-label"]`).should('not.exist')
 	}
+	static exchangeTabIsVisible() {
+		cy.get('[data-qa-id="order-form"]').within(() => {
+			cy.get('div#form-choose-exchange').contains('Exchange').should('be.visible')
+		})
+	}
+	static marginTabIsVisible() {
+		cy.get('[data-qa-id="order-form"]').within(() => {
+			cy.get('div#form-choose-margin').contains('Margin').should('be.visible')
+		})
+	}
+	static marginTabIsNotVisible() {
+		cy.get('[data-qa-id="order-form"]').within(() => {
+			cy.get('div#form-choose-margin').should('not.exist')
+		})
+	}
 }
 export default orderform

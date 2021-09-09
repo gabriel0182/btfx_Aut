@@ -16,7 +16,8 @@
 		"**/marketOrderPlaceholder.feature",
 		"**/orderFormValidationErrors.feature",
 		"**/orderFormBuySellButtons.feature",
-		"**/orderFormReduceOnlyOption.feature"
+		"**/orderFormReduceOnlyOption.feature",
+		"**/orderFormHeaderTabs.feature"
 	],
 	"viewportWidth": 1480,
 	"viewportHeight": 980,
